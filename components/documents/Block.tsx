@@ -66,38 +66,20 @@ export function Block({ block, onUpdate, onDelete, onAddBlock, isFocused, onFocu
     return <hr className={getBlockStyles("divider")} />;
   }
 
-  const getHeadingLevel = (type: string): number => {
-    if (type === "heading1") return 1;
-    if (type === "heading2") return 2;
-    if (type === "heading3") return 3;
-    return 0;
+  const getHeadingClass = (type: string): string => {
+    switch (type) {
+      case "heading1":
+        return "text-3xl font-bold";
+      case "heading2":
+        return "text-2xl font-semibold";
+      case "heading3":
+        return "text-xl font-semibold";
+      default:
+        return "";
+    }
   };
 
-  const headingLevel = getHeadingLevel(block.type);
-
-  if (headingLevel > 0) {
-    const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
-    return (
-      <div ref={blockRef} className="relative group">
-        <HeadingTag
-          ref={contentRef as any}
-          contentEditable
-          suppressContentEditableWarning
-          onInput={handleInput}
-          onKeyDown={handleKeyDown}
-          onFocus={onFocus}
-          className={`${getBlockStyles(block.type)} outline-none empty:before:content-[attr(data-placeholder)] empty:before:text-[#8A8A8A] empty:before:cursor-text`}
-          data-placeholder={getPlaceholder(block.type)}
-        />
-        <SlashCommand
-          isOpen={showSlashCommand}
-          onClose={() => setShowSlashCommand(false)}
-          onSelect={handleSlashSelect}
-          position={slashPosition}
-        />
-      </div>
-    );
-  }
+  const headingClass = getHeadingClass(block.type);
 
   return (
     <div ref={blockRef} className="relative group">
@@ -108,7 +90,7 @@ export function Block({ block, onUpdate, onDelete, onAddBlock, isFocused, onFocu
         onInput={handleInput}
         onKeyDown={handleKeyDown}
         onFocus={onFocus}
-        className={`${getBlockStyles(block.type)} outline-none empty:before:content-[attr(data-placeholder)] empty:before:text-[#8A8A8A] empty:before:cursor-text`}
+        className={`${getBlockStyles(block.type)} ${headingClass} outline-none empty:before:content-[attr(data-placeholder)] empty:before:text-[#8A8A8A] empty:before:cursor-text`}
         data-placeholder={getPlaceholder(block.type)}
       />
       
