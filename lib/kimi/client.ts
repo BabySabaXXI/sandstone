@@ -140,15 +140,16 @@ export function mockGradeEssay(essay: string, question: string): GradingResult {
 
   return {
     overallScore: avgScore,
-    band: avgScore.toFixed(1),
+    grade: avgScore >= 8 ? "A*" : avgScore >= 7 ? "A" : avgScore >= 6 ? "B" : avgScore >= 5 ? "C" : "D",
     examiners,
     annotations: generateMockAnnotations(essay),
-    summary: `This essay demonstrates a ${avgScore.toFixed(1)} level of writing proficiency.`,
+    summary: `This response demonstrates a ${avgScore.toFixed(1)} level of proficiency.`,
     improvements: [
       "Practice using more sophisticated vocabulary",
       "Work on complex sentence structures",
       "Ensure consistent use of academic register",
     ],
+    subject: "economics" as const,
   };
 }
 
