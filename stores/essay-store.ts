@@ -26,8 +26,7 @@ interface EssayStore {
   essays: Essay[];
   isLoading: boolean;
   error: string | null;
-  
-  // Actions
+
   fetchEssays: () => Promise<void>;
   createEssay: (
     question: string,
@@ -37,11 +36,9 @@ interface EssayStore {
     marks?: number,
     gradingResult?: any
   ) => Promise<Essay>;
-  updateEssay: (id: string, updates: Partial<Essay>) => Promise<void>;
   deleteEssay: (id: string) => Promise<void>;
   getEssayById: (id: string) => Essay | undefined;
   getEssaysBySubject: (subject: Subject) => Essay[];
-  clearError: () => void;
 }
 
 export const useEssayStore = create<EssayStore>()(
@@ -53,10 +50,10 @@ export const useEssayStore = create<EssayStore>()(
 
       fetchEssays: async () => {
         set({ isLoading: true, error: null });
-        
+
         try {
           const { data: { user } } = await supabase.auth.getUser();
-          
+
           if (!user) {
             set({ isLoading: false, error: "Not authenticated" });
             return;
@@ -96,23 +93,16 @@ export const useEssayStore = create<EssayStore>()(
           set({ essays, isLoading: false });
         } catch (error) {
           console.error("Failed to fetch essays:", error);
-          set({ 
-            isLoading: false, 
-            error: error instanceof Error ? error.message : "Failed to fetch essays" 
+          set({
+            isLoading: false,
+            error: error instanceof Error ? error.message : "Failed to fetch essays",
           });
         }
       },
 
-      createEssay: async (
-        question,
-        content,
-        subject,
-        questionType,
-        marks,
-        gradingResult
-      ) => {
+      createEssay: async (question, content, subject, questionType, marks, gradingResult) => {
         const { data: { user } } = await supabase.auth.getUser();
-        
+
         if (!user) {
           throw new Error("Not authenticated");
         }
@@ -173,48 +163,9 @@ export const useEssayStore = create<EssayStore>()(
         return essay;
       },
 
-      updateEssay: async (id, updates) => {
-        const { data: { user } } = await supabase.auth.getUser();
-        
-        if (!user) {
-          throw new Error("Not authenticated");
-        }
-
-        const updateData: any = {
-          updated_at: new Date().toISOString(),
-        };
-
-        if (updates.question !== undefined) updateData.question = updates.question;
-        if (updates.content !== undefined) updateData.content = updates.content;
-        if (updates.overallScore !== undefined) updateData.overall_score = updates.overallScore;
-        if (updates.grade !== undefined) updateData.grade = updates.grade;
-        if (updates.feedback !== undefined) updateData.feedback = updates.feedback;
-        if (updates.annotations !== undefined) updateData.annotations = updates.annotations;
-        if (updates.summary !== undefined) updateData.summary = updates.summary;
-        if (updates.improvements !== undefined) updateData.improvements = updates.improvements;
-
-        const { error } = await supabase
-          .from("essays")
-          .update(updateData)
-          .eq("id", id)
-          .eq("user_id", user.id);
-
-        if (error) {
-          throw new Error(error.message);
-        }
-
-        set((state) => ({
-          essays: state.essays.map((essay) =>
-            essay.id === id
-              ? { ...essay, ...updates, updatedAt: new Date() }
-              : essay
-          ),
-        }));
-      },
-
       deleteEssay: async (id) => {
         const { data: { user } } = await supabase.auth.getUser();
-        
+
         if (!user) {
           throw new Error("Not authenticated");
         }
@@ -241,8 +192,6 @@ export const useEssayStore = create<EssayStore>()(
       getEssaysBySubject: (subject) => {
         return get().essays.filter((essay) => essay.subject === subject);
       },
-
-      clearError: () => set({ error: null }),
     }),
     {
       name: "essay-store",

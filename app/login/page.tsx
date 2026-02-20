@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useAuth } from "@/components/auth-provider";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import { 
   Mail, Lock, User, Eye, EyeOff, GraduationCap, Sparkles,
   Phone, Github, Chrome, ArrowRight, ChevronLeft, TestTube
@@ -105,12 +106,13 @@ export default function LoginPage() {
   const fillDemoAccount = (type: "admin" | "test") => {
     if (type === "admin") {
       setEmail("admin@sandstone.app");
-      setPassword("admin123");
+      setPassword("admin123456");
     } else {
       setEmail("test@example.com");
-      setPassword("test123");
+      setPassword("test123456");
     }
     setError("");
+    toast.info("Click Sign In to log in with this demo account");
   };
 
   return (
