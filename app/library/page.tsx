@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { motion } from "framer-motion";
 import { ThreePanel } from "@/components/layout/ThreePanel";
 import { BookOpen, ExternalLink, FileText, Video, Headphones } from "lucide-react";
@@ -31,7 +32,7 @@ const resources = [
   },
 ];
 
-const typeIcons = {
+const typeIcons: Record<string, React.ComponentType<{ className?: string }>> = {
   article: FileText,
   video: Video,
   audio: Headphones,
