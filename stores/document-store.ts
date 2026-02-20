@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { supabase } from "@/lib/supabase/client";
-import { Document, DocumentBlock, Folder, DatabaseDocument, DatabaseFolder } from "@/types";
+import { Document, DocumentBlock, Folder, DatabaseDocument, DatabaseFolder, Subject } from "@/types";
 import { createBlock, BlockType } from "@/lib/documents/blocks";
 import { toast } from "sonner";
 
@@ -13,7 +13,7 @@ interface DocumentStore {
   syncing: boolean;
   
   // Document operations
-  createDocument: (title?: string, folderId?: string) => Promise<string>;
+  createDocument: (title?: string, folderId?: string, subject?: Subject) => Promise<string>;
   updateDocument: (id: string, updates: Partial<Document>) => Promise<void>;
   deleteDocument: (id: string) => Promise<void>;
   setCurrentDocument: (id: string | null) => void;
@@ -25,7 +25,7 @@ interface DocumentStore {
   moveBlock: (documentId: string, blockId: string, newIndex: number) => void;
   
   // Folder operations
-  createFolder: (name: string, parentId?: string) => Promise<string>;
+  createFolder: (name: string, parentId?: string, subject?: Subject) => Promise<string>;
   updateFolder: (id: string, updates: Partial<Folder>) => Promise<void>;
   deleteFolder: (id: string) => Promise<void>;
   
@@ -33,6 +33,7 @@ interface DocumentStore {
   getDocument: (id: string) => Document | undefined;
   getFolder: (id: string) => Folder | undefined;
   getDocumentsInFolder: (folderId?: string) => Document[];
+  getDocumentsBySubject: (subject: Subject) => Document[];
   
   // Sync operations
   syncWithSupabase: () => Promise<void>;
@@ -48,11 +49,12 @@ export const useDocumentStore = create<DocumentStore>()(
       loading: false,
       syncing: false,
 
-      createDocument: async (title = "Untitled", folderId) => {
+      createDocument: async (title = "Untitled", folderId, subject = "economics") => {
         const id = crypto.randomUUID();
         const newDocument: Document = {
           id,
           title,
+          subject,
           blocks: [createBlock("paragraph")],
           folderId,
           createdAt: new Date(),
@@ -68,6 +70,7 @@ export const useDocumentStore = create<DocumentStore>()(
               id: newDocument.id,
               user_id: user.id,
               title: newDocument.title,
+              subject: newDocument.subject,
               content: newDocument.blocks,
               folder_id: folderId,
             });
@@ -192,11 +195,12 @@ export const useDocumentStore = create<DocumentStore>()(
         }));
       },
 
-      createFolder: async (name, parentId) => {
+      createFolder: async (name, parentId, subject = "economics") => {
         const id = crypto.randomUUID();
         const newFolder: Folder = {
           id,
           name,
+          subject,
           parentId,
           createdAt: new Date(),
         };
@@ -209,6 +213,7 @@ export const useDocumentStore = create<DocumentStore>()(
               id: newFolder.id,
               user_id: user.id,
               name: newFolder.name,
+              subject: newFolder.subject,
               parent_id: parentId,
             });
             if (error) throw error;
@@ -258,6 +263,8 @@ export const useDocumentStore = create<DocumentStore>()(
       getFolder: (id) => get().folders.find((folder) => folder.id === id),
       getDocumentsInFolder: (folderId) =>
         get().documents.filter((doc) => doc.folderId === folderId),
+      getDocumentsBySubject: (subject) =>
+        get().documents.filter((doc) => doc.subject === subject),
 
       fetchDocuments: async () => {
         set({ loading: true });
@@ -291,6 +298,7 @@ export const useDocumentStore = create<DocumentStore>()(
           const mappedDocuments: Document[] = docsData.map((doc: DatabaseDocument) => ({
             id: doc.id,
             title: doc.title,
+            subject: doc.subject as Subject,
             blocks: doc.content || [createBlock("paragraph")],
             folderId: doc.folder_id,
             createdAt: new Date(doc.created_at),
@@ -300,6 +308,7 @@ export const useDocumentStore = create<DocumentStore>()(
           const mappedFolders: Folder[] = foldersData.map((folder: DatabaseFolder) => ({
             id: folder.id,
             name: folder.name,
+            subject: folder.subject as Subject,
             parentId: folder.parent_id,
             createdAt: new Date(folder.created_at),
           }));

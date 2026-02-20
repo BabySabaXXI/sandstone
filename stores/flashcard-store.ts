@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { supabase } from "@/lib/supabase/client";
-import { Flashcard, FlashcardDeck, DatabaseFlashcardDeck, DatabaseFlashcard } from "@/types";
+import { Flashcard, FlashcardDeck, DatabaseFlashcardDeck, DatabaseFlashcard, Subject } from "@/types";
 import { calculateSM2, SM2Result } from "@/lib/flashcards/sm2";
 import { toast } from "sonner";
 
@@ -13,7 +13,7 @@ interface FlashcardStore {
   syncing: boolean;
   
   // Local operations
-  createDeck: (name: string, description?: string) => Promise<string>;
+  createDeck: (name: string, description?: string, subject?: Subject) => Promise<string>;
   updateDeck: (id: string, updates: Partial<FlashcardDeck>) => Promise<void>;
   deleteDeck: (id: string) => Promise<void>;
   setCurrentDeck: (id: string | null) => void;
@@ -31,6 +31,7 @@ interface FlashcardStore {
   getDeck: (id: string) => FlashcardDeck | undefined;
   getDueCards: (deckId: string) => Flashcard[];
   getStudyStats: (deckId: string) => { mastered: number; learning: number; new: number };
+  getDecksBySubject: (subject: Subject) => FlashcardDeck[];
   
   // Sync operations
   syncWithSupabase: () => Promise<void>;
@@ -46,12 +47,13 @@ export const useFlashcardStore = create<FlashcardStore>()(
       loading: false,
       syncing: false,
 
-      createDeck: async (name, description = "") => {
+      createDeck: async (name, description = "", subject = "economics") => {
         const id = crypto.randomUUID();
         const newDeck: FlashcardDeck = {
           id,
           name,
           description,
+          subject,
           cards: [],
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -67,6 +69,7 @@ export const useFlashcardStore = create<FlashcardStore>()(
               user_id: user.id,
               name: newDeck.name,
               description: newDeck.description,
+              subject: newDeck.subject,
             });
             if (error) throw error;
           }
@@ -271,6 +274,9 @@ export const useFlashcardStore = create<FlashcardStore>()(
         };
       },
 
+      getDecksBySubject: (subject) =>
+        get().decks.filter((deck) => deck.subject === subject),
+
       fetchDecks: async () => {
         set({ loading: true });
         
@@ -303,6 +309,7 @@ export const useFlashcardStore = create<FlashcardStore>()(
             id: deck.id,
             name: deck.name,
             description: deck.description,
+            subject: deck.subject as Subject,
             cards: (cardsData || [])
               .filter((c: DatabaseFlashcard) => c.deck_id === deck.id)
               .map((c: DatabaseFlashcard) => ({
