@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { examiners } from "@/lib/examiners/config";
+import { getExaminers } from "@/lib/examiners/config";
 import { AgentCard } from "./AgentCard";
 import { ScoreCard } from "./ScoreCard";
-import { ExaminerScore, GradingResult } from "@/types";
+import { ExaminerScore, GradingResult, Annotation, Subject } from "@/types";
 import { Sparkles, Brain, Zap } from "lucide-react";
 
 interface ExaminerSwarmProps {
   essay: string;
   question: string;
+  subject: Subject;
   onComplete?: (result: GradingResult) => void;
   onGenerating?: (generating: boolean) => void;
 }
 
 type ExaminerStatus = "waiting" | "thinking" | "complete" | "error";
 
-// Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -42,7 +42,8 @@ const itemVariants = {
   },
 };
 
-export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: ExaminerSwarmProps) {
+export function ExaminerSwarm({ essay, question, subject, onComplete, onGenerating }: ExaminerSwarmProps) {
+  const examiners = getExaminers(subject);
   const [statuses, setStatuses] = useState<Record<string, ExaminerStatus>>(
     Object.fromEntries(examiners.map((e) => [e.id, "waiting"]))
   );
@@ -55,7 +56,6 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
   const completedCount = Object.values(statuses).filter((s) => s === "complete").length;
   const progress = (completedCount / examiners.length) * 100;
 
-  // Reset state when essay changes
   useEffect(() => {
     if (!essay) return;
     
@@ -67,23 +67,19 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
     setShowCelebration(false);
     onGenerating?.(true);
 
-    // Simulate grading process with improved timing
     const runGrading = async () => {
       const individualExaminers = examiners.filter((e) => e.id !== "consensus");
       
       for (let i = 0; i < individualExaminers.length; i++) {
         const examiner = individualExaminers[i];
         
-        // Set thinking state with staggered delay
         await new Promise((resolve) => setTimeout(resolve, i === 0 ? 500 : 1200));
         
         setStatuses((prev) => ({ ...prev, [examiner.id]: "thinking" }));
 
-        // Simulate processing time with variation
         const processingTime = 1500 + Math.random() * 1000;
         await new Promise((resolve) => setTimeout(resolve, processingTime));
 
-        // Generate score with some randomness but consistent range
         const baseScore = 6;
         const score = baseScore + Math.random() * 2.5 + (i % 3) * 0.3;
         const clampedScore = Math.min(9, Math.max(4, score));
@@ -91,18 +87,16 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
         setScores((prev) => ({ ...prev, [examiner.id]: clampedScore }));
         setFeedbacks((prev) => ({
           ...prev,
-          [examiner.id]: generateFeedback(examiner.id, clampedScore),
+          [examiner.id]: generateFeedback(examiner.id, clampedScore, subject),
         }));
         setStatuses((prev) => ({ ...prev, [examiner.id]: "complete" }));
       }
 
-      // Consensus examiner with dramatic pause
       await new Promise((resolve) => setTimeout(resolve, 800));
       setStatuses((prev) => ({ ...prev, consensus: "thinking" }));
       
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Calculate consensus score
       const individualScores = Object.entries(scores)
         .filter(([id]) => id !== "consensus")
         .map(([, score]) => score);
@@ -118,91 +112,145 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
       setShowCelebration(true);
       onGenerating?.(false);
 
-      // Build final result
       const result: GradingResult = {
         overallScore: avgScore,
-        band: avgScore.toFixed(1),
+        grade: getGradeLabel(avgScore, subject),
         examiners: examiners.map((e) => ({
           name: e.name,
           score: scores[e.id] || avgScore,
           maxScore: 9,
-          feedback: feedbacks[e.id] || generateFeedback(e.id, avgScore),
+          feedback: feedbacks[e.id] || generateFeedback(e.id, avgScore, subject),
           criteria: e.criteria,
         })),
         annotations: generateAnnotations(essay),
-        summary: generateSummary(avgScore),
-        improvements: generateImprovements(avgScore),
+        summary: generateSummary(avgScore, subject),
+        improvements: generateImprovements(avgScore, subject),
+        subject,
       };
 
       onComplete?.(result);
     };
 
     runGrading();
-  }, [essay, question]);
+  }, [essay, question, subject]);
 
-  const generateFeedback = (examinerId: string, score: number): string => {
-    const feedbacks: Record<string, string[]> = {
-      "task-response": [
-        "Addresses the task well with a clear position throughout.",
-        "All parts of the prompt are addressed with relevant examples.",
-        "Good task response with room for more developed arguments.",
-      ],
-      coherence: [
-        "Well-organized essay with clear paragraph structure.",
-        "Good use of cohesive devices linking ideas effectively.",
-        "Logical progression of ideas with clear introduction and conclusion.",
-      ],
-      lexical: [
-        "Good range of vocabulary with some less common items.",
-        "Effective word choice with appropriate collocations.",
-        "Adequate vocabulary range, could use more sophisticated terms.",
-      ],
-      grammar: [
-        "Variety of complex structures used accurately.",
-        "Good grammatical control with minor errors.",
-        "Adequate range of structures, work on complex sentences.",
-      ],
-      style: [
-        "Appropriate academic register maintained throughout.",
-        "Formal tone with consistent academic style.",
-        "Generally appropriate style with some inconsistencies.",
-      ],
-      consensus: [
-        "Overall strong performance across all criteria.",
-        "Good essay with clear areas for improvement identified.",
-        "Solid foundation with potential for higher band score.",
-      ],
+  const generateFeedback = (examinerId: string, score: number, subject: Subject): string => {
+    const feedbacks: Record<string, Record<string, string[]>> = {
+      economics: {
+        knowledge: [
+          "Good understanding of economic concepts demonstrated.",
+          "Accurate definitions provided with appropriate examples.",
+          "Economic theory applied correctly in context.",
+        ],
+        application: [
+          "Strong application of knowledge to the given context.",
+          "Relevant real-world examples used effectively.",
+          "Good understanding of the specific scenario.",
+        ],
+        analysis: [
+          "Clear chains of reasoning developed throughout.",
+          "Good use of cause and effect relationships.",
+          "Appropriate use of diagrams to support analysis.",
+        ],
+        evaluation: [
+          "Balanced arguments presented with critical assessment.",
+          "Good prioritization of factors considered.",
+          "Supported judgments provided throughout.",
+        ],
+        structure: [
+          "Well-organized response with clear structure.",
+          "Effective introduction and conclusion provided.",
+          "Logical flow of arguments maintained.",
+        ],
+        consensus: [
+          "Overall strong performance across all criteria.",
+          "Good understanding demonstrated with room for development.",
+          "Solid foundation with clear areas for improvement.",
+        ],
+      },
+      geography: {
+        knowledge: [
+          "Good understanding of geographical concepts shown.",
+          "Accurate use of geographical terminology.",
+          "Appropriate case studies included.",
+        ],
+        application: [
+          "Effective application to specific contexts.",
+          "Good use of place-specific examples.",
+          "Appropriate scale considered in response.",
+        ],
+        analysis: [
+          "Clear explanation of geographical processes.",
+          "Good understanding of interconnections shown.",
+          "Effective use of geographical evidence.",
+        ],
+        evaluation: [
+          "Balanced perspectives presented effectively.",
+          "Good consideration of different viewpoints.",
+          "Supported conclusions provided.",
+        ],
+        skills: [
+          "Good interpretation of geographical sources.",
+          "Appropriate use of data and maps.",
+          "Fieldwork understanding demonstrated.",
+        ],
+        consensus: [
+          "Overall strong geographical understanding shown.",
+          "Good application with room for development.",
+          "Solid foundation across geographical skills.",
+        ],
+      },
     };
 
-    const examinerFeedbacks = feedbacks[examinerId] || feedbacks.consensus;
+    const subjectFeedbacks = feedbacks[subject] || feedbacks.economics;
+    const examinerFeedbacks = subjectFeedbacks[examinerId] || subjectFeedbacks.consensus;
     const index = Math.floor((score / 9) * examinerFeedbacks.length);
     return examinerFeedbacks[Math.min(index, examinerFeedbacks.length - 1)];
   };
 
-  const generateSummary = (score: number): string => {
-    if (score >= 7.5) return "This essay demonstrates a strong command of academic writing with well-developed arguments and sophisticated language use.";
-    if (score >= 6.5) return "This essay shows good writing skills with clear organization and adequate vocabulary, though some areas need refinement.";
-    if (score >= 5.5) return "This essay demonstrates adequate writing ability but requires improvement in organization, vocabulary range, and grammatical accuracy.";
-    return "This essay shows basic writing competence but needs significant improvement in multiple areas to achieve a higher band score.";
+  const getGradeLabel = (score: number, subject: Subject): string => {
+    if (score >= 8) return "A*";
+    if (score >= 7) return "A";
+    if (score >= 6) return "B";
+    if (score >= 5) return "C";
+    if (score >= 4) return "D";
+    return "E";
   };
 
-  const generateImprovements = (score: number): string[] => {
-    const improvements = [
-      "Practice using more sophisticated vocabulary and academic collocations",
-      "Work on developing complex sentence structures with subordinate clauses",
-      "Ensure consistent use of formal academic register throughout",
-      "Strengthen the logical flow between paragraphs with better transitions",
-      "Provide more specific examples to support your main arguments",
-    ];
+  const generateSummary = (score: number, subject: Subject): string => {
+    const summaries: Record<string, string> = {
+      economics: `This response demonstrates ${score >= 7 ? "strong" : score >= 5 ? "good" : "developing"} understanding of economic concepts. The ${score >= 6 ? "analysis shows clear chains of reasoning" : "response would benefit from more developed analysis"} and ${score >= 7 ? "effective evaluation throughout" : "further development of evaluation skills"}.`,
+      geography: `This response shows ${score >= 7 ? "strong" : score >= 5 ? "good" : "developing"} geographical understanding. The ${score >= 6 ? "application of knowledge to contexts is effective" : "application needs further development"} and ${score >= 7 ? "evaluation is well-balanced" : "evaluation skills need strengthening"}.`,
+    };
+    return summaries[subject] || summaries.economics;
+  };
+
+  const generateImprovements = (score: number, subject: Subject): string[] => {
+    const improvements: Record<string, string[]> = {
+      economics: [
+        "Include more specific economic data to support arguments",
+        "Develop evaluation points with clearer prioritization",
+        "Use economic diagrams to illustrate key concepts",
+        "Consider both short-run and long-run effects",
+        "Include more real-world examples from different economies",
+      ],
+      geography: [
+        "Include more specific place-based examples",
+        "Develop case study knowledge with specific details",
+        "Use maps and data to support geographical arguments",
+        "Consider different scales from local to global",
+        "Strengthen links between human and physical geography",
+      ],
+    };
     
-    return score >= 7 ? improvements.slice(0, 3) : improvements;
+    const subjectImprovements = improvements[subject] || improvements.economics;
+    return score >= 7 ? subjectImprovements.slice(0, 3) : subjectImprovements;
   };
 
-  const generateAnnotations = (essay: string): import("@/types").Annotation[] => {
-    // Simple annotation generation based on essay content
-    const annotations: import("@/types").Annotation[] = [];
+  const generateAnnotations = (essay: string): Annotation[] => {
+    const annotations: Annotation[] = [];
     const sentences = essay.split(/[.!?]+/);
-    const types: Array<"grammar" | "vocabulary" | "style" | "positive"> = ["positive", "vocabulary", "grammar"];
+    const types: Array<"grammar" | "vocabulary" | "style" | "positive" | "knowledge" | "analysis" | "evaluation"> = ["positive", "analysis", "knowledge"];
     
     for (let i = 0; i < Math.min(3, sentences.length); i++) {
       const sentence = sentences[i];
@@ -212,8 +260,8 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
           type: types[i],
           start: essay.indexOf(sentence),
           end: essay.indexOf(sentence) + sentence.length,
-          message: i === 0 ? "Strong opening statement" : i === 1 ? "Consider using more academic vocabulary" : "Good use of complex structure",
-          suggestion: i === 1 ? "Consider: 'significant challenge' instead of 'big problem'" : undefined,
+          message: i === 0 ? "Strong opening point" : i === 1 ? "Good analytical approach" : "Clear understanding shown",
+          suggestion: i === 1 ? "Consider developing this point further with specific examples" : undefined,
         });
       }
     }
@@ -225,7 +273,6 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
 
   return (
     <div className="space-y-6">
-      {/* Progress Header */}
       <AnimatePresence>
         {!isComplete && (
           <motion.div
@@ -252,7 +299,6 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
         )}
       </AnimatePresence>
 
-      {/* Progress Bar */}
       <div className="h-1 bg-[#F0F0EC] rounded-full overflow-hidden">
         <motion.div
           className="h-full bg-gradient-to-r from-[#E8D5C4] to-[#A8C5A8]"
@@ -262,19 +308,17 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
         />
       </div>
 
-      {/* Score Card */}
       <AnimatePresence>
         {completedCount > 0 && (
           <ScoreCard
             overallScore={overallScore}
-            band={overallScore.toFixed(1)}
+            grade={getGradeLabel(overallScore, subject)}
             totalExaminers={examiners.length}
             completedExaminers={completedCount}
           />
         )}
       </AnimatePresence>
 
-      {/* Agent Cards Grid */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -297,7 +341,6 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
         ))}
       </motion.div>
 
-      {/* Completion Message */}
       <AnimatePresence>
         {isComplete && (
           <motion.div
@@ -306,7 +349,6 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
             exit={{ opacity: 0, y: -20 }}
             className="relative overflow-hidden"
           >
-            {/* Celebration particles */}
             <AnimatePresence>
               {showCelebration && (
                 <>
@@ -350,7 +392,7 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
               </motion.div>
               <h3 className="text-[#2D2D2D] font-semibold text-lg">Grading Complete!</h3>
               <p className="text-[#5A5A5A] text-sm mt-1">
-                All {examiners.length} AI examiners have finished evaluating your essay.
+                All {examiners.length} AI examiners have finished evaluating your response.
               </p>
               <div className="mt-4 flex items-center justify-center gap-4 text-sm">
                 <div className="flex items-center gap-1.5">

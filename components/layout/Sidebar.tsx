@@ -12,11 +12,10 @@ import {
   Layers,
   Brain,
   LogIn,
-  LogOut,
-  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth-provider";
+import { SubjectSwitcher } from "./SubjectSwitcher";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/" },

@@ -1,16 +1,25 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { Target, Link, BookOpen, Type, GraduationCap, Scale, Check, Loader2, Sparkles } from "lucide-react";
+import { 
+  Target, Link, BookOpen, Type, GraduationCap, Scale, Check, Loader2, 
+  TrendingUp, GitBranch, Layout, Brain, Map, Globe
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const iconMap = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Target,
   Link,
   BookOpen,
   Type,
   GraduationCap,
   Scale,
+  TrendingUp,
+  GitBranch,
+  Layout,
+  Brain,
+  Map,
+  Globe,
 };
 
 interface AgentCardProps {
@@ -34,7 +43,7 @@ export function AgentCard({
   color,
   feedback,
 }: AgentCardProps) {
-  const Icon = iconMap[icon as keyof typeof iconMap] || Target;
+  const Icon = iconMap[icon] || Target;
 
   return (
     <motion.div
@@ -53,7 +62,6 @@ export function AgentCard({
       )}
     >
       <div className="flex items-start gap-3">
-        {/* Icon with animation */}
         <motion.div
           animate={
             status === "thinking"
@@ -70,7 +78,6 @@ export function AgentCard({
           <Icon className="w-5 h-5" style={{ color }} />
         </motion.div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
             <h4 className="font-medium text-[#2D2D2D] text-sm">{name}</h4>
@@ -107,7 +114,6 @@ export function AgentCard({
           
           <p className="text-[#8A8A8A] text-xs mt-1">{description}</p>
 
-          {/* Feedback */}
           <AnimatePresence>
             {status === "complete" && feedback && (
               <motion.p
@@ -121,7 +127,6 @@ export function AgentCard({
             )}
           </AnimatePresence>
 
-          {/* Score */}
           <AnimatePresence>
             {status === "complete" && score !== undefined && (
               <motion.div
@@ -138,7 +143,6 @@ export function AgentCard({
                     className="h-full rounded-full relative"
                     style={{ backgroundColor: color }}
                   >
-                    {/* Shimmer effect */}
                     <motion.div
                       initial={{ x: "-100%" }}
                       animate={{ x: "100%" }}
@@ -159,7 +163,6 @@ export function AgentCard({
             )}
           </AnimatePresence>
 
-          {/* Thinking indicator */}
           <AnimatePresence>
             {status === "thinking" && (
               <motion.div

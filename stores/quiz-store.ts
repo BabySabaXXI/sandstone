@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { supabase } from "@/lib/supabase/client";
-import { Quiz, QuizAttempt, QuizQuestion } from "@/types";
+import { Quiz, QuizAttempt, QuizQuestion, Subject } from "@/types";
 import { toast } from "sonner";
 
 interface QuizStore {
@@ -11,23 +11,20 @@ interface QuizStore {
   currentAttempt: QuizAttempt | null;
   loading: boolean;
   
-  // Quiz operations
-  createQuiz: (title: string, description: string, questions: QuizQuestion[], sourceType?: string, sourceId?: string) => Promise<string>;
+  createQuiz: (title: string, description: string, questions: QuizQuestion[], subject: Subject, sourceType?: string, sourceId?: string) => Promise<string>;
   deleteQuiz: (id: string) => Promise<void>;
   setCurrentQuiz: (id: string | null) => void;
   getQuiz: (id: string) => Quiz | undefined;
+  getQuizzesBySubject: (subject: Subject) => Quiz[];
   
-  // Attempt operations
   startAttempt: (quizId: string) => void;
   submitAnswer: (questionId: string, answer: string, correct: boolean) => void;
   completeAttempt: () => Promise<void>;
   getQuizAttempts: (quizId: string) => QuizAttempt[];
   getAttemptStats: (quizId: string) => { totalAttempts: number; bestScore: number; averageScore: number };
   
-  // Generate quiz from content
-  generateQuizFromEssay: (essayContent: string, essayQuestion: string) => Promise<Quiz>;
+  generateQuizFromEssay: (essayContent: string, essayQuestion: string, subject: Subject) => Promise<Quiz>;
   
-  // Sync
   fetchQuizzes: () => Promise<void>;
   syncWithSupabase: () => Promise<void>;
 }
@@ -41,12 +38,13 @@ export const useQuizStore = create<QuizStore>()(
       currentAttempt: null,
       loading: false,
 
-      createQuiz: async (title, description, questions, sourceType = "manual", sourceId) => {
+      createQuiz: async (title, description, questions, subject, sourceType = "manual", sourceId) => {
         const id = crypto.randomUUID();
         const newQuiz: Quiz = {
           id,
           title,
           description,
+          subject,
           sourceType: sourceType as "essay" | "document" | "manual",
           sourceId,
           questions,
@@ -64,6 +62,7 @@ export const useQuizStore = create<QuizStore>()(
               user_id: user.id,
               title: newQuiz.title,
               description: newQuiz.description,
+              subject: newQuiz.subject,
               source_type: newQuiz.sourceType,
               source_id: newQuiz.sourceId,
               questions: newQuiz.questions,
@@ -95,6 +94,7 @@ export const useQuizStore = create<QuizStore>()(
 
       setCurrentQuiz: (id) => set({ currentQuizId: id }),
       getQuiz: (id) => get().quizzes.find((q) => q.id === id),
+      getQuizzesBySubject: (subject) => get().quizzes.filter((q) => q.subject === subject),
 
       startAttempt: (quizId) => {
         const quiz = get().getQuiz(quizId);
@@ -182,54 +182,37 @@ export const useQuizStore = create<QuizStore>()(
         };
       },
 
-      generateQuizFromEssay: async (essayContent, essayQuestion) => {
-        // Parse essay content to generate relevant questions
-        const sentences = essayContent.split(/[.!?]+/).filter((s) => s.trim().length > 20);
-        const words = essayContent.toLowerCase().match(/\b[a-z]{5,}\b/g) || [];
-        const uniqueWords = [...new Set(words)].slice(0, 10);
-
+      generateQuizFromEssay: async (essayContent, essayQuestion, subject) => {
         const questions: QuizQuestion[] = [
           {
             id: crypto.randomUUID(),
             type: "multiple_choice",
-            question: "What is the main topic of the essay?",
+            question: "What is the main focus of this response?",
             options: [
-              "Environmental issues",
-              "Social problems",
-              "Education",
-              "Technology"
+              "Economic analysis",
+              "Geographical processes",
+              "Historical events",
+              "Scientific methodology"
             ],
-            correctAnswer: "Social problems",
-            explanation: "Based on the essay content about crime and rehabilitation.",
-            difficulty: "easy",
-          },
-          {
-            id: crypto.randomUUID(),
-            type: "fill_blank",
-            question: "The essay discusses _______ as an alternative to longer prison sentences.",
-            correctAnswer: "rehabilitation",
-            explanation: "The essay mentions rehabilitation programs as an effective alternative.",
+            correctAnswer: subject === "economics" ? "Economic analysis" : "Geographical processes",
+            explanation: "Based on the content of the response provided.",
             difficulty: "medium",
           },
           {
             id: crypto.randomUUID(),
-            type: "multiple_choice",
-            question: "According to the essay, what helps ex-prisoners reintegrate into society?",
-            options: [
-              "Strict punishment",
-              "Education and job training",
-              "Longer sentences",
-              "Isolation"
-            ],
-            correctAnswer: "Education and job training",
-            explanation: "The essay specifically mentions education and job training programs.",
+            type: "fill_blank",
+            question: subject === "economics" 
+              ? "The response discusses the effects of _______ on the economy."
+              : "The response examines the impacts of _______ on geographical areas.",
+            correctAnswer: "key factors",
+            explanation: "The main factors discussed in the response.",
             difficulty: "easy",
           },
           {
             id: crypto.randomUUID(),
             type: "essay",
-            question: "Summarize the author's main argument in 2-3 sentences.",
-            explanation: "The author argues that while prison sentences have benefits, education and rehabilitation are more effective long-term solutions.",
+            question: "Summarize the key arguments presented in 2-3 sentences.",
+            explanation: "A concise summary of the main points raised in the response.",
             difficulty: "hard",
           },
         ];
@@ -238,7 +221,8 @@ export const useQuizStore = create<QuizStore>()(
         const quiz: Quiz = {
           id,
           title: `Quiz: ${essayQuestion.slice(0, 40)}...`,
-          description: `Test your understanding of this IELTS essay`,
+          description: `Test your understanding of this ${subject} response`,
+          subject,
           sourceType: "essay",
           questions,
           createdAt: new Date(),
@@ -255,6 +239,7 @@ export const useQuizStore = create<QuizStore>()(
               user_id: user.id,
               title: quiz.title,
               description: quiz.description,
+              subject: quiz.subject,
               source_type: quiz.sourceType,
               questions: quiz.questions,
             });
@@ -288,6 +273,7 @@ export const useQuizStore = create<QuizStore>()(
             id: q.id,
             title: q.title,
             description: q.description,
+            subject: q.subject as Subject,
             sourceType: q.source_type,
             sourceId: q.source_id,
             questions: q.questions,

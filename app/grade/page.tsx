@@ -1,31 +1,48 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThreePanel } from "@/components/layout/ThreePanel";
+import { SubjectSwitcher } from "@/components/layout/SubjectSwitcher";
 import { ExaminerSwarm } from "@/components/grading/ExaminerSwarm";
 import { EssayHighlighter } from "@/components/grading/EssayHighlighter";
 import { GradingResult } from "@/types";
 import { Send, RotateCcw, FileText, Brain, Sparkles, Save, CheckCircle } from "lucide-react";
 import { useEssayStore } from "@/stores/essay-store";
 import { useQuizStore } from "@/stores/quiz-store";
+import { useSubjectStore } from "@/stores/subject-store";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { getSubjectConfig } from "@/lib/subjects/config";
 
-const sampleQuestion =
-  "Some people think that the best way to reduce crime is to give longer prison sentences. To what extent do you agree or disagree?";
+const sampleQuestions: Record<string, string> = {
+  economics: "Discuss the likely microeconomic and macroeconomic effects of a significant increase in government spending on infrastructure projects.",
+  geography: "Evaluate the strategies used to manage the impacts of tropical storms in contrasting areas of the world.",
+};
 
-const sampleEssay = `In recent years, the issue of crime has become a major concern for society. While it is true that longer prison sentences can act as a deterrent, I believe that there are more effective ways to reduce crime.
+const sampleResponses: Record<string, string> = {
+  economics: `Government spending on infrastructure projects can have significant effects on both microeconomic and macroeconomic levels.
 
-On the one hand, longer prison sentences can discourage people from committing crimes. When potential criminals know that they will face severe punishment, they may think twice before breaking the law. This approach protects society by keeping dangerous criminals away from the public.
+On the microeconomic level, infrastructure spending creates jobs in the construction sector. This increases household income and consumer spending. Firms benefit from improved transportation networks, reducing costs and increasing efficiency. However, there may be opportunity costs as resources are diverted from other sectors.
 
-On the other hand, there are alternative methods that address the root causes of crime. Education and job training programs can help ex-prisoners reintegrate into society. When people have stable employment and a sense of purpose, they are less likely to return to criminal activities.
+On the macroeconomic level, increased government spending represents an expansionary fiscal policy. This shifts the AD curve to the right, increasing real GDP and price level. The multiplier effect means the final increase in GDP may be larger than the initial spending. However, this depends on the size of the multiplier, which is affected by leakages.
 
-In conclusion, while longer prison sentences have some benefits, I believe that rehabilitation and education programs are more effective in reducing crime in the long term.`;
+Evaluation suggests that while infrastructure spending can boost economic growth, its effectiveness depends on the state of the economy and the quality of projects undertaken.`,
+  geography: `Tropical storms have devastating impacts that require effective management strategies. Different regions employ various approaches based on their resources and experiences.
+
+In developed countries like the USA, sophisticated monitoring and early warning systems are in place. Hurricane Katrina showed both successes and failures in these systems. Evacuation plans are well-developed, though not always followed. Infrastructure is built to withstand high winds and flooding.
+
+In developing countries like Bangladesh, community-based early warning systems have been implemented. Cyclone shelters have been constructed. However, limited resources mean less sophisticated technology and infrastructure.
+
+The effectiveness of these strategies varies. Early warning systems save lives but cannot prevent property damage. Long-term strategies like improved building codes are more effective but require significant investment and political will.`,
+};
 
 export default function GradePage() {
-  const [question, setQuestion] = useState(sampleQuestion);
-  const [essay, setEssay] = useState(sampleEssay);
+  const { currentSubject } = useSubjectStore();
+  const subjectConfig = getSubjectConfig(currentSubject);
+  
+  const [question, setQuestion] = useState(sampleQuestions[currentSubject] || sampleQuestions.economics);
+  const [essay, setEssay] = useState(sampleResponses[currentSubject] || sampleResponses.economics);
   const [isGrading, setIsGrading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [result, setResult] = useState<GradingResult | null>(null);
@@ -56,17 +73,17 @@ export default function GradePage() {
     setIsGrading(false);
     
     // Auto-save the essay with results
-    const id = await saveEssay(question, essay, gradingResult);
+    const id = await saveEssay(question, essay, gradingResult, currentSubject);
     if (id) {
       setSavedEssayId(id);
-      toast.success("Essay saved to your library");
+      toast.success("Response saved to your library");
     }
   };
 
   const handleGenerateQuiz = async () => {
     if (!savedEssayId) return;
     
-    const quiz = await generateQuizFromEssay(essay, question);
+    const quiz = await generateQuizFromEssay(essay, question, currentSubject);
     if (quiz) {
       setQuizGenerated(true);
       toast.success("Quiz generated! Go to Quiz Center to take it.");
@@ -86,15 +103,20 @@ export default function GradePage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#E8D5C4] to-[#F5E6D3] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-[#2D2D2D]" />
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#E8D5C4] to-[#F5E6D3] flex items-center justify-center">
+                <Sparkles className="w-5 h-5 text-[#2D2D2D]" />
+              </div>
+              <div>
+                <h1 className="text-h1 text-[#2D2D2D]">Response Grading</h1>
+                <p className="text-[#5A5A5A]">
+                  Submit your {subjectConfig?.name} response for AI-powered evaluation
+                </p>
+              </div>
             </div>
-            <h1 className="text-h1 text-[#2D2D2D]">Essay Grading</h1>
+            <SubjectSwitcher />
           </div>
-          <p className="text-[#5A5A5A]">
-            Submit your essay for AI-powered evaluation by 6 expert examiners
-          </p>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -109,21 +131,21 @@ export default function GradePage() {
               {/* Question Input */}
               <div className="bg-white rounded-xl border border-[#E5E5E0] shadow-card p-5">
                 <label className="block text-sm font-medium text-[#2D2D2D] mb-2">
-                  Essay Question
+                  Question
                 </label>
                 <textarea
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   className="w-full px-4 py-3 border border-[#E5E5E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] resize-none h-24"
-                  placeholder="Enter the essay question..."
+                  placeholder="Enter the question..."
                 />
               </div>
 
-              {/* Essay Input */}
+              {/* Response Input */}
               <div className="bg-white rounded-xl border border-[#E5E5E0] shadow-card p-5">
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-sm font-medium text-[#2D2D2D]">
-                    Your Essay
+                    Your Response
                   </label>
                   <span className="text-xs text-[#8A8A8A]">
                     {essay.split(/\s+/).filter(Boolean).length} words
@@ -133,7 +155,7 @@ export default function GradePage() {
                   value={essay}
                   onChange={(e) => setEssay(e.target.value)}
                   className="w-full px-4 py-3 border border-[#E5E5E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] resize-none h-80 font-mono text-sm"
-                  placeholder="Type your essay here..."
+                  placeholder="Type your response here..."
                 />
               </div>
 
@@ -145,7 +167,7 @@ export default function GradePage() {
                   className="flex items-center gap-2 bg-[#2D2D2D] text-white px-6 py-3 rounded-lg hover:bg-[#1A1A1A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-4 h-4" />
-                  Grade Essay
+                  Grade Response
                 </button>
               </div>
             </motion.div>
@@ -166,7 +188,7 @@ export default function GradePage() {
                   className="flex items-center gap-2 text-[#5A5A5A] hover:text-[#2D2D2D] transition-colors"
                 >
                   <RotateCcw className="w-4 h-4" />
-                  Grade Another Essay
+                  Grade Another Response
                 </button>
                 
                 <div className="flex items-center gap-2">
@@ -204,6 +226,7 @@ export default function GradePage() {
                   <ExaminerSwarm
                     essay={essay}
                     question={question}
+                    subject={currentSubject}
                     onComplete={handleGradingComplete}
                     onGenerating={setIsGenerating}
                   />

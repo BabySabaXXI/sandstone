@@ -54,7 +54,7 @@ export default function LoginPage() {
             <GraduationCap className="w-8 h-8 text-[#2D2D2D]" />
           </div>
           <h1 className="text-2xl font-bold text-[#2D2D2D]">Sandstone</h1>
-          <p className="text-[#8A8A8A] text-sm">AI-Powered IELTS Essay Grading</p>
+          <p className="text-[#8A8A8A] text-sm">AI-Powered Learning Platform</p>
         </motion.div>
 
         {/* Form Card */}
@@ -69,7 +69,7 @@ export default function LoginPage() {
               {isSignUp ? "Create Account" : "Welcome Back"}
             </h2>
             <p className="text-sm text-[#8A8A8A]">
-              {isSignUp ? "Start your IELTS preparation journey" : "Sign in to continue learning"}
+              {isSignUp ? "Start your learning journey today" : "Sign in to continue learning"}
             </p>
           </div>
 

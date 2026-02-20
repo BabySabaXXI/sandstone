@@ -5,13 +5,16 @@ import { TrendingUp, Award, BarChart3 } from "lucide-react";
 
 interface ScoreCardProps {
   overallScore: number;
-  band: string;
+  band?: string;
+  grade?: string;
   totalExaminers: number;
   completedExaminers: number;
 }
 
-export function ScoreCard({ overallScore, band, totalExaminers, completedExaminers }: ScoreCardProps) {
+export function ScoreCard({ overallScore, band, grade, totalExaminers, completedExaminers }: ScoreCardProps) {
   const progress = (completedExaminers / totalExaminers) * 100;
+  const displayLabel = grade || band || overallScore.toFixed(1);
+  const isGrade = !!grade;
 
   return (
     <motion.div
@@ -38,9 +41,9 @@ export function ScoreCard({ overallScore, band, totalExaminers, completedExamine
           transition={{ delay: 0.2 }}
           className="text-6xl font-bold"
         >
-          {band}
+          {displayLabel}
         </motion.span>
-        <span className="text-white/60 mb-2">/ 9.0</span>
+        {!isGrade && <span className="text-white/60 mb-2">/ 9.0</span>}
       </div>
 
       {/* Progress Bar */}
@@ -69,8 +72,8 @@ export function ScoreCard({ overallScore, band, totalExaminers, completedExamine
           <p className="text-white/50 text-xs mt-1">Average</p>
         </div>
         <div className="text-center border-x border-white/10">
-          <span className="text-2xl font-semibold text-[#E8D5C4]">{band}</span>
-          <p className="text-white/50 text-xs mt-1">Band</p>
+          <span className="text-2xl font-semibold text-[#E8D5C4]">{displayLabel}</span>
+          <p className="text-white/50 text-xs mt-1">{isGrade ? "Grade" : "Band"}</p>
         </div>
         <div className="text-center">
           <span className="text-2xl font-semibold text-[#A8C5D4]">{completedExaminers}</span>

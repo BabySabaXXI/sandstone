@@ -3,19 +3,22 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { ThreePanel } from "@/components/layout/ThreePanel";
+import { SubjectSwitcher } from "@/components/layout/SubjectSwitcher";
 import { useAuth } from "@/components/auth-provider";
 import { useEssayStore } from "@/stores/essay-store";
 import { useFlashcardStore } from "@/stores/flashcard-store";
 import { useQuizStore } from "@/stores/quiz-store";
-import { FileText, GraduationCap, Layers, Sparkles, ArrowRight, Brain, TrendingUp, Clock } from "lucide-react";
+import { useSubjectStore } from "@/stores/subject-store";
+import { FileText, GraduationCap, Layers, Sparkles, ArrowRight, Brain, TrendingUp, Clock, BookOpen } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { getSubjectConfig } from "@/lib/subjects/config";
 
 const features = [
   {
     icon: GraduationCap,
-    title: "AI Essay Grading",
-    description: "Get instant feedback from 6 AI examiners",
+    title: "AI Response Grading",
+    description: "Get instant feedback from AI examiners",
     href: "/grade",
     color: "#E8D5C4",
   },
@@ -29,7 +32,7 @@ const features = [
   {
     icon: FileText,
     title: "Documents",
-    description: "Organize your writing practice",
+    description: "Organize your study notes",
     href: "/documents",
     color: "#A8C5D4",
   },
@@ -44,10 +47,13 @@ const features = [
 
 export default function HomePage() {
   const { user } = useAuth();
+  const { currentSubject } = useSubjectStore();
   const { essays, fetchEssays } = useEssayStore();
   const { decks, fetchDecks } = useFlashcardStore();
   const { quizzes, fetchQuizzes } = useQuizStore();
   const [isLoading, setIsLoading] = useState(true);
+
+  const subjectConfig = getSubjectConfig(currentSubject);
 
   useEffect(() => {
     const loadData = async () => {
@@ -60,36 +66,39 @@ export default function HomePage() {
       setIsLoading(false);
     };
     loadData();
-  }, [fetchEssays, fetchDecks, fetchQuizzes]);
+  }, [fetchEssays, fetchDecks, fetchQuizzes, currentSubject]);
 
   // Calculate stats
-  const totalEssays = essays.length;
-  const avgScore = essays.length > 0
-    ? (essays.reduce((sum, e) => sum + (e.overallScore || 0), 0) / essays.length).toFixed(1)
+  const subjectEssays = essays.filter((e) => e.subject === currentSubject);
+  const subjectDecks = decks.filter((d) => d.subject === currentSubject);
+  
+  const totalEssays = subjectEssays.length;
+  const avgScore = subjectEssays.length > 0
+    ? (subjectEssays.reduce((sum, e) => sum + (e.overallScore || 0), 0) / subjectEssays.length).toFixed(1)
     : "0.0";
-  const totalCards = decks.reduce((sum, d) => sum + d.cards.length, 0);
-  const dueCards = decks.reduce((sum, d) => {
+  const totalCards = subjectDecks.reduce((sum, d) => sum + d.cards.length, 0);
+  const dueCards = subjectDecks.reduce((sum, d) => {
     const now = new Date();
     return sum + d.cards.filter((c) => !c.nextReview || c.nextReview <= now).length;
   }, 0);
 
   const stats = [
-    { label: "Essays Graded", value: totalEssays.toString() },
-    { label: "Avg. Band Score", value: avgScore },
+    { label: "Responses Graded", value: totalEssays.toString() },
+    { label: "Avg. Score", value: avgScore },
     { label: "Flashcards", value: totalCards.toString() },
     { label: "Due for Review", value: dueCards.toString() },
   ];
 
   const recentActivity = [
-    ...essays.slice(0, 3).map((e) => ({
+    ...subjectEssays.slice(0, 3).map((e) => ({
       id: e.id,
       type: "essay" as const,
       title: e.question.slice(0, 50) + "...",
-      subtitle: `Band ${e.band || "N/A"} • ${new Date(e.createdAt).toLocaleDateString()}`,
+      subtitle: `Score: ${e.overallScore?.toFixed(1) || "N/A"} • ${new Date(e.createdAt).toLocaleDateString()}`,
       icon: FileText,
       color: "#E8D5C4",
     })),
-    ...decks.slice(0, 2).map((d) => ({
+    ...subjectDecks.slice(0, 2).map((d) => ({
       id: d.id,
       type: "deck" as const,
       title: d.name,
@@ -102,24 +111,33 @@ export default function HomePage() {
   return (
     <ThreePanel>
       <div className="max-w-4xl mx-auto">
-        {/* Hero */}
+        {/* Header with Subject Switcher */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <div className="inline-flex items-center gap-2 bg-[#E8D5C4]/30 text-[#2D2D2D] px-4 py-2 rounded-full text-sm mb-6">
-            <Sparkles className="w-4 h-4" />
-            <span>AI-Powered Essay Grading</span>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className="inline-flex items-center gap-2 bg-[#E8D5C4]/30 text-[#2D2D2D] px-4 py-2 rounded-full text-sm">
+              <Sparkles className="w-4 h-4" />
+              <span>AI-Powered Learning</span>
+            </div>
+            <SubjectSwitcher />
           </div>
+          
           <h1 className="text-hero text-[#2D2D2D] mb-4">
-            {user ? `Welcome back, ${user.email?.split('@')[0] || 'Learner'}!` : "Master Your IELTS Writing"}
+            {user ? `Welcome back, ${user.email?.split('@')[0] || 'Learner'}!` : "Master Your Studies"}
           </h1>
           <p className="text-body text-[#5A5A5A] max-w-xl mx-auto">
-            Get instant, detailed feedback on your essays from our swarm of AI examiners.
-            Track your progress and improve your writing skills.
+            Get instant, detailed feedback on your {subjectConfig?.name || "subject"} responses from our AI examiners.
+            Track your progress and improve your academic skills.
           </p>
+          {subjectConfig?.examBoard && (
+            <p className="text-sm text-[#8A8A8A] mt-2">
+              {subjectConfig.examBoard} • {subjectConfig.level}
+            </p>
+          )}
         </motion.div>
 
         {/* Stats */}
@@ -228,7 +246,7 @@ export default function HomePage() {
             ) : (
               <div className="p-8 text-center text-[#8A8A8A]">
                 <TrendingUp className="w-12 h-12 mx-auto mb-3 text-[#E8D5C4]" />
-                <p>Start grading essays to see your activity here</p>
+                <p>Start grading responses to see your activity here</p>
               </div>
             )}
           </div>
@@ -242,9 +260,9 @@ export default function HomePage() {
           className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4"
         >
           {[
-            { title: "Task Response", tip: "Address all parts of the prompt clearly", icon: TrendingUp },
-            { title: "Coherence", tip: "Use cohesive devices to link ideas", icon: TrendingUp },
-            { title: "Vocabulary", tip: "Use less common lexical items accurately", icon: TrendingUp },
+            { title: "Knowledge", tip: "Demonstrate understanding of key concepts", icon: BookOpen },
+            { title: "Analysis", tip: "Develop clear chains of reasoning", icon: TrendingUp },
+            { title: "Evaluation", tip: "Provide balanced critical assessment", icon: Brain },
           ].map((item, index) => (
             <div key={item.title} className="bg-[#F5F5F0] rounded-xl p-4">
               <h4 className="font-medium text-[#2D2D2D] text-sm mb-1">{item.title}</h4>

@@ -1,3 +1,16 @@
+// Subject Types
+export type Subject = "economics" | "geography";
+
+export interface SubjectConfig {
+  id: Subject;
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  examBoard?: string;
+  level?: string;
+}
+
 // Grading Types
 export interface ExaminerScore {
   name: string;
@@ -9,7 +22,7 @@ export interface ExaminerScore {
 
 export interface Annotation {
   id: string;
-  type: "grammar" | "vocabulary" | "style" | "positive";
+  type: "grammar" | "vocabulary" | "style" | "positive" | "knowledge" | "analysis" | "evaluation";
   start: number;
   end: number;
   message: string;
@@ -18,11 +31,13 @@ export interface Annotation {
 
 export interface GradingResult {
   overallScore: number;
-  band: string;
+  band?: string;
+  grade?: string;
   examiners: ExaminerScore[];
   annotations: Annotation[];
   summary: string;
   improvements: string[];
+  subject: Subject;
 }
 
 // Flashcard Types
@@ -43,6 +58,7 @@ export interface FlashcardDeck {
   id: string;
   name: string;
   description: string;
+  subject: Subject;
   cards: Flashcard[];
   createdAt: Date;
   updatedAt: Date;
@@ -58,6 +74,7 @@ export interface DocumentBlock {
 export interface Document {
   id: string;
   title: string;
+  subject: Subject;
   blocks: DocumentBlock[];
   folderId?: string;
   createdAt: Date;
@@ -67,6 +84,7 @@ export interface Document {
 export interface Folder {
   id: string;
   name: string;
+  subject: Subject;
   parentId?: string;
   createdAt: Date;
 }
@@ -74,18 +92,20 @@ export interface Folder {
 // Quiz Types
 export interface QuizQuestion {
   id: string;
-  type: "multiple_choice" | "fill_blank" | "matching" | "essay";
+  type: "multiple_choice" | "fill_blank" | "matching" | "essay" | "definition" | "calculation";
   question: string;
   options?: string[];
   correctAnswer?: string;
   explanation?: string;
   difficulty: "easy" | "medium" | "hard";
+  topic?: string;
 }
 
 export interface Quiz {
   id: string;
   title: string;
   description: string;
+  subject: Subject;
   sourceType: "essay" | "document" | "manual";
   sourceId?: string;
   questions: QuizQuestion[];
@@ -106,6 +126,23 @@ export interface QuizAttempt {
   }[];
   completedAt?: Date;
   createdAt: Date;
+}
+
+// Essay/Response Types
+export interface EssayResponse {
+  id: string;
+  userId: string;
+  subject: Subject;
+  question: string;
+  content: string;
+  overallScore?: number;
+  grade?: string;
+  feedback?: ExaminerScore[];
+  annotations?: Annotation[];
+  summary?: string;
+  improvements?: string[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 // Layout Types
@@ -129,10 +166,11 @@ export interface UserProfile {
 export interface DatabaseEssay {
   id: string;
   user_id: string;
+  subject: string;
   question: string;
   content: string;
   overall_score?: number;
-  band?: string;
+  grade?: string;
   feedback?: ExaminerScore[];
   annotations?: Annotation[];
   summary?: string;
@@ -146,6 +184,7 @@ export interface DatabaseFlashcardDeck {
   user_id: string;
   name: string;
   description: string;
+  subject: string;
   created_at: string;
   updated_at: string;
 }
@@ -167,6 +206,7 @@ export interface DatabaseDocument {
   id: string;
   user_id: string;
   title: string;
+  subject: string;
   content: DocumentBlock[];
   folder_id?: string;
   created_at: string;
@@ -177,8 +217,22 @@ export interface DatabaseFolder {
   id: string;
   user_id: string;
   name: string;
+  subject: string;
   parent_id?: string;
   created_at: string;
+}
+
+export interface DatabaseQuiz {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string;
+  subject: string;
+  source_type: string;
+  source_id?: string;
+  questions: QuizQuestion[];
+  created_at: string;
+  updated_at: string;
 }
 
 // Re-export API types

@@ -3,30 +3,38 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThreePanel } from "@/components/layout/ThreePanel";
+import { SubjectSwitcher } from "@/components/layout/SubjectSwitcher";
 import { useQuizStore } from "@/stores/quiz-store";
 import { useEssayStore } from "@/stores/essay-store";
+import { useSubjectStore } from "@/stores/subject-store";
 import { Quiz, QuizQuestion, QuizAttempt } from "@/types";
 import { 
   Brain, Plus, Trash2, Play, ChevronRight, CheckCircle, 
   XCircle, Clock, Trophy, ArrowLeft, Sparkles, FileText
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getSubjectConfig } from "@/lib/subjects/config";
 
 export default function QuizPage() {
+  const { currentSubject } = useSubjectStore();
+  const subjectConfig = getSubjectConfig(currentSubject);
   const { quizzes, fetchQuizzes, deleteQuiz, setCurrentQuiz, getQuiz, currentQuizId, startAttempt, currentAttempt, submitAnswer, completeAttempt } = useQuizStore();
   const { essays } = useEssayStore();
   const [view, setView] = useState<"list" | "take" | "result" | "generate">("list");
   const [generatingForEssay, setGeneratingForEssay] = useState<string | null>(null);
 
+  const subjectQuizzes = quizzes.filter((q) => q.subject === currentSubject);
+  const subjectEssays = essays.filter((e) => e.subject === currentSubject);
+
   useEffect(() => {
     fetchQuizzes();
-  }, [fetchQuizzes]);
+  }, [fetchQuizzes, currentSubject]);
 
   const handleGenerateQuiz = async (essayId: string) => {
     setGeneratingForEssay(essayId);
-    const essay = essays.find((e) => e.id === essayId);
+    const essay = subjectEssays.find((e) => e.id === essayId);
     if (essay) {
-      await useQuizStore.getState().generateQuizFromEssay(essay.content, essay.question);
+      await useQuizStore.getState().generateQuizFromEssay(essay.content, essay.question, currentSubject);
       await fetchQuizzes();
     }
     setGeneratingForEssay(null);
@@ -47,20 +55,23 @@ export default function QuizPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="flex items-center gap-2 mb-2">
-            <Brain className="w-6 h-6 text-[#E8D5C4]" />
-            <h1 className="text-h1 text-[#2D2D2D]">Quiz Center</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 mb-2">
+              <Brain className="w-6 h-6 text-[#E8D5C4]" />
+              <h1 className="text-h1 text-[#2D2D2D]">Quiz Center</h1>
+            </div>
+            <SubjectSwitcher />
           </div>
           <p className="text-[#5A5A5A]">
-            Test your knowledge with AI-generated quizzes
+            Test your {subjectConfig?.name} knowledge with AI-generated quizzes
           </p>
         </motion.div>
 
         <AnimatePresence mode="wait">
           {view === "list" && (
             <QuizListView 
-              quizzes={quizzes}
-              essays={essays}
+              quizzes={subjectQuizzes}
+              essays={subjectEssays}
               onStartQuiz={handleStartQuiz}
               onDeleteQuiz={deleteQuiz}
               onGenerateQuiz={handleGenerateQuiz}
@@ -114,12 +125,12 @@ function QuizListView({
       exit={{ opacity: 0 }}
       className="space-y-6"
     >
-      {/* Generate from Essays Section */}
+      {/* Generate from Responses Section */}
       {essays.length > 0 && (
         <div className="bg-gradient-to-br from-[#E8D5C4]/20 to-[#F5E6D3]/20 rounded-xl border border-[#E8D5C4] p-5">
           <h3 className="font-semibold text-[#2D2D2D] mb-3 flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-[#E8D5C4]" />
-            Generate from Your Essays
+            Generate from Your Responses
           </h3>
           <div className="space-y-2">
             {essays.slice(0, 3).map((essay) => (
@@ -194,7 +205,7 @@ function QuizListView({
         <div className="text-center py-16 bg-white rounded-xl border border-[#E5E5E0]">
           <Brain className="w-12 h-12 text-[#E8D5C4] mx-auto mb-4" />
           <h3 className="text-h3 text-[#2D2D2D] mb-2">No Quizzes Yet</h3>
-          <p className="text-[#8A8A8A] mb-4">Generate quizzes from your essays to test your knowledge</p>
+          <p className="text-[#8A8A8A] mb-4">Generate quizzes from your responses to test your knowledge</p>
         </div>
       )}
     </motion.div>
@@ -466,4 +477,8 @@ function QuizResultView({ quiz, onBack }: { quiz: Quiz; onBack: () => void }) {
       </button>
     </motion.div>
   );
+}
+
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(" ");
 }
