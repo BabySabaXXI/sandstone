@@ -71,6 +71,9 @@ export function EssayHighlighter({ essay, gradingResult, readOnly = false }: Ess
         vocabulary: "bg-[#E5D4A8]/30 border-b-2 border-[#E5D4A8]",
         style: "bg-[#A8C5D4]/30 border-b-2 border-[#A8C5D4]",
         positive: "bg-[#A8C5A8]/30 border-b-2 border-[#A8C5A8]",
+        knowledge: "bg-[#A8C5A8]/30 border-b-2 border-[#A8C5A8]",
+        analysis: "bg-[#E8D5C4]/30 border-b-2 border-[#E8D5C4]",
+        evaluation: "bg-[#C9D6DF]/30 border-b-2 border-[#C9D6DF]",
       };
 
       parts.push(
@@ -114,7 +117,7 @@ export function EssayHighlighter({ essay, gradingResult, readOnly = false }: Ess
           className="bg-white rounded-xl border border-[#E5E5E0] shadow-card p-6"
           onClick={handleClickOutside}
         >
-          <h3 className="font-semibold text-[#2D2D2D] mb-4">Your Essay</h3>
+          <h3 className="font-semibold text-[#2D2D2D] mb-4">Your Response</h3>
           <div
             ref={containerRef}
             className="prose prose-slate max-w-none text-base leading-relaxed"
