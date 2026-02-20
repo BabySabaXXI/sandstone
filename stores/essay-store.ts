@@ -1,196 +1,252 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { supabase } from "@/lib/supabase/client";
-import { GradingResult, DatabaseEssay, ExaminerScore, Quiz, QuizQuestion, Subject } from "@/types";
-import { toast } from "sonner";
+import { Subject } from "@/types";
 
-interface Essay {
+export interface Essay {
   id: string;
+  userId: string;
   subject: Subject;
   question: string;
   content: string;
+  questionType?: string;
+  marks?: number;
   overallScore?: number;
   grade?: string;
-  feedback?: ExaminerScore[];
+  feedback?: any[];
   annotations?: any[];
   summary?: string;
   improvements?: string[];
+  examinerScores?: any[];
   createdAt: Date;
   updatedAt: Date;
-  synced?: boolean;
 }
 
 interface EssayStore {
   essays: Essay[];
-  loading: boolean;
-  syncing: boolean;
+  isLoading: boolean;
+  error: string | null;
   
+  // Actions
   fetchEssays: () => Promise<void>;
-  saveEssay: (question: string, content: string, result?: GradingResult, subject?: Subject) => Promise<string | null>;
+  createEssay: (
+    question: string,
+    content: string,
+    subject: Subject,
+    questionType?: string,
+    marks?: number,
+    gradingResult?: any
+  ) => Promise<Essay>;
+  updateEssay: (id: string, updates: Partial<Essay>) => Promise<void>;
   deleteEssay: (id: string) => Promise<void>;
-  getEssay: (id: string) => Essay | undefined;
+  getEssayById: (id: string) => Essay | undefined;
   getEssaysBySubject: (subject: Subject) => Essay[];
-  syncWithSupabase: () => Promise<void>;
+  clearError: () => void;
 }
 
 export const useEssayStore = create<EssayStore>()(
   persist(
     (set, get) => ({
       essays: [],
-      loading: false,
-      syncing: false,
+      isLoading: false,
+      error: null,
 
       fetchEssays: async () => {
-        set({ loading: true });
+        set({ isLoading: true, error: null });
         
         try {
           const { data: { user } } = await supabase.auth.getUser();
-          if (user) {
-            const { data, error } = await supabase
-              .from("essays")
-              .select("*")
-              .order("created_at", { ascending: false });
-            
-            if (error) throw error;
-            
-            if (data) {
-              const mappedEssays: Essay[] = data.map((e: DatabaseEssay) => ({
-                id: e.id,
-                subject: (e.subject as Subject) || "economics",
-                question: e.question,
-                content: e.content,
-                overallScore: e.overall_score,
-                grade: e.grade,
-                feedback: e.feedback,
-                annotations: e.annotations,
-                summary: e.summary,
-                improvements: e.improvements,
-                createdAt: new Date(e.created_at),
-                updatedAt: new Date(e.updated_at),
-                synced: true,
-              }));
-              set({ essays: mappedEssays });
-            }
+          
+          if (!user) {
+            set({ isLoading: false, error: "Not authenticated" });
+            return;
           }
+
+          const { data, error } = await supabase
+            .from("essays")
+            .select("*")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false });
+
+          if (error) {
+            console.error("Failed to fetch essays:", error);
+            set({ isLoading: false, error: error.message });
+            return;
+          }
+
+          const essays: Essay[] = (data || []).map((essay) => ({
+            id: essay.id,
+            userId: essay.user_id,
+            subject: essay.subject as Subject,
+            question: essay.question,
+            content: essay.content,
+            questionType: essay.question_type,
+            marks: essay.marks,
+            overallScore: essay.overall_score,
+            grade: essay.grade,
+            feedback: essay.feedback || [],
+            annotations: essay.annotations || [],
+            summary: essay.summary,
+            improvements: essay.improvements || [],
+            examinerScores: essay.examiner_scores || [],
+            createdAt: new Date(essay.created_at),
+            updatedAt: new Date(essay.updated_at),
+          }));
+
+          set({ essays, isLoading: false });
         } catch (error) {
-          console.error("Error fetching essays from Supabase:", error);
-          toast.error("Failed to sync responses from cloud");
-        } finally {
-          set({ loading: false });
+          console.error("Failed to fetch essays:", error);
+          set({ 
+            isLoading: false, 
+            error: error instanceof Error ? error.message : "Failed to fetch essays" 
+          });
         }
       },
 
-      saveEssay: async (question, content, result, subject = "economics") => {
-        const id = crypto.randomUUID();
-        const newEssay: Essay = {
-          id,
+      createEssay: async (
+        question,
+        content,
+        subject,
+        questionType,
+        marks,
+        gradingResult
+      ) => {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          throw new Error("Not authenticated");
+        }
+
+        const now = new Date().toISOString();
+        const newEssay = {
+          user_id: user.id,
           subject,
           question,
           content,
-          overallScore: result?.overallScore,
-          grade: result?.grade,
-          feedback: result?.examiners,
-          annotations: result?.annotations,
-          summary: result?.summary,
-          improvements: result?.improvements,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          synced: false,
+          question_type: questionType,
+          marks,
+          overall_score: gradingResult?.overallScore,
+          grade: gradingResult?.grade,
+          feedback: gradingResult?.examiners || [],
+          annotations: gradingResult?.annotations || [],
+          summary: gradingResult?.summary,
+          improvements: gradingResult?.improvements || [],
+          examiner_scores: gradingResult?.examiners || [],
+          created_at: now,
+          updated_at: now,
         };
 
-        set((state) => ({ essays: [newEssay, ...state.essays] }));
+        const { data, error } = await supabase
+          .from("essays")
+          .insert(newEssay)
+          .select()
+          .single();
 
-        try {
-          const { data: { user } } = await supabase.auth.getUser();
-          if (user) {
-            const { error } = await supabase.from("essays").insert({
-              id: newEssay.id,
-              user_id: user.id,
-              subject: newEssay.subject,
-              question: newEssay.question,
-              content: newEssay.content,
-              overall_score: newEssay.overallScore,
-              grade: newEssay.grade,
-              feedback: newEssay.feedback,
-              annotations: newEssay.annotations,
-              summary: newEssay.summary,
-              improvements: newEssay.improvements,
-            });
-
-            if (error) throw error;
-            
-            set((state) => ({
-              essays: state.essays.map((e) =>
-                e.id === id ? { ...e, synced: true } : e
-              ),
-            }));
-          }
-        } catch (error) {
-          console.error("Error saving essay to Supabase:", error);
-          toast.error("Response saved locally but failed to sync");
+        if (error) {
+          console.error("Failed to create essay:", error);
+          throw new Error(error.message);
         }
 
-        return id;
+        const essay: Essay = {
+          id: data.id,
+          userId: data.user_id,
+          subject: data.subject as Subject,
+          question: data.question,
+          content: data.content,
+          questionType: data.question_type,
+          marks: data.marks,
+          overallScore: data.overall_score,
+          grade: data.grade,
+          feedback: data.feedback || [],
+          annotations: data.annotations || [],
+          summary: data.summary,
+          improvements: data.improvements || [],
+          examinerScores: data.examiner_scores || [],
+          createdAt: new Date(data.created_at),
+          updatedAt: new Date(data.updated_at),
+        };
+
+        set((state) => ({
+          essays: [essay, ...state.essays],
+        }));
+
+        return essay;
+      },
+
+      updateEssay: async (id, updates) => {
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          throw new Error("Not authenticated");
+        }
+
+        const updateData: any = {
+          updated_at: new Date().toISOString(),
+        };
+
+        if (updates.question !== undefined) updateData.question = updates.question;
+        if (updates.content !== undefined) updateData.content = updates.content;
+        if (updates.overallScore !== undefined) updateData.overall_score = updates.overallScore;
+        if (updates.grade !== undefined) updateData.grade = updates.grade;
+        if (updates.feedback !== undefined) updateData.feedback = updates.feedback;
+        if (updates.annotations !== undefined) updateData.annotations = updates.annotations;
+        if (updates.summary !== undefined) updateData.summary = updates.summary;
+        if (updates.improvements !== undefined) updateData.improvements = updates.improvements;
+
+        const { error } = await supabase
+          .from("essays")
+          .update(updateData)
+          .eq("id", id)
+          .eq("user_id", user.id);
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        set((state) => ({
+          essays: state.essays.map((essay) =>
+            essay.id === id
+              ? { ...essay, ...updates, updatedAt: new Date() }
+              : essay
+          ),
+        }));
       },
 
       deleteEssay: async (id) => {
-        set((state) => ({
-          essays: state.essays.filter((e) => e.id !== id),
-        }));
-
-        try {
-          const { error } = await supabase.from("essays").delete().eq("id", id);
-          if (error) throw error;
-          toast.success("Response deleted");
-        } catch (error) {
-          console.error("Error deleting essay from Supabase:", error);
-        }
-      },
-
-      getEssay: (id) => get().essays.find((e) => e.id === id),
-      
-      getEssaysBySubject: (subject) => get().essays.filter((e) => e.subject === subject),
-
-      syncWithSupabase: async () => {
-        const { user } = (await supabase.auth.getUser()).data;
-        if (!user) return;
-
-        set({ syncing: true });
+        const { data: { user } } = await supabase.auth.getUser();
         
-        try {
-          const unsyncedEssays = get().essays.filter((e) => !e.synced);
-          
-          for (const essay of unsyncedEssays) {
-            const { error } = await supabase.from("essays").upsert({
-              id: essay.id,
-              user_id: user.id,
-              subject: essay.subject,
-              question: essay.question,
-              content: essay.content,
-              overall_score: essay.overallScore,
-              grade: essay.grade,
-              feedback: essay.feedback,
-              annotations: essay.annotations,
-              summary: essay.summary,
-              improvements: essay.improvements,
-            });
-
-            if (error) throw error;
-          }
-
-          await get().fetchEssays();
-          
-          toast.success("Synced with cloud");
-        } catch (error) {
-          console.error("Error syncing essays:", error);
-          toast.error("Sync failed");
-        } finally {
-          set({ syncing: false });
+        if (!user) {
+          throw new Error("Not authenticated");
         }
+
+        const { error } = await supabase
+          .from("essays")
+          .delete()
+          .eq("id", id)
+          .eq("user_id", user.id);
+
+        if (error) {
+          throw new Error(error.message);
+        }
+
+        set((state) => ({
+          essays: state.essays.filter((essay) => essay.id !== id),
+        }));
       },
+
+      getEssayById: (id) => {
+        return get().essays.find((essay) => essay.id === id);
+      },
+
+      getEssaysBySubject: (subject) => {
+        return get().essays.filter((essay) => essay.subject === subject);
+      },
+
+      clearError: () => set({ error: null }),
     }),
     {
       name: "essay-store",
+      partialize: (state) => ({ essays: state.essays }),
     }
   )
 );

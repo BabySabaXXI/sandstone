@@ -2,243 +2,387 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThreePanel } from "@/components/layout/ThreePanel";
-import { SubjectSwitcher } from "@/components/layout/SubjectSwitcher";
-import { ExaminerSwarm } from "@/components/grading/ExaminerSwarm";
-import { EssayHighlighter } from "@/components/grading/EssayHighlighter";
-import { GradingResult } from "@/types";
-import { Send, RotateCcw, FileText, Brain, Sparkles, Save, CheckCircle } from "lucide-react";
-import { useEssayStore } from "@/stores/essay-store";
-import { useQuizStore } from "@/stores/quiz-store";
-import { useSubjectStore } from "@/stores/subject-store";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth-provider";
+import { useEssayStore } from "@/stores/essay-store";
+import { useSubjectStore } from "@/stores/subject-store";
+import { ThreePanel } from "@/components/layout/ThreePanel";
+import { 
+  Send, Loader2, Save, BookOpen, ChevronDown, ChevronUp,
+  CheckCircle, AlertCircle, TrendingUp, FileText, X
+} from "lucide-react";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { getSubjectConfig } from "@/lib/subjects/config";
+import Link from "next/link";
 
-const sampleQuestions: Record<string, string> = {
-  economics: "Discuss the likely microeconomic and macroeconomic effects of a significant increase in government spending on infrastructure projects.",
-  geography: "Evaluate the strategies used to manage the impacts of tropical storms in contrasting areas of the world.",
-};
+// Economics units
+const units = [
+  { code: "WEC11", name: "Unit 1: Markets in Action", topics: ["Microeconomics", "Market Failure", "Government Intervention"] },
+  { code: "WEC12", name: "Unit 2: Macroeconomic Performance", topics: ["AD/AS", "Economic Growth", "Policy"] },
+  { code: "WEC13", name: "Unit 3: Business Behaviour", topics: ["Market Structures", "Costs", "Labour Markets"] },
+  { code: "WEC14", name: "Unit 4: Global Economy", topics: ["Globalisation", "Development", "Trade"] },
+];
 
-const sampleResponses: Record<string, string> = {
-  economics: `Government spending on infrastructure projects can have significant effects on both microeconomic and macroeconomic levels.
+// Question types with marks
+const questionTypes = [
+  { type: "4-mark", marks: 4, name: "4 Mark Question", time: 5 },
+  { type: "6-mark", marks: 6, name: "6 Mark Question", time: 8 },
+  { type: "8-mark", marks: 8, name: "8 Mark Question", time: 12 },
+  { type: "14-mark", marks: 14, name: "14 Mark Essay", time: 22 },
+  { type: "20-mark", marks: 20, name: "20 Mark Essay", time: 35 },
+];
 
-On the microeconomic level, infrastructure spending creates jobs in the construction sector. This increases household income and consumer spending. Firms benefit from improved transportation networks, reducing costs and increasing efficiency. However, there may be opportunity costs as resources are diverted from other sectors.
+interface ExaminerScore {
+  examinerId: string;
+  examinerName: string;
+  score: number;
+  maxScore: number;
+  feedback: string;
+  criteria: string[];
+  ao: string;
+}
 
-On the macroeconomic level, increased government spending represents an expansionary fiscal policy. This shifts the AD curve to the right, increasing real GDP and price level. The multiplier effect means the final increase in GDP may be larger than the initial spending. However, this depends on the size of the multiplier, which is affected by leakages.
-
-Evaluation suggests that while infrastructure spending can boost economic growth, its effectiveness depends on the state of the economy and the quality of projects undertaken.`,
-  geography: `Tropical storms have devastating impacts that require effective management strategies. Different regions employ various approaches based on their resources and experiences.
-
-In developed countries like the USA, sophisticated monitoring and early warning systems are in place. Hurricane Katrina showed both successes and failures in these systems. Evacuation plans are well-developed, though not always followed. Infrastructure is built to withstand high winds and flooding.
-
-In developing countries like Bangladesh, community-based early warning systems have been implemented. Cyclone shelters have been constructed. However, limited resources mean less sophisticated technology and infrastructure.
-
-The effectiveness of these strategies varies. Early warning systems save lives but cannot prevent property damage. Long-term strategies like improved building codes are more effective but require significant investment and political will.`,
-};
+interface GradingResult {
+  overallScore: number;
+  grade: string;
+  examiners: ExaminerScore[];
+  summary: string;
+  improvements: string[];
+  questionType: string;
+  unit: string;
+}
 
 export default function GradePage() {
+  const { user } = useAuth();
   const { currentSubject } = useSubjectStore();
-  const subjectConfig = getSubjectConfig(currentSubject);
-  
-  const [question, setQuestion] = useState(sampleQuestions[currentSubject] || sampleQuestions.economics);
-  const [essay, setEssay] = useState(sampleResponses[currentSubject] || sampleResponses.economics);
-  const [isGrading, setIsGrading] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [result, setResult] = useState<GradingResult | null>(null);
-  const [savedEssayId, setSavedEssayId] = useState<string | null>(null);
-  const [quizGenerated, setQuizGenerated] = useState(false);
-  
-  const { saveEssay } = useEssayStore();
-  const { generateQuizFromEssay } = useQuizStore();
+  const { createEssay } = useEssayStore();
   const router = useRouter();
+  
+  const [question, setQuestion] = useState("");
+  const [essay, setEssay] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState("WEC11");
+  const [selectedType, setSelectedType] = useState("14-mark");
+  const [isGrading, setIsGrading] = useState(false);
+  const [result, setResult] = useState<GradingResult | null>(null);
+  const [expandedExaminer, setExpandedExaminer] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleSubmit = () => {
-    if (!essay.trim() || !question.trim()) return;
+  const handleGrade = async () => {
+    if (!question.trim() || !essay.trim()) {
+      toast.error("Please enter both a question and your response");
+      return;
+    }
+
     setIsGrading(true);
     setResult(null);
-    setSavedEssayId(null);
-    setQuizGenerated(false);
-  };
 
-  const handleReset = () => {
-    setIsGrading(false);
-    setResult(null);
-    setSavedEssayId(null);
-    setQuizGenerated(false);
-  };
+    try {
+      const response = await fetch("/api/grade", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          question,
+          essay,
+          subject: currentSubject,
+          unit: selectedUnit,
+          questionType: selectedType,
+        }),
+      });
 
-  const handleGradingComplete = async (gradingResult: GradingResult) => {
-    setResult(gradingResult);
-    setIsGrading(false);
-    
-    // Auto-save the essay with results
-    const id = await saveEssay(question, essay, gradingResult, currentSubject);
-    if (id) {
-      setSavedEssayId(id);
-      toast.success("Response saved to your library");
+      if (!response.ok) {
+        throw new Error("Failed to grade essay");
+      }
+
+      const data = await response.json();
+      setResult(data);
+      toast.success("Grading complete!");
+    } catch (error) {
+      toast.error("Failed to grade. Please try again.");
+      console.error(error);
+    } finally {
+      setIsGrading(false);
     }
   };
 
-  const handleGenerateQuiz = async () => {
-    if (!savedEssayId) return;
-    
-    const quiz = await generateQuizFromEssay(essay, question, currentSubject);
-    if (quiz) {
-      setQuizGenerated(true);
-      toast.success("Quiz generated! Go to Quiz Center to take it.");
+  const handleSave = async () => {
+    if (!result) return;
+
+    setIsSaving(true);
+    try {
+      await createEssay(
+        question,
+        essay,
+        currentSubject,
+        selectedType,
+        parseInt(selectedType.split("-")[0])
+      );
+      toast.success("Response saved to your library!");
+    } catch (error) {
+      toast.error("Failed to save. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
-  const handleGoToQuiz = () => {
-    router.push("/quiz");
+  const getScoreColor = (score: number, maxScore: number) => {
+    const percentage = score / maxScore;
+    if (percentage >= 0.8) return "text-green-600 dark:text-green-400";
+    if (percentage >= 0.6) return "text-amber-600 dark:text-amber-400";
+    return "text-red-600 dark:text-red-400";
+  };
+
+  const getGradeColor = (grade: string) => {
+    if (grade === "A*" || grade === "A") return "text-green-600 dark:text-green-400";
+    if (grade === "B" || grade === "C") return "text-amber-600 dark:text-amber-400";
+    return "text-red-600 dark:text-red-400";
   };
 
   return (
     <ThreePanel>
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#E8D5C4] to-[#F5E6D3] flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-[#2D2D2D]" />
-              </div>
-              <div>
-                <h1 className="text-h1 text-[#2D2D2D]">Response Grading</h1>
-                <p className="text-[#5A5A5A]">
-                  Submit your {subjectConfig?.name} response for AI-powered evaluation
-                </p>
-              </div>
+        <div className="mb-8">
+          <h1 className="text-3xl font-semibold text-foreground mb-2">AI Response Grading</h1>
+          <p className="text-muted-foreground">
+            Get detailed feedback from AI examiners based on Pearson Edexcel IAL mark schemes
+          </p>
+        </div>
+
+        {/* Configuration */}
+        {!result && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Unit</label>
+              <select
+                value={selectedUnit}
+                onChange={(e) => setSelectedUnit(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                {units.map((unit) => (
+                  <option key={unit.code} value={unit.code}>
+                    {unit.name}
+                  </option>
+                ))}
+              </select>
             </div>
-            <SubjectSwitcher />
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Question Type</label>
+              <select
+                value={selectedType}
+                onChange={(e) => setSelectedType(e.target.value)}
+                className="w-full px-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              >
+                {questionTypes.map((qt) => (
+                  <option key={qt.type} value={qt.type}>
+                    {qt.name} ({qt.marks} marks, ~{qt.time} min)
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </motion.div>
+        )}
 
-        <AnimatePresence mode="wait">
-          {!isGrading && !result && (
+        {/* Input Form */}
+        {!result && (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Question</label>
+              <textarea
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Paste your exam question here..."
+                className="w-full h-24 px-4 py-3 border border-border rounded-xl bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">Your Response</label>
+              <textarea
+                value={essay}
+                onChange={(e) => setEssay(e.target.value)}
+                placeholder="Write your response here..."
+                className="w-full h-80 px-4 py-3 border border-border rounded-xl bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring resize-none"
+              />
+              <p className="text-xs text-muted-foreground mt-2">
+                Word count: {essay.split(/\s+/).filter(w => w.length > 0).length}
+              </p>
+            </div>
+
+            <button
+              onClick={handleGrade}
+              disabled={isGrading || !question.trim() || !essay.trim()}
+              className="w-full bg-primary text-primary-foreground py-4 rounded-xl hover:bg-primary/90 transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isGrading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Grading with AI Examiners...
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  Get Feedback
+                </>
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Results */}
+        <AnimatePresence>
+          {result && (
             <motion.div
-              key="input"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
             >
-              {/* Question Input */}
-              <div className="bg-white rounded-xl border border-[#E5E5E0] shadow-card p-5">
-                <label className="block text-sm font-medium text-[#2D2D2D] mb-2">
-                  Question
-                </label>
-                <textarea
-                  value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  className="w-full px-4 py-3 border border-[#E5E5E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] resize-none h-24"
-                  placeholder="Enter the question..."
-                />
-              </div>
-
-              {/* Response Input */}
-              <div className="bg-white rounded-xl border border-[#E5E5E0] shadow-card p-5">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-sm font-medium text-[#2D2D2D]">
-                    Your Response
-                  </label>
-                  <span className="text-xs text-[#8A8A8A]">
-                    {essay.split(/\s+/).filter(Boolean).length} words
-                  </span>
-                </div>
-                <textarea
-                  value={essay}
-                  onChange={(e) => setEssay(e.target.value)}
-                  className="w-full px-4 py-3 border border-[#E5E5E0] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] resize-none h-80 font-mono text-sm"
-                  placeholder="Type your response here..."
-                />
-              </div>
-
-              {/* Submit Button */}
-              <div className="flex justify-end">
+              {/* Actions */}
+              <div className="flex gap-3">
                 <button
-                  onClick={handleSubmit}
-                  disabled={!essay.trim() || !question.trim()}
-                  className="flex items-center gap-2 bg-[#2D2D2D] text-white px-6 py-3 rounded-lg hover:bg-[#1A1A1A] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={handleSave}
+                  disabled={isSaving}
+                  className="flex-1 bg-accent text-accent-foreground py-3 rounded-xl hover:bg-accent/90 transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4" />
-                  Grade Response
+                  {isSaving ? (
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                  ) : (
+                    <Save className="w-5 h-5" />
+                  )}
+                  Save to Library
+                </button>
+                <button
+                  onClick={() => {
+                    setResult(null);
+                    setEssay("");
+                    setQuestion("");
+                  }}
+                  className="flex-1 bg-secondary text-secondary-foreground py-3 rounded-xl hover:bg-secondary/80 transition-all duration-200 font-medium flex items-center justify-center gap-2"
+                >
+                  <FileText className="w-5 h-5" />
+                  Grade Another
                 </button>
               </div>
-            </motion.div>
-          )}
 
-          {(isGrading || result) && (
-            <motion.div
-              key="grading"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="space-y-6"
-            >
-              {/* Action Bar */}
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={handleReset}
-                  className="flex items-center gap-2 text-[#5A5A5A] hover:text-[#2D2D2D] transition-colors"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  Grade Another Response
-                </button>
-                
-                <div className="flex items-center gap-2">
-                  {savedEssayId && !quizGenerated && (
-                    <button
-                      onClick={handleGenerateQuiz}
-                      className="flex items-center gap-2 bg-[#E8D5C4] text-[#2D2D2D] px-4 py-2 rounded-lg hover:bg-[#D4C4B0] transition-colors"
-                    >
-                      <Brain className="w-4 h-4" />
-                      Generate Quiz
-                    </button>
-                  )}
-                  {quizGenerated && (
-                    <button
-                      onClick={handleGoToQuiz}
-                      className="flex items-center gap-2 bg-[#A8C5A8] text-white px-4 py-2 rounded-lg hover:bg-[#8BA88B] transition-colors"
-                    >
-                      <CheckCircle className="w-4 h-4" />
-                      Take Quiz
-                    </button>
-                  )}
-                  {savedEssayId && (
-                    <div className="flex items-center gap-1.5 text-sm text-[#A8C5A8]">
-                      <Save className="w-4 h-4" />
-                      <span>Saved</span>
+              {/* Overall Score */}
+              <div className="bg-card border border-border rounded-2xl p-8 shadow-soft">
+                <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                  <div className="text-center md:text-left">
+                    <h2 className="text-2xl font-semibold text-foreground mb-1">Overall Assessment</h2>
+                    <p className="text-muted-foreground">{selectedUnit} • {selectedType} question</p>
+                  </div>
+                  <div className="flex items-center gap-6">
+                    <div className="text-center">
+                      <div className={cn("text-5xl font-bold", getGradeColor(result.grade))}>
+                        {result.grade}
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-1">Grade</div>
                     </div>
-                  )}
+                    <div className="w-px h-16 bg-border" />
+                    <div className="text-center">
+                      <div className="text-5xl font-bold text-foreground">
+                        {result.overallScore.toFixed(1)}
+                      </div>
+                      <div className="text-sm text-muted-foreground mt-1">/ 10</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Grading Results */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Examiner Swarm */}
-                <div>
-                  <ExaminerSwarm
-                    essay={essay}
-                    question={question}
-                    subject={currentSubject}
-                    onComplete={handleGradingComplete}
-                    onGenerating={setIsGenerating}
-                  />
+              {/* Summary */}
+              {result.summary && (
+                <div className="bg-card border border-border rounded-2xl p-6 shadow-soft">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-accent" />
+                    Examiner Summary
+                  </h3>
+                  <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <p className="text-foreground whitespace-pre-wrap">{result.summary}</p>
+                  </div>
                 </div>
+              )}
 
-                {/* Essay with Highlights */}
-                <div>
-                  {result && (
-                    <EssayHighlighter essay={essay} gradingResult={result} />
-                  )}
-                </div>
+              {/* Individual Examiner Feedback */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold text-foreground">Detailed Feedback by Examiner</h3>
+                {result.examiners.map((examiner) => (
+                  <div
+                    key={examiner.examinerId}
+                    className="bg-card border border-border rounded-xl shadow-soft overflow-hidden"
+                  >
+                    <button
+                      onClick={() => setExpandedExaminer(
+                        expandedExaminer === examiner.examinerId ? null : examiner.examinerId
+                      )}
+                      className="w-full p-4 flex items-center justify-between hover:bg-secondary/50 transition-colors"
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className={cn("text-2xl font-bold", getScoreColor(examiner.score, examiner.maxScore))}>
+                          {examiner.score}/{examiner.maxScore}
+                        </div>
+                        <div className="text-left">
+                          <div className="font-medium text-foreground">{examiner.examinerName}</div>
+                          <div className="text-sm text-muted-foreground">AO: {examiner.ao}</div>
+                        </div>
+                      </div>
+                      {expandedExaminer === examiner.examinerId ? (
+                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                      ) : (
+                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                      )}
+                    </button>
+                    <AnimatePresence>
+                      {expandedExaminer === examiner.examinerId && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="border-t border-border"
+                        >
+                          <div className="p-4 space-y-4">
+                            <div>
+                              <h4 className="font-medium text-foreground mb-2">Feedback</h4>
+                              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                                {examiner.feedback}
+                              </p>
+                            </div>
+                            {examiner.criteria.length > 0 && (
+                              <div>
+                                <h4 className="font-medium text-foreground mb-2">Strengths</h4>
+                                <ul className="space-y-1">
+                                  {examiner.criteria.map((criterion, i) => (
+                                    <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
+                                      {criterion}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
               </div>
+
+              {/* Improvements */}
+              {result.improvements.length > 0 && (
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-amber-600" />
+                    Areas for Improvement
+                  </h3>
+                  <ul className="space-y-3">
+                    {result.improvements.map((improvement, i) => (
+                      <li key={i} className="text-sm text-foreground flex items-start gap-2">
+                        <AlertCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                        {improvement}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

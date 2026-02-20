@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Mail, Lock, User, Eye, EyeOff, GraduationCap, Sparkles,
-  Phone, Github, Chrome, ArrowRight, ChevronLeft
+  Phone, Github, Chrome, ArrowRight, ChevronLeft, TestTube
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type AuthMode = "email" | "phone" | "verify";
 
@@ -93,8 +94,19 @@ export default function LoginPage() {
     }
   };
 
+  const fillDemoAccount = (type: "admin" | "test") => {
+    if (type === "admin") {
+      setEmail("admin@sandstone.app");
+      setPassword("admin123");
+    } else {
+      setEmail("test@example.com");
+      setPassword("test123");
+    }
+    setError("");
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F5F5F0] dark:bg-[#1A1A1A] p-4 transition-colors">
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <div className="w-full max-w-md">
         {/* Logo */}
         <motion.div 
@@ -102,11 +114,11 @@ export default function LoginPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <div className="w-16 h-16 bg-gradient-to-br from-[#E8D5C4] to-[#F5E6D3] dark:from-[#3D3530] dark:to-[#2A2520] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-            <GraduationCap className="w-8 h-8 text-[#2D2D2D] dark:text-[#E8D5C4]" />
+          <div className="w-16 h-16 bg-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-soft">
+            <GraduationCap className="w-8 h-8 text-accent-foreground" />
           </div>
-          <h1 className="text-2xl font-bold text-[#2D2D2D] dark:text-white">Sandstone</h1>
-          <p className="text-[#8A8A8A] dark:text-[#A0A0A0] text-sm">AI-Powered Learning Platform</p>
+          <h1 className="text-2xl font-bold text-foreground">Sandstone</h1>
+          <p className="text-muted-foreground text-sm">AI-Powered Learning Platform</p>
         </motion.div>
 
         {/* Auth Card */}
@@ -114,7 +126,7 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white dark:bg-[#2D2D2D] rounded-2xl border border-[#E5E5E0] dark:border-[#3D3D3D] shadow-card-hover p-8"
+          className="bg-card border border-border rounded-2xl shadow-soft p-8"
         >
           <AnimatePresence mode="wait">
             {mode === "email" && (
@@ -125,10 +137,10 @@ export default function LoginPage() {
                 exit={{ opacity: 0, x: -20 }}
               >
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-[#2D2D2D] dark:text-white mb-1">
+                  <h2 className="text-xl font-semibold text-foreground mb-1">
                     {isSignUp ? "Create Account" : "Welcome Back"}
                   </h2>
-                  <p className="text-sm text-[#8A8A8A] dark:text-[#A0A0A0]">
+                  <p className="text-sm text-muted-foreground">
                     {isSignUp ? "Start your learning journey" : "Sign in to continue learning"}
                   </p>
                 </div>
@@ -137,7 +149,7 @@ export default function LoginPage() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#D4A8A8]/20 border border-[#D4A8A8] text-[#8B5A5A] px-4 py-3 rounded-xl mb-4 text-sm"
+                    className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-xl mb-4 text-sm"
                   >
                     {error}
                   </motion.div>
@@ -148,27 +160,27 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => handleSocialLogin("google")}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 border border-[#E5E5E0] dark:border-[#3D3D3D] rounded-xl hover:bg-[#F5F5F0] dark:hover:bg-[#3D3D3D] transition-colors"
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded-xl hover:bg-secondary transition-colors"
                   >
                     <Chrome className="w-5 h-5 text-[#EA4335]" />
-                    <span className="text-sm text-[#2D2D2D] dark:text-white">Google</span>
+                    <span className="text-sm text-foreground">Google</span>
                   </button>
                   <button
                     type="button"
                     onClick={() => handleSocialLogin("github")}
-                    className="flex items-center justify-center gap-2 px-4 py-2.5 border border-[#E5E5E0] dark:border-[#3D3D3D] rounded-xl hover:bg-[#F5F5F0] dark:hover:bg-[#3D3D3D] transition-colors"
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded-xl hover:bg-secondary transition-colors"
                   >
-                    <Github className="w-5 h-5 text-[#2D2D2D] dark:text-white" />
-                    <span className="text-sm text-[#2D2D2D] dark:text-white">GitHub</span>
+                    <Github className="w-5 h-5 text-foreground" />
+                    <span className="text-sm text-foreground">GitHub</span>
                   </button>
                 </div>
 
                 <div className="relative mb-6">
                   <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-[#E5E5E0] dark:border-[#3D3D3D]"></div>
+                    <div className="w-full border-t border-border"></div>
                   </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2 bg-white dark:bg-[#2D2D2D] text-[#8A8A8A]">Or continue with</span>
+                    <span className="px-2 bg-card text-muted-foreground">Or continue with</span>
                   </div>
                 </div>
 
@@ -180,16 +192,16 @@ export default function LoginPage() {
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
                       >
-                        <label className="block text-sm font-medium text-[#2D2D2D] dark:text-white mb-1.5">
+                        <label className="block text-sm font-medium text-foreground mb-1.5">
                           Full Name
                         </label>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                           <input
                             type="text"
                             value={fullName}
                             onChange={(e) => setFullName(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 border border-[#E5E5E0] dark:border-[#3D3D3D] dark:bg-[#1A1A1A] dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:border-transparent transition-all bg-[#FAFAF8] dark:bg-[#252525]"
+                            className="w-full pl-10 pr-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                             placeholder="Enter your name"
                           />
                         </div>
@@ -198,16 +210,16 @@ export default function LoginPage() {
                   </AnimatePresence>
 
                   <div>
-                    <label className="block text-sm font-medium text-[#2D2D2D] dark:text-white mb-1.5">
+                    <label className="block text-sm font-medium text-foreground mb-1.5">
                       Email Address
                     </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <input
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-[#E5E5E0] dark:border-[#3D3D3D] dark:bg-[#1A1A1A] dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:border-transparent transition-all bg-[#FAFAF8] dark:bg-[#252525]"
+                        className="w-full pl-10 pr-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                         placeholder="you@example.com"
                         required
                       />
@@ -215,16 +227,16 @@ export default function LoginPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-[#2D2D2D] dark:text-white mb-1.5">
+                    <label className="block text-sm font-medium text-foreground mb-1.5">
                       Password
                     </label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
+                      <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <input
                         type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full pl-10 pr-12 py-3 border border-[#E5E5E0] dark:border-[#3D3D3D] dark:bg-[#1A1A1A] dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:border-transparent transition-all bg-[#FAFAF8] dark:bg-[#252525]"
+                        className="w-full pl-10 pr-12 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                         placeholder="••••••••"
                         required
                         minLength={6}
@@ -232,7 +244,7 @@ export default function LoginPage() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8A8A8A] hover:text-[#5A5A5A] transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                       >
                         {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                       </button>
@@ -242,7 +254,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-[#2D2D2D] dark:bg-[#E8D5C4] text-white dark:text-[#2D2D2D] py-3 rounded-xl hover:bg-[#1A1A1A] dark:hover:bg-[#D4C4B0] transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-primary text-primary-foreground py-3 rounded-xl hover:bg-primary/90 transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? (
                       <motion.div
@@ -262,14 +274,39 @@ export default function LoginPage() {
                 {/* Phone Login Option */}
                 <button
                   onClick={() => setMode("phone")}
-                  className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2.5 border border-[#E5E5E0] dark:border-[#3D3D3D] rounded-xl hover:bg-[#F5F5F0] dark:hover:bg-[#3D3D3D] transition-colors"
+                  className="w-full mt-4 flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded-xl hover:bg-secondary transition-colors"
                 >
-                  <Phone className="w-4 h-4 text-[#8A8A8A]" />
-                  <span className="text-sm text-[#5A5A5A] dark:text-[#A0A0A0]">Continue with Phone</span>
+                  <Phone className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">Continue with Phone</span>
                 </button>
 
+                {/* Demo Accounts */}
+                {!isSignUp && (
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <p className="text-xs text-muted-foreground text-center mb-3">Demo Accounts</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      <button
+                        type="button"
+                        onClick={() => fillDemoAccount("test")}
+                        className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs bg-secondary hover:bg-secondary/80 rounded-lg transition-colors"
+                      >
+                        <TestTube className="w-3.5 h-3.5" />
+                        Test Account
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => fillDemoAccount("admin")}
+                        className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs bg-accent/30 hover:bg-accent/40 rounded-lg transition-colors"
+                      >
+                        <User className="w-3.5 h-3.5" />
+                        Admin Account
+                      </button>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-6 text-center">
-                  <p className="text-sm text-[#8A8A8A] dark:text-[#A0A0A0]">
+                  <p className="text-sm text-muted-foreground">
                     {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
                     <button
                       type="button"
@@ -277,7 +314,7 @@ export default function LoginPage() {
                         setIsSignUp(!isSignUp);
                         setError("");
                       }}
-                      className="text-[#2D2D2D] dark:text-[#E8D5C4] font-medium hover:underline"
+                      className="text-foreground font-medium hover:underline"
                     >
                       {isSignUp ? "Sign In" : "Sign Up"}
                     </button>
@@ -295,17 +332,17 @@ export default function LoginPage() {
               >
                 <button
                   onClick={() => setMode("email")}
-                  className="flex items-center gap-2 text-[#8A8A8A] hover:text-[#2D2D2D] dark:hover:text-white mb-6"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Back
                 </button>
 
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-[#2D2D2D] dark:text-white mb-1">
+                  <h2 className="text-xl font-semibold text-foreground mb-1">
                     Phone Login
                   </h2>
-                  <p className="text-sm text-[#8A8A8A] dark:text-[#A0A0A0]">
+                  <p className="text-sm text-muted-foreground">
                     Enter your phone number to receive a code
                   </p>
                 </div>
@@ -314,7 +351,7 @@ export default function LoginPage() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#D4A8A8]/20 border border-[#D4A8A8] text-[#8B5A5A] px-4 py-3 rounded-xl mb-4 text-sm"
+                    className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-xl mb-4 text-sm"
                   >
                     {error}
                   </motion.div>
@@ -322,21 +359,21 @@ export default function LoginPage() {
 
                 <form onSubmit={handlePhoneSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#2D2D2D] dark:text-white mb-1.5">
+                    <label className="block text-sm font-medium text-foreground mb-1.5">
                       Phone Number
                     </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#8A8A8A]" />
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                       <input
                         type="tel"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full pl-10 pr-4 py-3 border border-[#E5E5E0] dark:border-[#3D3D3D] dark:bg-[#1A1A1A] dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:border-transparent transition-all bg-[#FAFAF8] dark:bg-[#252525]"
+                        className="w-full pl-10 pr-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all"
                         placeholder="+1 (555) 000-0000"
                         required
                       />
                     </div>
-                    <p className="text-xs text-[#8A8A8A] mt-1.5">
+                    <p className="text-xs text-muted-foreground mt-1.5">
                       Include country code (e.g., +1 for US)
                     </p>
                   </div>
@@ -344,7 +381,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-[#2D2D2D] dark:bg-[#E8D5C4] text-white dark:text-[#2D2D2D] py-3 rounded-xl hover:bg-[#1A1A1A] dark:hover:bg-[#D4C4B0] transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full bg-primary text-primary-foreground py-3 rounded-xl hover:bg-primary/90 transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <motion.div
@@ -372,17 +409,17 @@ export default function LoginPage() {
               >
                 <button
                   onClick={() => setMode("phone")}
-                  className="flex items-center gap-2 text-[#8A8A8A] hover:text-[#2D2D2D] dark:hover:text-white mb-6"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6"
                 >
                   <ChevronLeft className="w-4 h-4" />
                   Back
                 </button>
 
                 <div className="text-center mb-6">
-                  <h2 className="text-xl font-semibold text-[#2D2D2D] dark:text-white mb-1">
+                  <h2 className="text-xl font-semibold text-foreground mb-1">
                     Verify Code
                   </h2>
-                  <p className="text-sm text-[#8A8A8A] dark:text-[#A0A0A0]">
+                  <p className="text-sm text-muted-foreground">
                     Enter the 6-digit code sent to {phone}
                   </p>
                 </div>
@@ -391,7 +428,7 @@ export default function LoginPage() {
                   <motion.div
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="bg-[#D4A8A8]/20 border border-[#D4A8A8] text-[#8B5A5A] px-4 py-3 rounded-xl mb-4 text-sm"
+                    className="bg-destructive/10 border border-destructive/20 text-destructive px-4 py-3 rounded-xl mb-4 text-sm"
                   >
                     {error}
                   </motion.div>
@@ -399,14 +436,14 @@ export default function LoginPage() {
 
                 <form onSubmit={handleVerifyOtp} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-[#2D2D2D] dark:text-white mb-1.5">
+                    <label className="block text-sm font-medium text-foreground mb-1.5">
                       Verification Code
                     </label>
                     <input
                       type="text"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
-                      className="w-full px-4 py-3 border border-[#E5E5E0] dark:border-[#3D3D3D] dark:bg-[#1A1A1A] dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:border-transparent transition-all bg-[#FAFAF8] dark:bg-[#252525] text-center text-2xl tracking-widest"
+                      className="w-full px-4 py-3 border border-border rounded-xl bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all text-center text-2xl tracking-widest"
                       placeholder="000000"
                       maxLength={6}
                       required
@@ -416,7 +453,7 @@ export default function LoginPage() {
                   <button
                     type="submit"
                     disabled={isLoading || otp.length !== 6}
-                    className="w-full bg-[#2D2D2D] dark:bg-[#E8D5C4] text-white dark:text-[#2D2D2D] py-3 rounded-xl hover:bg-[#1A1A1A] dark:hover:bg-[#D4C4B0] transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50"
+                    className="w-full bg-primary text-primary-foreground py-3 rounded-xl hover:bg-primary/90 transition-all duration-200 font-medium flex items-center justify-center gap-2 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <motion.div
@@ -439,7 +476,7 @@ export default function LoginPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="text-center text-xs text-[#8A8A8A] dark:text-[#A0A0A0] mt-6"
+          className="text-center text-xs text-muted-foreground mt-6"
         >
           By continuing, you agree to our Terms of Service and Privacy Policy
         </motion.p>

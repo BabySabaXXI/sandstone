@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "./theme-provider";
-import { Sun, Moon, Monitor } from "lucide-react";
+import { Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ThemeToggleProps {
@@ -10,74 +9,55 @@ interface ThemeToggleProps {
 }
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [mounted, setMounted] = useState(false);
-  
-  // Avoid hydration mismatch by only rendering after mount
+
   useEffect(() => {
     setMounted(true);
+    // Check current theme
+    const isDark = document.documentElement.classList.contains("dark");
+    setTheme(isDark ? "dark" : "light");
   }, []);
 
-  // Return placeholder during SSR to avoid hydration mismatch
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    const root = document.documentElement;
+    
+    root.classList.remove("light", "dark");
+    root.classList.add(newTheme);
+    
+    localStorage.setItem("sandstone-theme", newTheme);
+    setTheme(newTheme);
+  };
+
   if (!mounted) {
     return (
-      <div className={cn("flex items-center gap-1 bg-[#F5F5F0] rounded-lg p-1", className)}>
-        <div className="p-2 rounded-md">
-          <Sun className="w-4 h-4 text-[#8A8A8A]" />
-        </div>
-        <div className="p-2 rounded-md">
-          <Moon className="w-4 h-4 text-[#8A8A8A]" />
-        </div>
-        <div className="p-2 rounded-md">
-          <Monitor className="w-4 h-4 text-[#8A8A8A]" />
-        </div>
-      </div>
+      <button className={cn(
+        "w-9 h-9 rounded-lg flex items-center justify-center transition-colors",
+        "bg-secondary border border-border",
+        className
+      )}>
+        <Sun className="w-4 h-4 text-muted-foreground" />
+      </button>
     );
   }
 
-  return <ThemeToggleInner className={className} />;
-}
-
-function ThemeToggleInner({ className }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme();
-
   return (
-    <div className={cn("flex items-center gap-1 bg-[#F5F5F0] dark:bg-[#252525] rounded-lg p-1", className)}>
-      <button
-        onClick={() => setTheme("light")}
-        className={cn(
-          "p-2 rounded-md transition-all",
-          theme === "light"
-            ? "bg-white dark:bg-[#3D3D3D] shadow-sm text-[#E8D5C4]"
-            : "text-[#8A8A8A] hover:text-[#2D2D2D] dark:hover:text-white"
-        )}
-        title="Light mode"
-      >
-        <Sun className="w-4 h-4" />
-      </button>
-      <button
-        onClick={() => setTheme("dark")}
-        className={cn(
-          "p-2 rounded-md transition-all",
-          theme === "dark"
-            ? "bg-[#3D3D3D] shadow-sm text-[#E8D5C4]"
-            : "text-[#8A8A8A] hover:text-[#2D2D2D] dark:hover:text-white"
-        )}
-        title="Dark mode"
-      >
-        <Moon className="w-4 h-4" />
-      </button>
-      <button
-        onClick={() => setTheme("system")}
-        className={cn(
-          "p-2 rounded-md transition-all",
-          theme === "system"
-            ? "bg-white dark:bg-[#3D3D3D] shadow-sm text-[#E8D5C4]"
-            : "text-[#8A8A8A] hover:text-[#2D2D2D] dark:hover:text-white"
-        )}
-        title="System preference"
-      >
-        <Monitor className="w-4 h-4" />
-      </button>
-    </div>
+    <button
+      onClick={toggleTheme}
+      className={cn(
+        "w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200",
+        "bg-secondary hover:bg-muted border border-border",
+        "focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
+        className
+      )}
+      aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+    >
+      {theme === "light" ? (
+        <Moon className="w-4 h-4 text-foreground transition-transform duration-200" />
+      ) : (
+        <Sun className="w-4 h-4 text-foreground transition-transform duration-200" />
+      )}
+    </button>
   );
 }

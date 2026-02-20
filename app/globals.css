@@ -4,42 +4,8 @@
 
 @layer base {
   :root {
-    /* PRIMARY PALETTE - Muted Professional (Light) */
-    --background: 45 14% 95%;           /* #F5F5F0 - White cement grey */
-    --background-dark: 0 0% 10%;        /* #1A1A1A - Dark mode */
-    --surface: 0 0% 100%;               /* #FFFFFF - Pure white */
-    --surface-elevated: 40 14% 98%;     /* #FAFAF8 */
-    --surface-hover: 45 14% 93%;        /* #F0F0EC */
-
-    /* ACCENT COLORS - Soft Muted */
-    --accent-primary: 30 35% 84%;       /* #E8D5C4 - Sand dune */
-    --accent-secondary: 30 50% 90%;     /* #F5E6D3 - Light peach */
-    --accent-tertiary: 30 20% 76%;      /* #D4C4B0 - Warm grey */
-    --accent-warm: 32 45% 78%;          /* #E5C9A8 - Soft peach */
-    --accent-cool: 200 25% 82%;         /* #C9D6DF - Soft blue-grey */
-
-    /* TEXT COLORS */
-    --text-primary: 0 0% 18%;           /* #2D2D2D - Near black */
-    --text-secondary: 0 0% 35%;         /* #5A5A5A - Medium grey */
-    --text-muted: 0 0% 54%;             /* #8A8A8A - Light grey */
-    --text-inverse: 0 0% 100%;          /* #FFFFFF - White */
-
-    /* BORDER COLORS */
-    --border: 45 14% 91%;               /* #E5E5E0 - Subtle */
-    --border-strong: 45 14% 85%;        /* #D5D5D0 - Stronger */
-    --border-accent: 30 35% 84%;        /* #E8D5C4 - Accent */
-
-    /* STATUS COLORS - MUTED */
-    --success: 120 20% 72%;             /* #A8C5A8 - Soft sage */
-    --warning: 45 35% 78%;              /* #E5D4A8 - Soft amber */
-    --error: 0 25% 75%;                 /* #D4A8A8 - Soft rose */
-    --info: 200 30% 75%;                /* #A8C5D4 - Soft blue */
-
-    /* AI PANEL - Dark Muted */
-    --ai-panel-bg: rgba(30, 30, 30, 0.95);
-    --ai-panel-border: rgba(255, 255, 255, 0.08);
-
-    /* SHADCN THEME VARIABLES */
+    /* SHADCN THEME VARIABLES - Light */
+    --background: 45 14% 95%;
     --foreground: 0 0% 18%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 18%;
@@ -47,66 +13,91 @@
     --popover-foreground: 0 0% 18%;
     --primary: 0 0% 18%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 45 14% 95%;
+    --secondary: 45 14% 93%;
     --secondary-foreground: 0 0% 18%;
     --muted: 45 14% 93%;
     --muted-foreground: 0 0% 54%;
+    --accent: 30 35% 84%;
+    --accent-foreground: 0 0% 18%;
     --destructive: 0 25% 75%;
     --destructive-foreground: 0 0% 18%;
+    --border: 45 14% 91%;
     --input: 45 14% 91%;
     --ring: 30 35% 84%;
     --radius: 0.75rem;
+    
+    /* Custom app colors */
+    --sand-50: 45 14% 98%;
+    --sand-100: 45 14% 95%;
+    --sand-200: 45 14% 91%;
+    --sand-300: 45 14% 85%;
+    --sand-400: 45 14% 70%;
+    --sand-500: 45 10% 50%;
+    --sand-600: 45 10% 40%;
+    --sand-700: 45 10% 30%;
+    --sand-800: 45 10% 20%;
+    --sand-900: 45 10% 10%;
+    
+    --peach-100: 30 35% 92%;
+    --peach-200: 30 35% 84%;
+    --peach-300: 30 30% 76%;
+    --peach-400: 30 30% 68%;
+    
+    --sage-100: 120 20% 92%;
+    --sage-200: 120 20% 72%;
+    --sage-300: 120 20% 52%;
+    
+    --blue-100: 200 30% 92%;
+    --blue-200: 200 30% 75%;
+    --blue-300: 200 30% 55%;
   }
 
   .dark {
-    /* DARK MODE PALETTE */
-    --background: 0 0% 10%;             /* #1A1A1A - Dark background */
-    --surface: 0 0% 18%;                /* #2D2D2D - Card surface */
-    --surface-elevated: 0 0% 15%;       /* #262626 - Elevated surface */
-    --surface-hover: 0 0% 22%;          /* #383838 - Hover state */
-
-    /* ACCENT COLORS - Inverted for dark */
-    --accent-primary: 30 35% 75%;       /* #D4C4B0 - Brighter sand */
-    --accent-secondary: 30 30% 65%;     /* #B8A894 - Darker peach */
-    --accent-tertiary: 30 20% 55%;      /* #A09080 - Muted grey */
-
-    /* TEXT COLORS - Inverted */
-    --text-primary: 0 0% 95%;           /* #F2F2F2 - Near white */
-    --text-secondary: 0 0% 75%;         /* #BFBFBF - Light grey */
-    --text-muted: 0 0% 55%;             /* #8C8C8C - Muted grey */
-    --text-inverse: 0 0% 18%;           /* #2D2D2D - Dark */
-
-    /* BORDER COLORS - Darker */
-    --border: 0 0% 24%;                 /* #3D3D3D */
-    --border-strong: 0 0% 30%;          /* #4D4D4D */
-    --border-accent: 30 35% 75%;        /* #D4C4B0 */
-
-    /* STATUS COLORS - Darker */
-    --success: 120 20% 50%;             /* #6B8B6B */
-    --warning: 45 35% 50%;              /* #8B7B5B */
-    --error: 0 25% 50%;                 /* #8B5B5B */
-    --info: 200 30% 50%;                /* #5B7B8B */
-
-    /* AI PANEL - Dark */
-    --ai-panel-bg: rgba(20, 20, 20, 0.98);
-    --ai-panel-border: rgba(255, 255, 255, 0.1);
-
     /* SHADCN THEME VARIABLES - Dark */
+    --background: 0 0% 8%;
     --foreground: 0 0% 95%;
-    --card: 0 0% 18%;
+    --card: 0 0% 12%;
     --card-foreground: 0 0% 95%;
-    --popover: 0 0% 15%;
+    --popover: 0 0% 10%;
     --popover-foreground: 0 0% 95%;
     --primary: 30 35% 75%;
-    --primary-foreground: 0 0% 10%;
-    --secondary: 0 0% 22%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 22%;
+    --muted: 0 0% 18%;
     --muted-foreground: 0 0% 55%;
+    --accent: 30 35% 75%;
+    --accent-foreground: 0 0% 8%;
     --destructive: 0 25% 50%;
     --destructive-foreground: 0 0% 95%;
-    --input: 0 0% 24%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 30 35% 75%;
+    
+    /* Custom app colors - Dark */
+    --sand-50: 0 0% 12%;
+    --sand-100: 0 0% 10%;
+    --sand-200: 0 0% 16%;
+    --sand-300: 0 0% 22%;
+    --sand-400: 0 0% 35%;
+    --sand-500: 0 0% 50%;
+    --sand-600: 0 0% 65%;
+    --sand-700: 0 0% 75%;
+    --sand-800: 0 0% 85%;
+    --sand-900: 0 0% 95%;
+    
+    --peach-100: 30 25% 25%;
+    --peach-200: 30 30% 65%;
+    --peach-300: 30 35% 75%;
+    --peach-400: 30 40% 85%;
+    
+    --sage-100: 120 15% 18%;
+    --sage-200: 120 20% 50%;
+    --sage-300: 120 25% 65%;
+    
+    --blue-100: 200 20% 18%;
+    --blue-200: 200 25% 55%;
+    --blue-300: 200 30% 70%;
   }
 }
 
@@ -114,32 +105,133 @@
   * {
     @apply border-border;
   }
+  
+  html {
+    @apply antialiased;
+  }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-200;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 
-/* Custom utility classes */
+/* Softer shadow utilities - Manus/Claude inspired */
 @layer utilities {
-  .gradient-primary {
-    background: linear-gradient(135deg, #E8D5C4 0%, #F5E6D3 100%);
+  .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
   }
-  .gradient-secondary {
-    background: linear-gradient(135deg, #E5C9A8 0%, #C9D6DF 100%);
+  
+  .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
   }
-  .gradient-success {
-    background: linear-gradient(135deg, #A8C5A8 0%, #B8D4B8 100%);
+  
+  .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
   }
-  .gradient-dark {
-    background: linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  
+  .shadow-soft-xl {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
   }
-  .gradient-card {
-    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF8 100%);
+  
+  /* Dark mode shadows */
+  .dark .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
   }
-  .ai-panel {
-    background: rgba(30, 30, 30, 0.95);
-    backdrop-filter: blur(16px);
-    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  
+  .dark .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  }
+  
+  .dark .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  }
+  
+  /* Card backgrounds */
+  .bg-card-soft {
+    @apply bg-white dark:bg-[#141414];
+  }
+  
+  .bg-elevated {
+    @apply bg-[#FAFAF8] dark:bg-[#1A1A1A];
+  }
+  
+  /* Border utilities */
+  .border-subtle {
+    @apply border-[#E8E8E3] dark:border-[#2A2A2A];
+  }
+  
+  /* Text utilities */
+  .text-primary-soft {
+    @apply text-[#1A1A1A] dark:text-[#E8E8E3];
+  }
+  
+  .text-secondary-soft {
+    @apply text-[#4A4A4A] dark:text-[#A0A0A0];
+  }
+  
+  .text-muted-soft {
+    @apply text-[#6A6A6A] dark:text-[#707070];
+  }
+  
+  /* Accent backgrounds */
+  .bg-accent-soft {
+    @apply bg-[#F5EFE9] dark:bg-[#2A2520];
+  }
+  
+  /* Scrollbar styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0 0 0 / 0.2) transparent;
+  }
+  
+  .dark .scrollbar-thin {
+    scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(0 0 0 / 0.2);
+    border-radius: 3px;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Focus styles */
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:ring-offset-2 dark:focus:ring-offset-[#1A1A1A];
   }
 }
