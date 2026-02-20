@@ -12,6 +12,7 @@ import {
   Brain, Plus, Trash2, Play, ChevronRight, CheckCircle, 
   XCircle, Clock, Trophy, ArrowLeft, Sparkles, FileText
 } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 import { getSubjectConfig } from "@/lib/subjects/config";
 
@@ -479,6 +480,3 @@ function QuizResultView({ quiz, onBack }: { quiz: Quiz; onBack: () => void }) {
   );
 }
 
-function cn(...classes: (string | boolean | undefined)[]) {
-  return classes.filter(Boolean).join(" ");
-}
