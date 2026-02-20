@@ -1,5 +1,3 @@
-import { ExaminerConfig } from "./types";
-
 export interface ExaminerConfig {
   id: string;
   name: string;
