@@ -66,13 +66,42 @@ export function Block({ block, onUpdate, onDelete, onAddBlock, isFocused, onFocu
     return <hr className={getBlockStyles("divider")} />;
   }
 
-  const Tag = block.type.startsWith("heading")
-    ? (block.type as keyof JSX.IntrinsicElements)
-    : "div";
+  const getHeadingLevel = (type: string): number => {
+    if (type === "heading1") return 1;
+    if (type === "heading2") return 2;
+    if (type === "heading3") return 3;
+    return 0;
+  };
+
+  const headingLevel = getHeadingLevel(block.type);
+
+  if (headingLevel > 0) {
+    const HeadingTag = `h${headingLevel}` as keyof JSX.IntrinsicElements;
+    return (
+      <div ref={blockRef} className="relative group">
+        <HeadingTag
+          ref={contentRef as any}
+          contentEditable
+          suppressContentEditableWarning
+          onInput={handleInput}
+          onKeyDown={handleKeyDown}
+          onFocus={onFocus}
+          className={`${getBlockStyles(block.type)} outline-none empty:before:content-[attr(data-placeholder)] empty:before:text-[#8A8A8A] empty:before:cursor-text`}
+          data-placeholder={getPlaceholder(block.type)}
+        />
+        <SlashCommand
+          isOpen={showSlashCommand}
+          onClose={() => setShowSlashCommand(false)}
+          onSelect={handleSlashSelect}
+          position={slashPosition}
+        />
+      </div>
+    );
+  }
 
   return (
     <div ref={blockRef} className="relative group">
-      <Tag
+      <div
         ref={contentRef}
         contentEditable
         suppressContentEditableWarning
