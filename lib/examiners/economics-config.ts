@@ -1,165 +1,45 @@
 /**
  * Pearson Edexcel IAL Economics Examiner Configuration
- * Based on official training data and mark schemes
- * 
- * Qualification: YEC11 (IAL) / XEC11 (IAS)
- * Units: WEC11, WEC12, WEC13, WEC14
- * Assessment Objectives: AO1, AO2, AO3, AO4
+ * Integrates with Economics Intelligence Engine
  */
 
 import { Subject } from "@/types";
+import {
+  caseStudies,
+  examTechniques,
+  constructGradingPrompt,
+  diagramRequirements,
+  evaluationFrameworks
+} from "./economics-intelligence";
 
-// Question types for Edexcel IAL Economics
-export type QuestionType = 
-  | "4-mark"      // Knowledge/Understanding
-  | "6-mark"      // Knowledge + Application
-  | "8-mark"      // Analysis
-  | "10-mark"     // Analysis + Evaluation (AS Level)
-  | "12-mark"     // Extended Analysis
-  | "14-mark"     // Essay with evaluation (Unit 1 & 2)
-  | "16-mark"     // Extended essay (Unit 3 & 4)
-  | "20-mark";    // Full essay with context (Unit 3 & 4)
+export type QuestionType =
+  | "4-mark"
+  | "6-mark"
+  | "8-mark"
+  | "10-mark"
+  | "12-mark"
+  | "14-mark"
+  | "16-mark"
+  | "20-mark";
 
-// Unit codes
 export type UnitCode = "WEC11" | "WEC12" | "WEC13" | "WEC14";
 
-// Assessment Objectives
-export interface AssessmentObjective {
-  code: "AO1" | "AO2" | "AO3" | "AO4";
-  name: string;
-  description: string;
-  weight: number;
-}
-
-export const assessmentObjectives: AssessmentObjective[] = [
-  {
-    code: "AO1",
-    name: "Knowledge & Understanding",
-    description: "Demonstrate knowledge and understanding of economic concepts",
-    weight: 0.25,
-  },
-  {
-    code: "AO2",
-    name: "Application",
-    description: "Apply economic knowledge to real-world situations",
-    weight: 0.25,
-  },
-  {
-    code: "AO3",
-    name: "Analysis",
-    description: "Analyze economic issues using appropriate tools and frameworks",
-    weight: 0.25,
-  },
-  {
-    code: "AO4",
-    name: "Evaluation",
-    description: "Evaluate economic arguments and policy options",
-    weight: 0.25,
-  },
-];
-
-// Question type configurations
-export interface QuestionTypeConfig {
-  type: QuestionType;
-  marks: number;
-  timeMinutes: number;
-  unitAvailability: UnitCode[];
-  requiredAOs: ("AO1" | "AO2" | "AO3" | "AO4")[];
-  structure: string;
-  examinerAdvice: string;
-}
-
-export const questionTypes: QuestionTypeConfig[] = [
-  {
-    type: "4-mark",
-    marks: 4,
-    timeMinutes: 5,
-    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2"],
-    structure: "2 knowledge points + 2 application points",
-    examinerAdvice: "Define key terms clearly. Apply to the context given in the question.",
-  },
-  {
-    type: "6-mark",
-    marks: 6,
-    timeMinutes: 8,
-    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2"],
-    structure: "Knowledge + Application with development",
-    examinerAdvice: "Provide 2-3 developed points with clear context application.",
-  },
-  {
-    type: "8-mark",
-    marks: 8,
-    timeMinutes: 12,
-    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2", "AO3"],
-    structure: "Knowledge + Application + Analysis",
-    examinerAdvice: "Include chains of reasoning. Use diagrams where appropriate.",
-  },
-  {
-    type: "10-mark",
-    marks: 10,
-    timeMinutes: 15,
-    unitAvailability: ["WEC11", "WEC12"],
-    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
-    structure: "4 marks analysis + 6 marks evaluation",
-    examinerAdvice: "Provide balanced evaluation. Consider both sides of the argument.",
-  },
-  {
-    type: "12-mark",
-    marks: 12,
-    timeMinutes: 18,
-    unitAvailability: ["WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2", "AO3"],
-    structure: "Knowledge + Application + Extended Analysis",
-    examinerAdvice: "Develop chains of reasoning thoroughly. Use real-world examples.",
-  },
-  {
-    type: "14-mark",
-    marks: 14,
-    timeMinutes: 22,
-    unitAvailability: ["WEC11", "WEC12"],
-    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
-    structure: "6 marks analysis + 8 marks evaluation",
-    examinerAdvice: "L2 evaluation requires at least 2 evaluative points. L3 requires developed evaluation with priorities or limitations.",
-  },
-  {
-    type: "16-mark",
-    marks: 16,
-    timeMinutes: 25,
-    unitAvailability: ["WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
-    structure: "8 marks analysis + 8 marks evaluation",
-    examinerAdvice: "Use context throughout. Evaluation must be balanced and developed.",
-  },
-  {
-    type: "20-mark",
-    marks: 20,
-    timeMinutes: 35,
-    unitAvailability: ["WEC13", "WEC14"],
-    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
-    structure: "10 marks analysis + 10 marks evaluation with context",
-    examinerAdvice: "Integrate context from extracts. Provide reasoned judgment in conclusion.",
-  },
-];
-
-// Examiner definitions based on assessment objectives
 export interface ExaminerConfig {
   id: string;
   name: string;
   ao: "AO1" | "AO2" | "AO3" | "AO4";
   description: string;
   criteria: string[];
-  feedbackTemplate: string;
   maxScore: number;
   weight: number;
+  color: string;
+  icon: string;
 }
 
 export const economicsExaminers: ExaminerConfig[] = [
   {
     id: "knowledge-examiner",
-    name: "Knowledge & Understanding (AO1)",
+    name: "Knowledge & Understanding",
     ao: "AO1",
     description: "Assesses accuracy of economic definitions, concepts, and theories",
     criteria: [
@@ -167,148 +47,185 @@ export const economicsExaminers: ExaminerConfig[] = [
       "Correct use of economic terminology",
       "Understanding of relevant concepts",
       "Appropriate theory selection",
+      "Correct formulas and calculations"
     ],
-    feedbackTemplate: `
-## Knowledge & Understanding Feedback
-
-**Strengths:**
-{{strengths}}
-
-**Areas for Improvement:**
-{{improvements}}
-
-**Key Terminology:**
-{{terminology}}
-
-**Specific Corrections:**
-{{corrections}}
-    `,
     maxScore: 9,
     weight: 0.25,
+    color: "#3B82F6",
+    icon: "BookOpen"
   },
   {
     id: "application-examiner",
-    name: "Application (AO2)",
+    name: "Application",
     ao: "AO2",
     description: "Assesses ability to apply knowledge to real-world contexts",
     criteria: [
-      "Use of real-world examples",
+      "Use of real-world examples from case studies",
       "Application to context provided",
-      "Relevant case studies",
-      "Contemporary awareness",
+      "Relevant contemporary examples (2024-2025)",
+      "Use of data from extracts",
+      "Synoptic links where appropriate"
     ],
-    feedbackTemplate: `
-## Application Feedback
-
-**Context Usage:**
-{{context}}
-
-**Examples Provided:**
-{{examples}}
-
-**Suggestions for Better Application:**
-{{suggestions}}
-    `,
     maxScore: 9,
     weight: 0.25,
+    color: "#10B981",
+    icon: "Globe"
   },
   {
     id: "analysis-examiner",
-    name: "Analysis (AO3)",
+    name: "Analysis",
     ao: "AO3",
     description: "Assesses chains of reasoning and analytical depth",
     criteria: [
-      "Clear chains of reasoning",
-      "Use of diagrams (where appropriate)",
+      "Clear chains of reasoning (minimum 3 steps)",
+      "Accurate diagrams with labels",
       "Logical development of arguments",
       "Causal relationships explained",
+      "Reference to diagrams in text"
     ],
-    feedbackTemplate: `
-## Analysis Feedback
-
-**Chains of Reasoning:**
-{{reasoning}}
-
-**Diagram Suggestions:**
-{{diagrams}}
-
-**Logical Structure:**
-{{structure}}
-
-**Analytical Depth:**
-{{depth}}
-    `,
     maxScore: 9,
     weight: 0.25,
+    color: "#F59E0B",
+    icon: "TrendingUp"
   },
   {
     id: "evaluation-examiner",
-    name: "Evaluation (AO4)",
+    name: "Evaluation",
     ao: "AO4",
     description: "Assesses critical assessment and balanced judgment",
     criteria: [
       "Balanced consideration of viewpoints",
       "Use of evaluative language",
-      "Prioritization of arguments",
-      "Reasoned judgment in conclusion",
+      "Time dimension considerations",
+      "Stakeholder analysis",
+      "Reasoned judgment in conclusion"
     ],
-    feedbackTemplate: `
-## Evaluation Feedback
-
-**Evaluative Points:**
-{{points}}
-
-**Balance:**
-{{balance}}
-
-**Quality of Judgment:**
-{{judgment}}
-
-**Suggestions for Improvement:**
-{{improvements}}
-    `,
     maxScore: 9,
     weight: 0.25,
-  },
+    color: "#8B5CF6",
+    icon: "Scale"
+  }
 ];
 
-// Unit-specific knowledge domains
+// Export case studies for use in components
+export { caseStudies, examTechniques, diagramRequirements, evaluationFrameworks };
+
+// Question type configurations
+export interface QuestionTypeConfig {
+  type: QuestionType;
+  marks: number;
+  unitAvailability: UnitCode[];
+  requiredAOs: ("AO1" | "AO2" | "AO3" | "AO4")[];
+  examinerAdvice: string;
+  requiresDiagram: boolean;
+}
+
+export const questionTypes: QuestionTypeConfig[] = [
+  {
+    type: "4-mark",
+    marks: 4,
+    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2"],
+    examinerAdvice: "2 knowledge points + 2 application points. Define key terms clearly.",
+    requiresDiagram: false
+  },
+  {
+    type: "6-mark",
+    marks: 6,
+    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2"],
+    examinerAdvice: "Provide 2-3 developed points with clear context application.",
+    requiresDiagram: false
+  },
+  {
+    type: "8-mark",
+    marks: 8,
+    unitAvailability: ["WEC11", "WEC12", "WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2", "AO3"],
+    examinerAdvice: "Include chains of reasoning. Use diagrams where appropriate.",
+    requiresDiagram: true
+  },
+  {
+    type: "10-mark",
+    marks: 10,
+    unitAvailability: ["WEC11", "WEC12"],
+    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
+    examinerAdvice: "4 marks analysis + 6 marks evaluation. Minimum 2 evaluative points.",
+    requiresDiagram: true
+  },
+  {
+    type: "12-mark",
+    marks: 12,
+    unitAvailability: ["WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2", "AO3"],
+    examinerAdvice: "Develop chains of reasoning thoroughly. Use real-world examples.",
+    requiresDiagram: true
+  },
+  {
+    type: "14-mark",
+    marks: 14,
+    unitAvailability: ["WEC11", "WEC12"],
+    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
+    examinerAdvice: "L2 evaluation requires 2+ evaluative points. L3 requires developed evaluation with priorities.",
+    requiresDiagram: true
+  },
+  {
+    type: "16-mark",
+    marks: 16,
+    unitAvailability: ["WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
+    examinerAdvice: "Use context throughout. Evaluation must be balanced and developed.",
+    requiresDiagram: true
+  },
+  {
+    type: "20-mark",
+    marks: 20,
+    unitAvailability: ["WEC13", "WEC14"],
+    requiredAOs: ["AO1", "AO2", "AO3", "AO4"],
+    examinerAdvice: "Integrate context from extracts. Provide reasoned judgment in conclusion.",
+    requiresDiagram: true
+  }
+];
+
+// Unit knowledge domains
 export const unitKnowledge: Record<UnitCode, {
   title: string;
   topics: string[];
   keyDiagrams: string[];
   commonContexts: string[];
+  caseStudyKeys: string[];
 }> = {
   WEC11: {
-    title: "Markets in Action (Microeconomics)",
+    title: "Markets in Action",
     topics: [
       "Scarcity and choice",
       "Production possibility frontiers",
       "Supply and demand",
-      "Price elasticity",
+      "Elasticities",
       "Market failure",
       "Externalities",
       "Public goods",
-      "Government intervention",
+      "Government intervention"
     ],
     keyDiagrams: [
       "Supply and demand equilibrium",
-      "Price elasticity of demand",
+      "PED/IES/PES calculations",
       "Negative externalities (MSC > MPC)",
       "Positive externalities (MSB > MPB)",
       "Tax incidence",
-      "Subsidy effects",
+      "Subsidy effects"
     ],
     commonContexts: [
-      "Housing market",
-      "Transport and congestion",
+      "Zero Emission Zones (ZEZs)",
+      "UK housing market",
+      "Carbon pricing",
       "Energy markets",
-      "Agriculture",
-      "Healthcare",
+      "Transport and congestion"
     ],
+    caseStudyKeys: ["zeroEmissionZones", "housingMarket", "carbonPricing"]
   },
   WEC12: {
-    title: "Macroeconomic Performance and Policy",
+    title: "Macroeconomic Performance",
     topics: [
       "Circular flow of income",
       "Aggregate demand and supply",
@@ -316,24 +233,22 @@ export const unitKnowledge: Record<UnitCode, {
       "Inflation",
       "Unemployment",
       "Balance of payments",
-      "Macroeconomic policies",
-      "International competitiveness",
+      "Macroeconomic policies"
     ],
     keyDiagrams: [
       "AD/AS model",
       "Phillips curve",
       "Keynesian vs Classical AS",
       "Multiplier effect",
-      "Crowding out",
-      "Lorenz curve",
+      "Crowding out"
     ],
     commonContexts: [
-      "UK economy",
-      "US economy",
-      "Developing economies",
-      "Eurozone",
-      "Post-pandemic recovery",
+      "UK growth slowdown 2025",
+      "Inflation 2024-2025",
+      "National Minimum Wage",
+      "Monetary policy trade-offs"
     ],
+    caseStudyKeys: ["ukSlowdown2025", "ukInflation2024", "nationalMinimumWage"]
   },
   WEC13: {
     title: "Business Behaviour",
@@ -345,23 +260,23 @@ export const unitKnowledge: Record<UnitCode, {
       "Monopoly",
       "Oligopoly",
       "Monopolistic competition",
-      "Labour markets",
+      "Labour markets"
     ],
     keyDiagrams: [
       "Cost curves (SRAC, LRAC, MC)",
       "Revenue curves",
       "Profit maximization (MC=MR)",
-      "Perfect competition short/long run",
+      "Perfect competition SR/LR",
       "Monopoly welfare loss",
-      "Kinked demand curve",
+      "Kinked demand curve"
     ],
     commonContexts: [
-      "Big Tech",
-      "Energy companies",
-      "Retail markets",
-      "Airlines",
-      "Pharmaceuticals",
+      "China EV price wars",
+      "UK housebuilding oligopoly",
+      "UK supermarket competition",
+      "Indian market structures"
     ],
+    caseStudyKeys: ["chinaEV", "ukHousebuilding", "ukSupermarkets"]
   },
   WEC14: {
     title: "Developments in the Global Economy",
@@ -372,35 +287,32 @@ export const unitKnowledge: Record<UnitCode, {
       "Exchange rates",
       "Development economics",
       "Inequality",
-      "Role of state",
-      "International institutions",
+      "Role of state"
     ],
     keyDiagrams: [
       "Comparative advantage",
-      "Tariff effects",
+      "Tariff welfare effects",
       "Exchange rate determination",
-      "J-curve effect",
-      "Lorenz curve/Gini coefficient",
-      "Poverty cycle",
+      "J-curve effect"
     ],
     commonContexts: [
-      "Developing countries",
-      "China",
-      "India",
-      "Sub-Saharan Africa",
-      "Climate change",
+      "Indonesia commodity dependence",
+      "Rwanda development success",
+      "Development innovations",
+      "Trade and convergence"
     ],
-  },
+    caseStudyKeys: ["indonesia", "rwanda", "developmentInnovations"]
+  }
 };
 
-// Grade boundaries (typical)
+// Grade boundaries
 export const gradeBoundaries = {
   Astar: 90,
   A: 80,
   B: 70,
   C: 60,
   D: 50,
-  E: 40,
+  E: 40
 };
 
 // Helper functions
@@ -425,40 +337,36 @@ export function calculateGrade(score: number, maxScore: number): string {
   return "U";
 }
 
-// System prompt for AI examiners
-export function generateSystemPrompt(unit: UnitCode, questionType: QuestionType): string {
+export function generateSystemPrompt(unit: UnitCode, questionType: QuestionType, hasDiagram: boolean): string {
+  return constructGradingPrompt(unit, questionType, "AO1", hasDiagram);
+}
+
+export function getExaminerPrompt(examiner: ExaminerConfig, unit: UnitCode, questionType: QuestionType, hasDiagram: boolean): string {
+  return constructGradingPrompt(unit, questionType, examiner.ao, hasDiagram);
+}
+
+// Diagram detection helpers
+export function requiresDiagram(questionType: QuestionType): boolean {
   const config = getQuestionTypeConfig(questionType);
-  const unitData = unitKnowledge[unit];
+  return config?.requiresDiagram || false;
+}
+
+export function getDiagramFeedback(questionType: QuestionType, hasDiagram: boolean, diagramQuality?: string): string {
+  if (!requiresDiagram(questionType)) {
+    return "Diagram not required for this question type, but beneficial if accurate.";
+  }
   
-  return `You are an expert Pearson Edexcel IAL Economics examiner specializing in ${unitData.title}.
-
-**Question Type:** ${questionType} (${config?.marks} marks)
-**Unit:** ${unit}
-
-**Your Role:**
-You are one of four specialist examiners assessing this response. Focus on your specific assessment objective while being aware of the overall mark scheme.
-
-**Key Topics in this Unit:**
-${unitData.topics.map(t => `- ${t}`).join("\n")}
-
-**Relevant Diagrams:**
-${unitData.keyDiagrams.map(d => `- ${d}`).join("\n")}
-
-**Mark Scheme for ${questionType} questions:**
-${config?.examinerAdvice}
-
-**Current Contexts (2024-2025):**
-${unitData.commonContexts.map(c => `- ${c}`).join("\n")}
-
-**Grading Standards:**
-- Level 3 (High): Detailed knowledge, thorough application, developed analysis/evaluation
-- Level 2 (Mid): Sound knowledge, some application, clear but limited analysis/evaluation  
-- Level 1 (Low): Basic knowledge, limited application, undeveloped analysis/evaluation
-
-**Important:**
-- Base assessment on official Edexcel IAL Economics mark schemes
-- Consider the specific context provided in the question
-- Award marks based on what the candidate HAS done, not what they haven't
-- Use current real-world examples where appropriate
-- Reference specific mark scheme levels in feedback`;
+  if (!hasDiagram) {
+    return `⚠️ MISSING DIAGRAM: ${questionType} questions require diagrams. Marks deducted for missing or incorrect diagrams.`;
+  }
+  
+  if (diagramQuality === "poor") {
+    return "Diagram present but has significant errors (wrong curves, missing labels, incorrect axes).";
+  }
+  
+  if (diagramQuality === "good") {
+    return "✓ Accurate diagram with correct curves, labels, and explanation in text.";
+  }
+  
+  return "Diagram present - assess accuracy of curves, labels, and whether referenced in explanation.";
 }

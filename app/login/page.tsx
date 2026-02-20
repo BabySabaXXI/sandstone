@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { 
   Mail, Lock, User, Eye, EyeOff, GraduationCap, Sparkles,
-  Phone, Github, Chrome, ArrowRight, ChevronLeft, TestTube
+  Phone, Github, Chrome, ArrowRight, ChevronLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -103,17 +103,7 @@ export default function LoginPage() {
     }
   };
 
-  const fillDemoAccount = (type: "admin" | "test") => {
-    if (type === "admin") {
-      setEmail("admin@sandstone.app");
-      setPassword("admin123456");
-    } else {
-      setEmail("test@example.com");
-      setPassword("test123456");
-    }
-    setError("");
-    toast.info("Click Sign In to log in with this demo account");
-  };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
@@ -302,30 +292,7 @@ export default function LoginPage() {
                   <span className="text-sm text-muted-foreground">Continue with Phone</span>
                 </button>
 
-                {/* Demo Accounts */}
-                {!isSignUp && (
-                  <div className="mt-6 pt-6 border-t border-border">
-                    <p className="text-xs text-muted-foreground text-center mb-3">Demo Accounts</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      <button
-                        type="button"
-                        onClick={() => fillDemoAccount("test")}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs bg-secondary hover:bg-secondary/80 rounded-lg transition-colors"
-                      >
-                        <TestTube className="w-3.5 h-3.5" />
-                        Test Account
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => fillDemoAccount("admin")}
-                        className="flex items-center justify-center gap-1.5 px-3 py-2 text-xs bg-accent/30 hover:bg-accent/40 rounded-lg transition-colors"
-                      >
-                        <User className="w-3.5 h-3.5" />
-                        Admin Account
-                      </button>
-                    </div>
-                  </div>
-                )}
+
 
                 <div className="mt-6 text-center">
                   <p className="text-sm text-muted-foreground">

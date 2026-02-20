@@ -3,18 +3,20 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useFlashcardStore } from "@/stores/flashcard-store";
+import { useSubjectStore } from "@/stores/subject-store";
 import { Plus, MoreVertical, Edit2, Trash2, BookOpen, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function DeckManager() {
   const { decks, createDeck, deleteDeck, setCurrentDeck, getStudyStats } = useFlashcardStore();
+  const { currentSubject } = useSubjectStore();
   const [isCreating, setIsCreating] = useState(false);
   const [newDeckName, setNewDeckName] = useState("");
   const [newDeckDescription, setNewDeckDescription] = useState("");
 
   const handleCreate = async () => {
     if (newDeckName.trim()) {
-      await createDeck(newDeckName.trim(), newDeckDescription.trim());
+      await createDeck(newDeckName.trim(), newDeckDescription.trim(), currentSubject);
       setNewDeckName("");
       setNewDeckDescription("");
       setIsCreating(false);
