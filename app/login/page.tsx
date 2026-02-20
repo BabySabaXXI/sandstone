@@ -28,6 +28,7 @@ export default function LoginPage() {
     signIn, 
     signUp, 
     user, 
+    error: authError,
     signInWithProvider,
     signInWithPhone,
     verifyPhoneOtp
@@ -50,8 +51,15 @@ export default function LoginPage() {
       } else {
         await signIn(email, password);
       }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+    } catch (err: any) {
+      console.error("Auth error:", err);
+      if (err.message?.includes("fetch")) {
+        setError("Connection error. Please check your internet connection or try again later.");
+      } else if (err.message?.includes("Invalid login")) {
+        setError("Invalid email or password. Please try again.");
+      } else {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -128,6 +136,18 @@ export default function LoginPage() {
           transition={{ delay: 0.1 }}
           className="bg-card border border-border rounded-2xl shadow-soft p-8"
         >
+          {/* Config Error Banner */}
+          {authError && (
+            <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-xl">
+              <p className="text-sm text-amber-800 dark:text-amber-200">
+                <strong>Configuration Issue:</strong> {authError}
+              </p>
+              <p className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                Please check the ENV_SETUP.md file for configuration instructions.
+              </p>
+            </div>
+          )}
+
           <AnimatePresence mode="wait">
             {mode === "email" && (
               <motion.div

@@ -8,6 +8,7 @@ import { toast } from "sonner";
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  error: string | null;
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, fullName?: string) => Promise<void>;
   signOut: () => Promise<void>;
@@ -20,13 +21,32 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Check if Supabase is configured
+const isSupabaseConfigured = () => {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return url && key && !url.includes('your-project') && !key.includes('your-key');
+};
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Check if Supabase is configured
+    if (!isSupabaseConfigured()) {
+      setError("Supabase not configured. Please check environment variables.");
+      setLoading(false);
+      return;
+    }
+
     // Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session }, error }) => {
+      if (error) {
+        console.error("Session error:", error);
+        setError("Failed to check authentication status");
+      }
       setUser(session?.user ?? null);
       setLoading(false);
     });
@@ -46,6 +66,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured. Please contact support.");
+    }
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       toast.error(error.message);
@@ -54,6 +77,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signUp = async (email: string, password: string, fullName?: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured. Please contact support.");
+    }
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -71,6 +97,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured");
+    }
     const { error } = await supabase.auth.signOut();
     if (error) {
       toast.error(error.message);
@@ -79,6 +108,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithProvider = async (provider: Provider) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured. Please contact support.");
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
@@ -92,6 +124,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signInWithPhone = async (phone: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured. Please contact support.");
+    }
     const { error } = await supabase.auth.signInWithOtp({
       phone,
     });
@@ -103,6 +138,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const verifyPhoneOtp = async (phone: string, token: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured");
+    }
     const { error } = await supabase.auth.verifyOtp({
       phone,
       token,
@@ -115,6 +153,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const resetPassword = async (email: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured");
+    }
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
     });
@@ -126,6 +167,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updatePassword = async (password: string) => {
+    if (!isSupabaseConfigured()) {
+      throw new Error("Authentication not configured");
+    }
     const { error } = await supabase.auth.updateUser({
       password,
     });
@@ -140,6 +184,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     <AuthContext.Provider value={{ 
       user, 
       loading, 
+      error,
       signIn, 
       signUp, 
       signOut,
