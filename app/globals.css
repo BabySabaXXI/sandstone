@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* PRIMARY PALETTE - Muted Professional */
+    --background: 45 14% 95%;           /* #F5F5F0 - White cement grey */
+    --background-dark: 0 0% 10%;        /* #1A1A1A - Dark mode */
+    --surface: 0 0% 100%;               /* #FFFFFF - Pure white */
+    --surface-elevated: 40 14% 98%;     /* #FAFAF8 */
+    --surface-hover: 45 14% 93%;        /* #F0F0EC */
+
+    /* ACCENT COLORS - Soft Muted */
+    --accent-primary: 30 35% 84%;       /* #E8D5C4 - Sand dune */
+    --accent-secondary: 30 50% 90%;     /* #F5E6D3 - Light peach */
+    --accent-tertiary: 30 20% 76%;      /* #D4C4B0 - Warm grey */
+    --accent-warm: 32 45% 78%;          /* #E5C9A8 - Soft peach */
+    --accent-cool: 200 25% 82%;         /* #C9D6DF - Soft blue-grey */
+
+    /* TEXT COLORS */
+    --text-primary: 0 0% 18%;           /* #2D2D2D - Near black */
+    --text-secondary: 0 0% 35%;         /* #5A5A5A - Medium grey */
+    --text-muted: 0 0% 54%;             /* #8A8A8A - Light grey */
+    --text-inverse: 0 0% 100%;          /* #FFFFFF - White */
+
+    /* BORDER COLORS */
+    --border: 45 14% 91%;               /* #E5E5E0 - Subtle */
+    --border-strong: 45 14% 85%;        /* #D5D5D0 - Stronger */
+    --border-accent: 30 35% 84%;        /* #E8D5C4 - Accent */
+
+    /* STATUS COLORS - MUTED */
+    --success: 120 20% 72%;             /* #A8C5A8 - Soft sage */
+    --warning: 45 35% 78%;              /* #E5D4A8 - Soft amber */
+    --error: 0 25% 75%;                 /* #D4A8A8 - Soft rose */
+    --info: 200 30% 75%;                /* #A8C5D4 - Soft blue */
+
+    /* AI PANEL - Dark Muted */
+    --ai-panel-bg: rgba(30, 30, 30, 0.95);
+    --ai-panel-border: rgba(255, 255, 255, 0.08);
+
+    /* SHADCN THEME VARIABLES */
+    --foreground: 0 0% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+    --primary: 0 0% 18%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 14% 95%;
+    --secondary-foreground: 0 0% 18%;
+    --muted: 45 14% 93%;
+    --muted-foreground: 0 0% 54%;
+    --destructive: 0 25% 75%;
+    --destructive-foreground: 0 0% 18%;
+    --input: 45 14% 91%;
+    --ring: 30 35% 84%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom utility classes */
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, #E8D5C4 0%, #F5E6D3 100%);
+  }
+  .gradient-secondary {
+    background: linear-gradient(135deg, #E5C9A8 0%, #C9D6DF 100%);
+  }
+  .gradient-success {
+    background: linear-gradient(135deg, #A8C5A8 0%, #B8D4B8 100%);
+  }
+  .gradient-dark {
+    background: linear-gradient(180deg, #2D2D2D 0%, #1A1A1A 100%);
+  }
+  .gradient-card {
+    background: linear-gradient(180deg, #FFFFFF 0%, #FAFAF8 100%);
+  }
+  .ai-panel {
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(16px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+  }
+}
