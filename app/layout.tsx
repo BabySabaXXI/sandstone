@@ -16,8 +16,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sandstone - AI Essay Grading",
-  description: "AI-powered IELTS essay grading with detailed feedback",
+  title: "Sandstone - AI-Powered Learning",
+  description: "AI-powered A-Level response grading with detailed examiner feedback",
 };
 
 export default function RootLayout({

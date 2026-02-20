@@ -5,24 +5,29 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE profiles (
   id UUID REFERENCES auth.users(id) PRIMARY KEY,
   email TEXT NOT NULL,
+  phone TEXT,
   full_name TEXT,
   avatar_url TEXT,
+  preferences JSONB DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Essays table
+-- Essays/Responses table
 CREATE TABLE essays (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
+  subject TEXT NOT NULL DEFAULT 'economics',
   question TEXT NOT NULL,
   content TEXT NOT NULL,
+  question_type TEXT, -- '14', '6', '20', etc.
   overall_score DECIMAL(3,1),
-  band TEXT,
+  grade TEXT,
   feedback JSONB DEFAULT '[]',
   annotations JSONB DEFAULT '[]',
   summary TEXT,
   improvements JSONB DEFAULT '[]',
+  examiner_scores JSONB DEFAULT '[]',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -32,6 +37,7 @@ CREATE TABLE examiner_scores (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   essay_id UUID REFERENCES essays(id) ON DELETE CASCADE,
   examiner_name TEXT NOT NULL,
+  examiner_type TEXT NOT NULL,
   score DECIMAL(3,1) NOT NULL,
   max_score INTEGER DEFAULT 9,
   feedback TEXT,
@@ -43,6 +49,7 @@ CREATE TABLE examiner_scores (
 CREATE TABLE flashcard_decks (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
+  subject TEXT NOT NULL DEFAULT 'economics',
   name TEXT NOT NULL,
   description TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -67,6 +74,7 @@ CREATE TABLE flashcards (
 CREATE TABLE documents (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
+  subject TEXT NOT NULL DEFAULT 'economics',
   title TEXT NOT NULL,
   content JSONB DEFAULT '[]',
   folder_id UUID,
@@ -78,6 +86,7 @@ CREATE TABLE documents (
 CREATE TABLE folders (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
+  subject TEXT NOT NULL DEFAULT 'economics',
   name TEXT NOT NULL,
   parent_id UUID REFERENCES folders(id),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -87,9 +96,10 @@ CREATE TABLE folders (
 CREATE TABLE quizzes (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
+  subject TEXT NOT NULL DEFAULT 'economics',
   title TEXT NOT NULL,
   description TEXT,
-  source_type TEXT NOT NULL, -- 'essay', 'document', 'manual'
+  source_type TEXT NOT NULL,
   source_id UUID,
   questions JSONB NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -112,9 +122,26 @@ CREATE TABLE quiz_attempts (
 CREATE TABLE ai_chats (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   user_id UUID REFERENCES auth.users(id) NOT NULL,
-  context_type TEXT, -- 'essay', 'document', 'general'
+  subject TEXT NOT NULL DEFAULT 'economics',
+  title TEXT NOT NULL DEFAULT 'New Chat',
+  context_type TEXT,
   context_id UUID,
   messages JSONB NOT NULL DEFAULT '[]',
+  is_pinned BOOLEAN DEFAULT FALSE,
+  is_archived BOOLEAN DEFAULT FALSE,
+  folder TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- User Settings table
+CREATE TABLE user_settings (
+  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) NOT NULL UNIQUE,
+  theme TEXT DEFAULT 'light',
+  default_subject TEXT DEFAULT 'economics',
+  notifications_enabled BOOLEAN DEFAULT TRUE,
+  email_notifications BOOLEAN DEFAULT TRUE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -130,6 +157,7 @@ ALTER TABLE folders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE quizzes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE quiz_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE ai_chats ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_settings ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
 CREATE POLICY "Users can view own profile" ON profiles FOR SELECT USING (auth.uid() = id);
@@ -178,6 +206,10 @@ CREATE POLICY "Users can create own attempts" ON quiz_attempts FOR INSERT WITH C
 CREATE POLICY "Users can view own chats" ON ai_chats FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can manage own chats" ON ai_chats FOR ALL USING (auth.uid() = user_id);
 
+-- User Settings policies
+CREATE POLICY "Users can view own settings" ON user_settings FOR SELECT USING (auth.uid() = user_id);
+CREATE POLICY "Users can manage own settings" ON user_settings FOR ALL USING (auth.uid() = user_id);
+
 -- Create function to handle updated_at
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
@@ -195,13 +227,18 @@ CREATE TRIGGER update_flashcards_updated_at BEFORE UPDATE ON flashcards FOR EACH
 CREATE TRIGGER update_documents_updated_at BEFORE UPDATE ON documents FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_quizzes_updated_at BEFORE UPDATE ON quizzes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_ai_chats_updated_at BEFORE UPDATE ON ai_chats FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_user_settings_updated_at BEFORE UPDATE ON user_settings FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Create function to create profile on signup
+-- Create function to create profile and settings on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO public.profiles (id, email, full_name, avatar_url)
   VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'full_name', NEW.raw_user_meta_data->>'avatar_url');
+  
+  INSERT INTO public.user_settings (user_id, theme, default_subject)
+  VALUES (NEW.id, 'light', 'economics');
+  
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;

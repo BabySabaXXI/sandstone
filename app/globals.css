@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* PRIMARY PALETTE - Muted Professional */
+    /* PRIMARY PALETTE - Muted Professional (Light) */
     --background: 45 14% 95%;           /* #F5F5F0 - White cement grey */
     --background-dark: 0 0% 10%;        /* #1A1A1A - Dark mode */
     --surface: 0 0% 100%;               /* #FFFFFF - Pure white */
@@ -56,6 +56,57 @@
     --input: 45 14% 91%;
     --ring: 30 35% 84%;
     --radius: 0.75rem;
+  }
+
+  .dark {
+    /* DARK MODE PALETTE */
+    --background: 0 0% 10%;             /* #1A1A1A - Dark background */
+    --surface: 0 0% 18%;                /* #2D2D2D - Card surface */
+    --surface-elevated: 0 0% 15%;       /* #262626 - Elevated surface */
+    --surface-hover: 0 0% 22%;          /* #383838 - Hover state */
+
+    /* ACCENT COLORS - Inverted for dark */
+    --accent-primary: 30 35% 75%;       /* #D4C4B0 - Brighter sand */
+    --accent-secondary: 30 30% 65%;     /* #B8A894 - Darker peach */
+    --accent-tertiary: 30 20% 55%;      /* #A09080 - Muted grey */
+
+    /* TEXT COLORS - Inverted */
+    --text-primary: 0 0% 95%;           /* #F2F2F2 - Near white */
+    --text-secondary: 0 0% 75%;         /* #BFBFBF - Light grey */
+    --text-muted: 0 0% 55%;             /* #8C8C8C - Muted grey */
+    --text-inverse: 0 0% 18%;           /* #2D2D2D - Dark */
+
+    /* BORDER COLORS - Darker */
+    --border: 0 0% 24%;                 /* #3D3D3D */
+    --border-strong: 0 0% 30%;          /* #4D4D4D */
+    --border-accent: 30 35% 75%;        /* #D4C4B0 */
+
+    /* STATUS COLORS - Darker */
+    --success: 120 20% 50%;             /* #6B8B6B */
+    --warning: 45 35% 50%;              /* #8B7B5B */
+    --error: 0 25% 50%;                 /* #8B5B5B */
+    --info: 200 30% 50%;                /* #5B7B8B */
+
+    /* AI PANEL - Dark */
+    --ai-panel-bg: rgba(20, 20, 20, 0.98);
+    --ai-panel-border: rgba(255, 255, 255, 0.1);
+
+    /* SHADCN THEME VARIABLES - Dark */
+    --foreground: 0 0% 95%;
+    --card: 0 0% 18%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 30 35% 75%;
+    --primary-foreground: 0 0% 10%;
+    --secondary: 0 0% 22%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 22%;
+    --muted-foreground: 0 0% 55%;
+    --destructive: 0 25% 50%;
+    --destructive-foreground: 0 0% 95%;
+    --input: 0 0% 24%;
+    --ring: 30 35% 75%;
   }
 }
 

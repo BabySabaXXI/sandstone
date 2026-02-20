@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ThreePanel } from "@/components/layout/ThreePanel";
 import { SubjectSwitcher } from "@/components/layout/SubjectSwitcher";
+import { AIChat } from "@/components/layout/AIChat";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { useAuth } from "@/components/auth-provider";
 import { useEssayStore } from "@/stores/essay-store";
 import { useFlashcardStore } from "@/stores/flashcard-store";
 import { useQuizStore } from "@/stores/quiz-store";
 import { useSubjectStore } from "@/stores/subject-store";
-import { FileText, GraduationCap, Layers, Sparkles, ArrowRight, Brain, TrendingUp, Clock, BookOpen } from "lucide-react";
+import { FileText, GraduationCap, Layers, Sparkles, ArrowRight, Brain, TrendingUp, Clock, BookOpen, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { getSubjectConfig } from "@/lib/subjects/config";
@@ -52,6 +54,7 @@ export default function HomePage() {
   const { decks, fetchDecks } = useFlashcardStore();
   const { quizzes, fetchQuizzes } = useQuizStore();
   const [isLoading, setIsLoading] = useState(true);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const subjectConfig = getSubjectConfig(currentSubject);
 
@@ -110,7 +113,34 @@ export default function HomePage() {
 
   return (
     <ThreePanel>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl mx-auto dark">
+        {/* Theme Toggle - Top Right */}
+        <div className="fixed top-6 right-6 z-40">
+          <ThemeToggle />
+        </div>
+
+        {/* AI Chat Button - Floating */}
+        <motion.button
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-colors",
+            isChatOpen 
+              ? "bg-[#2D2D2D] dark:bg-[#E8D5C4]" 
+              : "bg-gradient-to-br from-[#E8D5C4] to-[#D4C4B0] hover:from-[#D4C4B0] hover:to-[#C4B4A0]"
+          )}
+        >
+          <MessageCircle className={cn(
+            "w-6 h-6 transition-colors",
+            isChatOpen ? "text-white dark:text-[#2D2D2D]" : "text-[#2D2D2D]"
+          )} />
+        </motion.button>
+
+        {/* AI Chat Popup */}
+        <AnimatePresence>
+          {isChatOpen && <AIChat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />}
+        </AnimatePresence>
         {/* Header with Subject Switcher */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
