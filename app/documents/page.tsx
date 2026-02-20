@@ -29,8 +29,8 @@ export default function DocumentsPage() {
     setShowWelcome(false);
   };
 
-  const handleCreateDocument = () => {
-    const id = createDocument("Untitled Document");
+  const handleCreateDocument = async () => {
+    const id = await createDocument("Untitled Document");
     setCurrentDocument(id);
     setShowWelcome(false);
   };

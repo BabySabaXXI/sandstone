@@ -30,9 +30,9 @@ export function DocumentTree({ onSelectDocument, selectedId }: DocumentTreeProps
     });
   };
 
-  const handleCreateFolder = () => {
+  const handleCreateFolder = async () => {
     if (newFolderName.trim()) {
-      createFolder(newFolderName.trim());
+      await createFolder(newFolderName.trim());
       setNewFolderName("");
       setIsCreatingFolder(false);
     }
@@ -47,7 +47,7 @@ export function DocumentTree({ onSelectDocument, selectedId }: DocumentTreeProps
         <h3 className="font-semibold text-[#2D2D2D]">Documents</h3>
         <div className="flex gap-1">
           <button
-            onClick={() => createDocument("Untitled")}
+            onClick={async () => await createDocument("Untitled")}
             className="p-1.5 hover:bg-[#F0F0EC] rounded-lg transition-colors"
             title="New Document"
           >

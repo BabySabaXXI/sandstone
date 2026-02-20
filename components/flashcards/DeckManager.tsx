@@ -12,9 +12,9 @@ export function DeckManager() {
   const [newDeckName, setNewDeckName] = useState("");
   const [newDeckDescription, setNewDeckDescription] = useState("");
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     if (newDeckName.trim()) {
-      createDeck(newDeckName.trim(), newDeckDescription.trim());
+      await createDeck(newDeckName.trim(), newDeckDescription.trim());
       setNewDeckName("");
       setNewDeckDescription("");
       setIsCreating(false);

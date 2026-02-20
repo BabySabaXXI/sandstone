@@ -26,7 +26,7 @@ export default function FlashcardsPage() {
     setIsLoading(false);
   };
 
-  const handleStudy = (deckId: string) => {
+  const handleStudy = async (deckId: string) => {
     setCurrentDeck(deckId);
     setIsStudying(true);
   };
