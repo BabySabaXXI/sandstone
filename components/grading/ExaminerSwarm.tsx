@@ -198,17 +198,18 @@ export function ExaminerSwarm({ essay, question, onComplete, onGenerating }: Exa
     return score >= 7 ? improvements.slice(0, 3) : improvements;
   };
 
-  const generateAnnotations = (essay: string) => {
+  const generateAnnotations = (essay: string): import("@/types").Annotation[] => {
     // Simple annotation generation based on essay content
-    const annotations = [];
+    const annotations: import("@/types").Annotation[] = [];
     const sentences = essay.split(/[.!?]+/);
+    const types: Array<"grammar" | "vocabulary" | "style" | "positive"> = ["positive", "vocabulary", "grammar"];
     
     for (let i = 0; i < Math.min(3, sentences.length); i++) {
       const sentence = sentences[i];
       if (sentence.length > 30) {
         annotations.push({
           id: crypto.randomUUID(),
-          type: i === 0 ? "positive" : i === 1 ? "vocabulary" : "grammar",
+          type: types[i],
           start: essay.indexOf(sentence),
           end: essay.indexOf(sentence) + sentence.length,
           message: i === 0 ? "Strong opening statement" : i === 1 ? "Consider using more academic vocabulary" : "Good use of complex structure",
