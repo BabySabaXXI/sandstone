@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Annotation } from "@/types";
 import { AnnotationBadge } from "./Annotation";
-import { Lightbulb, MessageCircle, Check } from "lucide-react";
+import { Lightbulb, MessageCircle, Check, BookOpen, GitBranch, Scale } from "lucide-react";
 
 interface FeedbackTooltipProps {
   annotation: Annotation | null;
@@ -16,12 +16,26 @@ const typeIcons = {
   vocabulary: Lightbulb,
   style: MessageCircle,
   positive: Check,
+  knowledge: BookOpen,
+  analysis: GitBranch,
+  evaluation: Scale,
+};
+
+const typeStyles = {
+  grammar: { bg: "bg-[#D4A8A8]/20", text: "text-[#D4A8A8]" },
+  vocabulary: { bg: "bg-[#E5D4A8]/20", text: "text-[#E5D4A8]" },
+  style: { bg: "bg-[#A8C5D4]/20", text: "text-[#A8C5D4]" },
+  positive: { bg: "bg-[#A8C5A8]/20", text: "text-[#A8C5A8]" },
+  knowledge: { bg: "bg-[#A8C5A8]/20", text: "text-[#A8C5A8]" },
+  analysis: { bg: "bg-[#E8D5C4]/20", text: "text-[#E8D5C4]" },
+  evaluation: { bg: "bg-[#C9D6DF]/20", text: "text-[#C9D6DF]" },
 };
 
 export function FeedbackTooltip({ annotation, position, visible }: FeedbackTooltipProps) {
   if (!annotation) return null;
 
   const Icon = typeIcons[annotation.type];
+  const styles = typeStyles[annotation.type];
 
   return (
     <AnimatePresence>
@@ -41,27 +55,9 @@ export function FeedbackTooltip({ annotation, position, visible }: FeedbackToolt
         >
           <div className="flex items-start gap-3">
             <div
-              className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                annotation.type === "grammar"
-                  ? "bg-[#D4A8A8]/20"
-                  : annotation.type === "vocabulary"
-                  ? "bg-[#E5D4A8]/20"
-                  : annotation.type === "style"
-                  ? "bg-[#A8C5D4]/20"
-                  : "bg-[#A8C5A8]/20"
-              }`}
+              className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${styles.bg}`}
             >
-              <Icon
-                className={`w-4 h-4 ${
-                  annotation.type === "grammar"
-                    ? "text-[#D4A8A8]"
-                    : annotation.type === "vocabulary"
-                    ? "text-[#E5D4A8]"
-                    : annotation.type === "style"
-                    ? "text-[#A8C5D4]"
-                    : "text-[#A8C5A8]"
-                }`}
-              />
+              <Icon className={`w-4 h-4 ${styles.text}`} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 mb-2">
