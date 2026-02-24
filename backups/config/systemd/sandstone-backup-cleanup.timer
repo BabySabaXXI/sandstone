@@ -1,0 +1,13 @@
+[Unit]
+Description=Daily Backup Cleanup Timer for Sandstone Database
+Documentation=https://github.com/BabySabaXXI/sandstone/blob/main/docs/BACKUP.md
+
+[Timer]
+# Run daily at 4:00 AM
+OnCalendar=*-*-* 04:00:00
+
+# Randomize start time by up to 5 minutes
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

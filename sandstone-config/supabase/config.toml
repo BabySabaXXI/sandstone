@@ -1,0 +1,291 @@
+# =============================================================================
+# SANDSTONE APP - SUPABASE LOCAL DEVELOPMENT CONFIGURATION
+# =============================================================================
+# Configuration for Supabase CLI local development
+# https://supabase.com/docs/guides/cli/config
+# =============================================================================
+
+# Project ID (from your Supabase project)
+project_id = "csmroucrangjukwyeivqr"
+
+[api]
+# Port to use for Supabase API
+port = 54321
+# Schemas to expose in your API
+schemas = ["public", "storage", "graphql_public"]
+# Extra schemas to add to the search_path of every request
+extra_search_path = ["public", "extensions"]
+# Maximum rows returned from a table or view
+max_rows = 1000
+
+[db]
+# Port to use for the local database
+port = 54322
+# Major version of PostgreSQL
+major_version = 15
+# The database major version to use. This has to be the same as your remote database's.
+shadow_port = 54320
+
+[db.pooler]
+enabled = true
+# Port to use for connection pooling
+port = 54329
+# Specifies when a server connection can be reused by other clients.
+# Configure one of the supported pooler modes: `transaction`, `session`.
+pool_mode = "transaction"
+# How many server connections to allow per user/database pair.
+default_pool_size = 10
+# Maximum number of client connections allowed.
+max_client_conn = 100
+# Connection lifetime in milliseconds
+connection_lifetime = 3600000
+
+[realtime]
+enabled = true
+# Bind realtime via either IPv4 or IPv6. (default: IPv6)
+# ip_version = "IPv6"
+# The maximum length in bytes of HTTP request headers. (default: 4096)
+# max_header_length = 4096
+
+[studio]
+enabled = true
+# Port to use for Supabase Studio
+port = 54323
+# External URL of the API server that frontend connects to.
+api_url = "http://127.0.0.1:54321"
+# OpenAI API Key to use for Supabase AI in the Supabase Studio.
+openai_api_key = "env(OPENAI_API_KEY)"
+
+# Email testing server. Emails sent with the local dev setup are not actually sent - rather, they
+# are monitored, and you can view the emails that would have been sent from the web interface.
+inbucket_port = 54324
+
+[storage]
+enabled = true
+# The maximum file size allowed (e.g. "5MB", "500KB").
+file_size_limit = "50MiB"
+# The maximum folder depth allowed.
+max_folder_depth = 10
+
+[storage.image_transformation]
+enabled = true
+
+[auth]
+enabled = true
+# The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
+# in emails.
+site_url = "http://localhost:3000"
+# A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
+additional_redirect_urls = [
+  "https://localhost:3000",
+  "http://localhost:3000/auth/callback",
+  "https://localhost:3000/auth/callback",
+  "http://127.0.0.1:3000/auth/callback"
+]
+# How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604800 (1 week).
+jwt_expiry = 3600
+# If disabled, the refresh token will never expire.
+enable_refresh_token_rotation = true
+# Allows refresh tokens to be reused after expiry, up to the specified interval in seconds.
+# Requires enable_refresh_token_rotation = true.
+refresh_token_reuse_interval = 10
+# Allow/disallow new user signups to your project.
+enable_signup = true
+# Allow/disallow anonymous sign-ins to your project.
+enable_anonymous_sign_ins = false
+# Whether to send a confirmation email when a user signs up.
+enable_confirmations = true
+# Whether to send the Magic Link email with a link to the site_url or a link to the redirect URL.
+secure_email_change_confirmations = true
+# The length of time a confirmation email link is valid for.
+confirmation_email_expiry = 86400
+# The length of time a password recovery email link is valid for.
+recovery_email_expiry = 86400
+# The length of time an email OTP is valid for.
+email_otp_expiry = 3600
+# The length of time a phone OTP is valid for.
+phone_otp_expiry = 60
+# The length of time a signup confirmation link is valid for.
+invite_email_expiry = 86400
+# The length of time a magic link email is valid for.
+magic_link_email_expiry = 3600
+
+[auth.email]
+# Allow/disallow new user signups via email to your project.
+enable_signup = true
+# Whether users need to confirm their email address.
+double_confirm_changes = true
+# If enabled, users need to confirm their email address before signing in.
+enable_confirmations = true
+# The length of time a confirmation email link is valid for.
+confirm_email_expiry = 86400
+# The length of time a password recovery email link is valid for.
+recovery_email_expiry = 86400
+# The length of time an email OTP is valid for.
+email_otp_expiry = 3600
+# The subject of the confirmation email.
+confirm_email_subject = "Confirm your signup"
+# The subject of the magic link email.
+magic_link_subject = "Your Magic Link"
+# The subject of the reauthentication email.
+reauthentication_email_subject = "Your Reauthentication Link"
+# The subject of the email change confirmation email.
+email_change_subject = "Confirm Email Change"
+# The subject of the password recovery email.
+recovery_email_subject = "Reset Your Password"
+# The subject of the invite email.
+invite_email_subject = "You've been invited"
+
+# Use a custom SMTP server for sending emails.
+# [auth.email.smtp]
+# enabled = true
+# host = "smtp.example.com"
+# port = 587
+# user = "user@example.com"
+# pass = "password"
+# admin_email = "admin@example.com"
+# sender_name = "Sandstone App"
+
+[auth.sms]
+# Allow/disallow new user signups via phone to your project.
+enable_signup = true
+# Whether users need to confirm their phone number.
+enable_confirmations = true
+# The length of time a phone OTP is valid for.
+otp_expiry = 60
+# The length of time a password recovery OTP is valid for.
+recovery_otp_expiry = 3600
+# The length of time a phone change OTP is valid for.
+phone_change_otp_expiry = 3600
+# The length of time a signup confirmation OTP is valid for.
+invite_otp_expiry = 3600
+
+# Use Twilio for sending SMS
+# [auth.sms.twilio]
+# enabled = true
+# account_sid = "your-account-sid"
+# message_service_sid = "your-message-service-sid"
+# auth_token = "your-auth-token"
+# from_number = "your-twilio-number"
+
+# Use MessageBird for sending SMS
+# [auth.sms.messagebird]
+# enabled = true
+# originator = "Sandstone"
+# access_key = "your-access-key"
+
+[auth.external.github]
+enabled = true
+client_id = "env(GITHUB_CLIENT_ID)"
+secret = "env(GITHUB_CLIENT_SECRET)"
+# Overrides the default auth redirectUrl.
+redirect_uri = "http://localhost:54321/auth/v1/callback"
+# Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
+# or any other third-party OIDC providers.
+url = ""
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
+redirect_uri = "http://localhost:54321/auth/v1/callback"
+url = ""
+
+[auth.external.apple]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.azure]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+url = ""
+
+[auth.external.discord]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.facebook]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.keycloak]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+url = ""
+
+[auth.external.linkedin]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.notion]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.twitch]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.twitter]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.slack]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.spotify]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[auth.external.workos]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+url = ""
+
+[auth.external.zoom]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""
+
+[edge_runtime]
+enabled = true
+# Configure one of the supported pooler modes: `transaction`, `session`.
+inspector_port = 8083
+
+[analytics]
+enabled = true
+port = 54327
+# Configure one of the supported backends: `postgres`, `bigquery`.
+backend = "postgres"
+
+# Experimental features may cause breaking changes and are not recommended for production use.
+[experimental]
+# Configures Postgres storage engine to use. Available options:
+# - 'mamonsu' - Default Postgres storage engine
+# - 'pgsodium' - Uses pgsodium for encryption
+# postgres_storage_engine = "mamonsu"

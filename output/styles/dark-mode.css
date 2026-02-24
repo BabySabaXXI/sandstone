@@ -1,0 +1,458 @@
+/* ============================================================================
+   SANDSTONE DARK MODE STYLES - FIXED
+   ============================================================================
+   
+   Comprehensive dark mode styles for the Sandstone app.
+   Ensures proper contrast, visibility, and consistency in dark mode.
+   
+   Contents:
+   1. Dark mode color overrides
+   2. Component dark mode styles
+   3. Form element dark mode
+   4. Scrollbar dark mode
+   5. Shadow dark mode adjustments
+   6. Image dark mode
+   7. Code block dark mode
+   8. Table dark mode
+   ============================================================================ */
+
+/* ============================================================================
+   1. DARK MODE COLOR OVERRIDES
+   ============================================================================ */
+
+.dark {
+  /* Ensure proper color scheme */
+  color-scheme: dark;
+}
+
+/* ============================================================================
+   2. COMPONENT DARK MODE STYLES
+   ============================================================================ */
+
+/* ========================================
+   CARD DARK MODE
+   ======================================== */
+
+.dark .card-elevated {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  box-shadow: var(--shadow-card);
+}
+
+.dark .card-interactive:hover {
+  background-color: hsl(var(--secondary));
+  border-color: hsl(var(--border));
+}
+
+/* ========================================
+   BUTTON DARK MODE
+   ======================================== */
+
+.dark .btn-ghost:hover {
+  background-color: hsl(var(--secondary));
+}
+
+.dark .btn-outline {
+  border-color: hsl(var(--border));
+}
+
+.dark .btn-outline:hover {
+  background-color: hsl(var(--secondary));
+  border-color: hsl(var(--border));
+}
+
+/* ========================================
+   INPUT DARK MODE
+   ======================================== */
+
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: hsl(var(--input));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.2);
+}
+
+.dark input:disabled,
+.dark textarea:disabled,
+.dark select:disabled {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--muted-foreground));
+}
+
+/* ========================================
+   DROPDOWN/MENU DARK MODE
+   ======================================== */
+
+.dark [data-radix-popper-content-wrapper] {
+  background-color: hsl(var(--popover));
+  border-color: hsl(var(--border));
+  box-shadow: var(--shadow-dropdown);
+}
+
+.dark [data-radix-dropdown-menu-content] {
+  background-color: hsl(var(--popover));
+  border-color: hsl(var(--border));
+}
+
+.dark [data-radix-dropdown-menu-item]:hover {
+  background-color: hsl(var(--secondary));
+}
+
+/* ========================================
+   MODAL DIALOG DARK MODE
+   ======================================== */
+
+.dark [data-radix-dialog-overlay] {
+  background-color: rgb(0 0 0 / 0.7);
+}
+
+.dark [data-radix-dialog-content] {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  box-shadow: var(--shadow-modal);
+}
+
+/* ========================================
+   TOOLTIP DARK MODE
+   ======================================== */
+
+.dark [data-radix-tooltip-content] {
+  background-color: hsl(var(--popover));
+  border-color: hsl(var(--border));
+  color: hsl(var(--popover-foreground));
+}
+
+/* ============================================================================
+   3. FORM ELEMENT DARK MODE
+   ============================================================================ */
+
+/* ========================================
+   CHECKBOX & RADIO DARK MODE
+   ======================================== */
+
+.dark input[type="checkbox"],
+.dark input[type="radio"] {
+  accent-color: hsl(var(--primary));
+}
+
+.dark input[type="checkbox"]:checked,
+.dark input[type="radio"]:checked {
+  background-color: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+}
+
+/* ========================================
+   RANGE SLIDER DARK MODE
+   ======================================== */
+
+.dark input[type="range"] {
+  accent-color: hsl(var(--primary));
+}
+
+/* ========================================
+   SWITCH DARK MODE
+   ======================================== */
+
+.dark [role="switch"][data-state="checked"] {
+  background-color: hsl(var(--primary));
+}
+
+.dark [role="switch"][data-state="unchecked"] {
+  background-color: hsl(var(--muted));
+}
+
+/* ============================================================================
+   4. SCROLLBAR DARK MODE
+   ============================================================================ */
+
+.dark .scrollbar-thin {
+  scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted-foreground) / 0.3);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* ============================================================================
+   5. SHADOW DARK MODE ADJUSTMENTS
+   ============================================================================ */
+
+.dark .shadow-soft {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+}
+
+.dark .shadow-soft-md {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+}
+
+.dark .shadow-soft-lg {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+}
+
+.dark .shadow-soft-xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.4), 0 8px 10px -6px rgb(0 0 0 / 0.4);
+}
+
+/* ============================================================================
+   6. IMAGE DARK MODE
+   ============================================================================ */
+
+/* Slightly reduce brightness of images in dark mode */
+.dark img:not([src*=".svg"]):not(.no-dark-adjust) {
+  filter: brightness(0.95);
+}
+
+/* ============================================================================
+   7. CODE BLOCK DARK MODE
+   ============================================================================ */
+
+.dark code {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.dark pre {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+.dark pre code {
+  background-color: transparent;
+}
+
+/* ============================================================================
+   8. TABLE DARK MODE
+   ============================================================================ */
+
+.dark table {
+  border-color: hsl(var(--border));
+}
+
+.dark th,
+.dark td {
+  border-color: hsl(var(--border));
+}
+
+.dark th {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.dark tr:hover {
+  background-color: hsl(var(--secondary));
+}
+
+/* ============================================================================
+   9. SEPARATOR/DIVIDER DARK MODE
+   ============================================================================ */
+
+.dark hr,
+.dark [role="separator"] {
+  border-color: hsl(var(--border));
+  background-color: hsl(var(--border));
+}
+
+/* ============================================================================
+   10. ACCORDION DARK MODE
+   ============================================================================ */
+
+.dark [data-radix-accordion-trigger]:hover {
+  background-color: hsl(var(--secondary));
+}
+
+/* ============================================================================
+   11. TABS DARK MODE
+   ============================================================================ */
+
+.dark [data-radix-tabs-list] {
+  background-color: hsl(var(--muted));
+}
+
+.dark [data-radix-tabs-trigger][data-state="active"] {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+/* ============================================================================
+   12. ALERT DARK MODE
+   ============================================================================ */
+
+.dark .alert-info {
+  background-color: hsl(var(--blue-900) / 0.3);
+  border-color: hsl(var(--blue-700));
+  color: hsl(var(--blue-100));
+}
+
+.dark .alert-success {
+  background-color: hsl(var(--success-900) / 0.3);
+  border-color: hsl(var(--success-700));
+  color: hsl(var(--success-100));
+}
+
+.dark .alert-warning {
+  background-color: hsl(var(--warning-900) / 0.3);
+  border-color: hsl(var(--warning-700));
+  color: hsl(var(--warning-100));
+}
+
+.dark .alert-error {
+  background-color: hsl(var(--error-900) / 0.3);
+  border-color: hsl(var(--error-700));
+  color: hsl(var(--error-100));
+}
+
+/* ============================================================================
+   13. BADGE DARK MODE
+   ============================================================================ */
+
+.dark .badge-secondary {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.dark .badge-outline {
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+/* ============================================================================
+   14. SKELETON DARK MODE
+   ============================================================================ */
+
+.dark .skeleton {
+  background-color: hsl(var(--muted));
+}
+
+.dark .skeleton::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--background) / 0.3),
+    transparent
+  );
+}
+
+/* ============================================================================
+   15. TOAST DARK MODE
+   ============================================================================ */
+
+.dark [data-sonner-toast] {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+  color: hsl(var(--foreground));
+}
+
+/* ============================================================================
+   16. CALLOUT/NOTE DARK MODE
+   ============================================================================ */
+
+.dark .callout {
+  background-color: hsl(var(--muted));
+  border-color: hsl(var(--border));
+}
+
+.dark .callout-info {
+  background-color: hsl(var(--blue-900) / 0.2);
+  border-color: hsl(var(--blue-700));
+}
+
+.dark .callout-warning {
+  background-color: hsl(var(--warning-900) / 0.2);
+  border-color: hsl(var(--warning-700));
+}
+
+.dark .callout-error {
+  background-color: hsl(var(--error-900) / 0.2);
+  border-color: hsl(var(--error-700));
+}
+
+.dark .callout-success {
+  background-color: hsl(var(--success-900) / 0.2);
+  border-color: hsl(var(--success-700));
+}
+
+/* ============================================================================
+   17. LINK DARK MODE
+   ============================================================================ */
+
+.dark a:not(.btn):not([class*="no-link-style"]) {
+  color: hsl(var(--primary));
+}
+
+.dark a:not(.btn):not([class*="no-link-style"]):hover {
+  color: hsl(var(--primary) / 0.8);
+}
+
+/* ============================================================================
+   18. SELECTION DARK MODE
+   ============================================================================ */
+
+.dark ::selection {
+  background-color: hsl(var(--primary) / 0.4);
+  color: hsl(var(--foreground));
+}
+
+/* ============================================================================
+   19. FOCUS VISIBLE DARK MODE
+   ============================================================================ */
+
+.dark :focus-visible {
+  box-shadow: 0 0 0 2px hsl(var(--background)),
+              0 0 0 4px hsl(var(--ring));
+}
+
+/* ============================================================================
+   20. DISABLED STATE DARK MODE
+   ============================================================================ */
+
+.dark :disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================================
+   21. PLACEHOLDER DARK MODE
+   ============================================================================ */
+
+.dark ::placeholder {
+  color: hsl(var(--muted-foreground));
+  opacity: 0.6;
+}
+
+/* ============================================================================
+   22. HIGH CONTRAST MODE SUPPORT
+   ============================================================================ */
+
+@media (prefers-contrast: high) {
+  .dark {
+    --border: 0 0% 30%;
+    --muted-foreground: 0 0% 70%;
+  }
+
+  .dark .border-subtle {
+    border-color: hsl(var(--border));
+  }
+
+  .dark input,
+  .dark textarea,
+  .dark select {
+    border-width: 2px;
+  }
+}

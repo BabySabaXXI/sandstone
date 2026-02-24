@@ -1,0 +1,50 @@
+#===============================================================================
+# Sandstone Database Backup Cron Jobs
+#===============================================================================
+# Add these entries to your crontab with: crontab -e
+# Or copy to /etc/cron.d/sandstone-backups (as root)
+#===============================================================================
+
+# Set environment variables
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+BACKUP_DIR=/path/to/backups
+
+#-------------------------------------------------------------------------------
+# Daily Full Backup at 2:00 AM
+#-------------------------------------------------------------------------------
+# Creates a complete backup of the entire database
+# Retention: 30 days (configurable in backup.conf)
+0 2 * * * $BACKUP_DIR/scripts/supabase-backup.sh full >> $BACKUP_DIR/logs/cron.log 2>&1
+
+#-------------------------------------------------------------------------------
+# Weekly Schema Backup on Sundays at 3:00 AM
+#-------------------------------------------------------------------------------
+# Creates a schema-only backup for quick reference
+# Retention: 30 days
+0 3 * * 0 $BACKUP_DIR/scripts/supabase-backup.sh schema >> $BACKUP_DIR/logs/cron.log 2>&1
+
+#-------------------------------------------------------------------------------
+# Incremental Backup every 6 hours
+#-------------------------------------------------------------------------------
+# Backs up data changed since last full backup
+# Note: Requires proper WAL archiving for true point-in-time recovery
+0 */6 * * * $BACKUP_DIR/scripts/supabase-backup.sh incremental >> $BACKUP_DIR/logs/cron.log 2>&1
+
+#-------------------------------------------------------------------------------
+# Cleanup Old Backups at 4:00 AM
+#-------------------------------------------------------------------------------
+# Removes backups older than retention period
+0 4 * * * $BACKUP_DIR/scripts/supabase-backup.sh cleanup >> $BACKUP_DIR/logs/cron.log 2>&1
+
+#-------------------------------------------------------------------------------
+# Weekly Backup Verification on Mondays at 5:00 AM
+#-------------------------------------------------------------------------------
+# Verifies the most recent backup integrity
+0 5 * * 1 $BACKUP_DIR/scripts/supabase-restore.sh verify >> $BACKUP_DIR/logs/cron.log 2>&1
+
+#-------------------------------------------------------------------------------
+# Monthly Full Export on 1st of month at 1:00 AM
+#-------------------------------------------------------------------------------
+# Exports all data in JSON format for archiving
+0 1 1 * * $BACKUP_DIR/scripts/data-export.sh -f json all >> $BACKUP_DIR/logs/cron.log 2>&1

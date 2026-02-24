@@ -1,0 +1,16 @@
+[Unit]
+Description=Weekly Schema Backup Timer for Sandstone Database
+Documentation=https://github.com/BabySabaXXI/sandstone/blob/main/docs/BACKUP.md
+
+[Timer]
+# Run weekly on Sundays at 3:00 AM
+OnCalendar=Sun *-*-* 03:00:00
+
+# Randomize start time by up to 5 minutes
+RandomizedDelaySec=300
+
+# Run immediately if system was off during scheduled time
+Persistent=true
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,230 @@
+/**
+ * Sandstone Design Tokens
+ * =======================
+ * Centralized design tokens for consistent theming across the application.
+ * These tokens define the visual language of the Sandstone app.
+ * 
+ * Usage: Import this file in globals.css or component styles
+ * @import './tokens.css';
+ */
+
+/* ============================================
+   COLOR TOKENS
+   ============================================ */
+
+:root {
+  /* Primary Brand Colors */
+  --color-sand-50: #FBF7F4;
+  --color-sand-100: #F5EDE6;
+  --color-sand-200: #E8D5C4;
+  --color-sand-300: #D4B89E;
+  --color-sand-400: #C49A7A;
+  --color-sand-500: #B07D58;
+  --color-sand-600: #8F6547;
+  --color-sand-700: #6E4D37;
+  --color-sand-800: #4D3526;
+  --color-sand-900: #2C1E16;
+
+  /* Accent Colors */
+  --color-sage: #A8C5A8;
+  --color-sage-dark: #7FA37F;
+  --color-amber: #E5D4A8;
+  --color-amber-dark: #C9B37A;
+  --color-rose: #D4A8A8;
+  --color-rose-dark: #B87F7F;
+  --color-sky: #A8C5D4;
+  --color-sky-dark: #7FA3B8;
+
+  /* Neutral Colors */
+  --color-cement: #F5F5F0;
+  --color-charcoal: #2D2D2D;
+  --color-grey: #5A5A5A;
+  --color-grey-light: #8A8A8A;
+  --color-grey-lighter: #B8B8B8;
+  --color-grey-lightest: #E8E8E8;
+
+  /* Semantic Colors - Light Mode */
+  --color-background: #FAFAF8;
+  --color-background-elevated: #FFFFFF;
+  --color-background-muted: #F0EFED;
+  --color-surface: #FFFFFF;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-hover: #F5F5F0;
+
+  --color-text-primary: #2D2D2D;
+  --color-text-secondary: #5A5A5A;
+  --color-text-tertiary: #8A8A8A;
+  --color-text-muted: #B8B8B8;
+  --color-text-inverse: #FFFFFF;
+
+  --color-border: #E8E8E8;
+  --color-border-strong: #D4D4D4;
+  --color-border-subtle: #F0F0F0;
+
+  /* Status Colors */
+  --color-success: #22C55E;
+  --color-success-light: #DCFCE7;
+  --color-warning: #F59E0B;
+  --color-warning-light: #FEF3C7;
+  --color-error: #EF4444;
+  --color-error-light: #FEE2E2;
+  --color-info: #3B82F6;
+  --color-info-light: #DBEAFE;
+
+  /* ============================================
+     TYPOGRAPHY TOKENS
+     ============================================ */
+
+  /* Font Families */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+
+  /* Font Sizes */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.25rem;      /* 20px */
+  --text-2xl: 1.5rem;      /* 24px */
+  --text-3xl: 1.875rem;    /* 30px */
+  --text-4xl: 2.25rem;     /* 36px */
+
+  /* Font Weights */
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+
+  /* ============================================
+     SPACING TOKENS
+     ============================================ */
+
+  --space-0: 0;
+  --space-1: 0.25rem;      /* 4px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-3: 0.75rem;      /* 12px */
+  --space-4: 1rem;         /* 16px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-8: 2rem;         /* 32px */
+  --space-10: 2.5rem;      /* 40px */
+  --space-12: 3rem;        /* 48px */
+  --space-16: 4rem;        /* 64px */
+  --space-20: 5rem;        /* 80px */
+  --space-24: 6rem;        /* 96px */
+
+  /* ============================================
+     BORDER RADIUS TOKENS
+     ============================================ */
+
+  --radius-none: 0;
+  --radius-sm: 0.25rem;    /* 4px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+
+  /* ============================================
+     SHADOW TOKENS
+     ============================================ */
+
+  --shadow-none: none;
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.08);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.16);
+
+  /* ============================================
+     TRANSITION TOKENS
+     ============================================ */
+
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 350ms;
+  --transition-slower: 500ms;
+
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-manus: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ============================================
+     Z-INDEX TOKENS
+     ============================================ */
+
+  --z-base: 0;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+
+  /* ============================================
+     LAYOUT TOKENS
+     ============================================ */
+
+  --sidebar-width: 280px;
+  --sidebar-width-collapsed: 72px;
+  --header-height: 64px;
+  --container-max: 1440px;
+  --container-narrow: 768px;
+}
+
+/* ============================================
+   DARK MODE TOKENS
+   ============================================ */
+
+.dark {
+  /* Semantic Colors - Dark Mode */
+  --color-background: #1A1A1A;
+  --color-background-elevated: #242424;
+  --color-background-muted: #2D2D2D;
+  --color-surface: #242424;
+  --color-surface-elevated: #2D2D2D;
+  --color-surface-hover: #333333;
+
+  --color-text-primary: #F5F5F0;
+  --color-text-secondary: #B8B8B8;
+  --color-text-tertiary: #8A8A8A;
+  --color-text-muted: #5A5A5A;
+  --color-text-inverse: #2D2D2D;
+
+  --color-border: #3D3D3D;
+  --color-border-strong: #4D4D4D;
+  --color-border-subtle: #2D2D2D;
+
+  /* Shadows - Dark Mode */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-dropdown: 0 4px 16px rgba(0, 0, 0, 0.5);
+  --shadow-modal: 0 24px 48px rgba(0, 0, 0, 0.6);
+}

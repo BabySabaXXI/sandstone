@@ -1,0 +1,640 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   SANDSTONE TYPOGRAPHY SYSTEM
+   Import the comprehensive typography system
+   ============================================================================ */
+@import "../styles/typography.css";
+
+/* ============================================================================
+   SANDSTONE LAYOUT SYSTEM
+   Import the comprehensive layout system
+   ============================================================================ */
+@import "../styles/layout-system.css";
+
+/* ============================================================================
+   CSS CUSTOM PROPERTIES - THEME VARIABLES
+   ============================================================================ */
+@layer base {
+  :root {
+    /* SHADCN THEME VARIABLES - Light */
+    --background: 45 14% 95%;
+    --foreground: 0 0% 18%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 18%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+    --primary: 0 0% 18%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 14% 93%;
+    --secondary-foreground: 0 0% 18%;
+    --muted: 45 14% 93%;
+    --muted-foreground: 0 0% 54%;
+    --accent: 30 35% 84%;
+    --accent-foreground: 0 0% 18%;
+    --destructive: 0 25% 75%;
+    --destructive-foreground: 0 0% 18%;
+    --border: 45 14% 91%;
+    --input: 45 14% 91%;
+    --ring: 30 35% 84%;
+    --radius: 0.75rem;
+
+    /* Custom app colors */
+    --sand-50: 45 14% 98%;
+    --sand-100: 45 14% 95%;
+    --sand-200: 45 14% 91%;
+    --sand-300: 45 14% 85%;
+    --sand-400: 45 14% 70%;
+    --sand-500: 45 10% 50%;
+    --sand-600: 45 10% 40%;
+    --sand-700: 45 10% 30%;
+    --sand-800: 45 10% 20%;
+    --sand-900: 45 10% 10%;
+
+    --peach-100: 30 35% 92%;
+    --peach-200: 30 35% 84%;
+    --peach-300: 30 30% 76%;
+    --peach-400: 30 30% 68%;
+
+    --sage-100: 120 20% 92%;
+    --sage-200: 120 20% 72%;
+    --sage-300: 120 20% 52%;
+
+    --blue-100: 200 30% 92%;
+    --blue-200: 200 30% 75%;
+    --blue-300: 200 30% 55%;
+  }
+
+  .dark {
+    /* SHADCN THEME VARIABLES - Dark */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 30 35% 75%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 30 35% 75%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 25% 50%;
+    --destructive-foreground: 0 0% 95%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 30 35% 75%;
+
+    /* Custom app colors - Dark */
+    --sand-50: 0 0% 12%;
+    --sand-100: 0 0% 10%;
+    --sand-200: 0 0% 16%;
+    --sand-300: 0 0% 22%;
+    --sand-400: 0 0% 35%;
+    --sand-500: 0 0% 50%;
+    --sand-600: 0 0% 65%;
+    --sand-700: 0 0% 75%;
+    --sand-800: 0 0% 85%;
+    --sand-900: 0 0% 95%;
+
+    --peach-100: 30 25% 25%;
+    --peach-200: 30 30% 65%;
+    --peach-300: 30 35% 75%;
+    --peach-400: 30 40% 85%;
+
+    --sage-100: 120 15% 18%;
+    --sage-200: 120 20% 50%;
+    --sage-300: 120 25% 65%;
+
+    --blue-100: 200 20% 18%;
+    --blue-200: 200 25% 55%;
+    --blue-300: 200 30% 70%;
+  }
+}
+
+/* ============================================================================
+   BASE STYLES
+   ============================================================================ */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-200;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Focus visible styles */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Selection styles */
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+}
+
+/* ============================================================================
+   SHADOW UTILITIES - Softer shadows inspired by Manus/Claude
+   ============================================================================ */
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  }
+
+  /* Dark mode shadows */
+  .dark .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  }
+
+  .dark .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  }
+
+  .dark .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  }
+}
+
+/* ============================================================================
+   BACKGROUND UTILITIES
+   ============================================================================ */
+@layer utilities {
+  .bg-card-soft {
+    @apply bg-white dark:bg-[#141414];
+  }
+
+  .bg-elevated {
+    @apply bg-[#FAFAF8] dark:bg-[#1A1A1A];
+  }
+
+  .bg-accent-soft {
+    @apply bg-[#F5EFE9] dark:bg-[#2A2520];
+  }
+}
+
+/* ============================================================================
+   BORDER UTILITIES
+   ============================================================================ */
+@layer utilities {
+  .border-subtle {
+    @apply border-[#E8E8E3] dark:border-[#2A2A2A];
+  }
+}
+
+/* ============================================================================
+   TEXT UTILITIES - Enhanced Typography
+   ============================================================================ */
+@layer utilities {
+  .text-primary-soft {
+    @apply text-[#1A1A1A] dark:text-[#E8E8E3];
+  }
+
+  .text-secondary-soft {
+    @apply text-[#4A4A4A] dark:text-[#A0A0A0];
+  }
+
+  .text-muted-soft {
+    @apply text-[#6A6A6A] dark:text-[#707070];
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY SCALE - Display Headings
+     ======================================================================== */
+  .text-hero {
+    @apply font-display text-display-3xl;
+  }
+  
+  .text-hero-lg {
+    @apply font-display text-display-4xl;
+  }
+  
+  .text-hero-sm {
+    @apply font-display text-display-2xl;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY SCALE - Standard Headings
+     ======================================================================== */
+  .text-h1 {
+    @apply font-display text-h1;
+  }
+
+  .text-h2 {
+    @apply font-display text-h2;
+  }
+
+  .text-h3 {
+    @apply font-sans text-h3;
+  }
+
+  .text-h4 {
+    @apply font-sans text-h4;
+  }
+  
+  .text-h5 {
+    @apply font-sans text-h5;
+  }
+  
+  .text-h6 {
+    @apply font-sans text-h6 uppercase tracking-wide;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY SCALE - Body Text
+     ======================================================================== */
+  .text-body {
+    @apply font-sans text-body leading-relaxed;
+  }
+  
+  .text-body-lg {
+    @apply font-sans text-body-lg leading-relaxed;
+  }
+  
+  .text-body-xl {
+    @apply font-sans text-body-xl leading-relaxed;
+  }
+
+  .text-body-sm {
+    @apply font-sans text-body-sm leading-relaxed;
+  }
+  
+  .text-body-xs {
+    @apply font-sans text-body-xs leading-relaxed;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY SCALE - Captions & Labels
+     ======================================================================== */
+  .text-caption {
+    @apply font-sans text-caption;
+  }
+  
+  .text-caption-sm {
+    @apply font-sans text-caption-sm;
+  }
+  
+  .text-overline {
+    @apply font-sans text-overline uppercase tracking-widest;
+  }
+  
+  .text-label {
+    @apply font-sans text-label font-medium;
+  }
+  
+  .text-label-sm {
+    @apply font-sans text-label-sm font-medium;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Special Text Styles
+     ======================================================================== */
+  .text-lead {
+    @apply font-sans text-body-lg text-muted-foreground leading-relaxed;
+  }
+  
+  .text-quote {
+    @apply font-display text-body-lg italic border-l-4 border-accent pl-4 py-2 my-4 text-muted-foreground;
+  }
+  
+  .text-code {
+    @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded;
+  }
+  
+  .text-kbd {
+    @apply font-mono text-xs px-2 py-1 bg-muted border border-border rounded shadow-sm;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Font Smoothing & Rendering
+     ======================================================================== */
+  .text-smooth {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  .text-legible {
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Text Balance & Wrapping
+     ======================================================================== */
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Line Length (Prose Width)
+     ======================================================================== */
+  .prose-narrow {
+    max-width: 60ch;
+  }
+  
+  .prose-default {
+    max-width: 70ch;
+  }
+  
+  .prose-wide {
+    max-width: 80ch;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Line Clamping
+     ======================================================================== */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Word Breaking
+     ======================================================================== */
+  .break-words {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+  
+  .break-all {
+    word-break: break-all;
+  }
+  
+  .keep-all {
+    word-break: keep-all;
+  }
+
+  /* ========================================================================
+     TYPOGRAPHY - Whitespace
+     ======================================================================== */
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
+  }
+  
+  .whitespace-break-spaces {
+    white-space: break-spaces;
+  }
+}
+
+/* ============================================================================
+   SCROLLBAR UTILITIES
+   ============================================================================ */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0 0 0 / 0.2) transparent;
+  }
+
+  .dark .scrollbar-thin {
+    scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(0 0 0 / 0.2);
+    border-radius: 3px;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ============================================================================
+   ANIMATION UTILITIES
+   ============================================================================ */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.3s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* ============================================================================
+   FOCUS STYLES
+   ============================================================================ */
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[#E8D5C4] focus:ring-offset-2 dark:focus:ring-offset-[#1A1A1A];
+  }
+
+  .focus-visible-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+}
+
+/* ============================================================================
+   GLASS MORPHISM UTILITIES
+   ============================================================================ */
+@layer utilities {
+  .glass {
+    @apply bg-white/70 dark:bg-black/70 backdrop-blur-md;
+  }
+
+  .glass-strong {
+    @apply bg-white/90 dark:bg-black/90 backdrop-blur-xl;
+  }
+
+  .glass-subtle {
+    @apply bg-white/40 dark:bg-black/40 backdrop-blur-sm;
+  }
+}
+
+/* ============================================================================
+   CONTAINER QUERY UTILITIES (with fallback)
+   ============================================================================ */
+@supports (container-type: inline-size) {
+  .cq-container {
+    container-type: inline-size;
+  }
+
+  .cq-container-name {
+    container-type: inline-size;
+    container-name: layout;
+  }
+}
+
+/* ============================================================================
+   RESPONSIVE UTILITIES
+   ============================================================================ */
+@media (max-width: 639px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* ============================================================================
+   REDUCED MOTION
+   ============================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================================
+   PRINT STYLES
+   ============================================================================ */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-break {
+    page-break-before: always;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}

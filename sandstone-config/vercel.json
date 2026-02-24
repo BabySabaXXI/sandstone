@@ -1,0 +1,109 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "name": "sandstone-app",
+  "framework": "nextjs",
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "regions": ["fra1"],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@sandstone_supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@sandstone_supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@sandstone_supabase_service_key",
+    "SUPABASE_ACCESS_TOKEN": "@sandstone_supabase_access_token",
+    "KIMI_API_KEY": "@sandstone_kimi_api_key",
+    "NEXTAUTH_SECRET": "@sandstone_nextauth_secret",
+    "GITHUB_CLIENT_ID": "@sandstone_github_client_id",
+    "GITHUB_CLIENT_SECRET": "@sandstone_github_client_secret",
+    "GOOGLE_CLIENT_ID": "@sandstone_google_client_id",
+    "GOOGLE_CLIENT_SECRET": "@sandstone_google_client_secret"
+  },
+  "build": {
+    "env": {
+      "NEXT_PUBLIC_APP_URL": "https://sandstone-app.vercel.app"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/auth/callback",
+      "destination": "/api/auth/callback"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "/auth/login",
+      "permanent": true
+    },
+    {
+      "source": "/signup",
+      "destination": "/auth/signup",
+      "permanent": true
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/cleanup-expired-sessions",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/refresh-materialized-views",
+      "schedule": "0 2 * * *"
+    }
+  ],
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 60
+    },
+    "app/api/grade/*.ts": {
+      "maxDuration": 120
+    }
+  }
+}

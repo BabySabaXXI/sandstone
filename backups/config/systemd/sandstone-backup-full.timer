@@ -1,0 +1,16 @@
+[Unit]
+Description=Daily Full Backup Timer for Sandstone Database
+Documentation=https://github.com/BabySabaXXI/sandstone/blob/main/docs/BACKUP.md
+
+[Timer]
+# Run daily at 2:00 AM
+OnCalendar=*-*-* 02:00:00
+
+# Randomize start time by up to 10 minutes to avoid load spikes
+RandomizedDelaySec=600
+
+# Run immediately if system was off during scheduled time
+Persistent=true
+
+[Install]
+WantedBy=timers.target

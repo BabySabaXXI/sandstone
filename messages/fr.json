@@ -1,0 +1,789 @@
+{
+  "metadata": {
+    "title": "Sandstone - Apprentissage A-Level par IA",
+    "description": "Notation des réponses A-Level par IA avec commentaires détaillés. Maîtrisez l'Économie et la Géographie avec un tutorat personnalisé.",
+    "keywords": "A-Level, Économie, Géographie, tutorat IA, préparation examens, notation essais, Edexcel, app étude"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "dashboard": "Tableau de Bord",
+    "grade": "Noter Essai",
+    "flashcards": "Fiches",
+    "quiz": "Quiz",
+    "documents": "Documents",
+    "library": "Bibliothèque",
+    "settings": "Paramètres",
+    "login": "Connexion",
+    "signup": "Inscription",
+    "logout": "Déconnexion",
+    "profile": "Profil",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "skip": "Passer",
+    "continue": "Continuer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "create": "Créer",
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "view": "Voir",
+    "download": "Télécharger",
+    "share": "Partager",
+    "copy": "Copier",
+    "paste": "Coller",
+    "cut": "Couper",
+    "selectAll": "Tout Sélectionner",
+    "deselectAll": "Tout Désélectionner",
+    "expand": "Développer",
+    "collapse": "Réduire",
+    "showMore": "Voir Plus",
+    "showLess": "Voir Moins",
+    "learnMore": "En Savoir Plus",
+    "getStarted": "Commencer",
+    "tryNow": "Essayer Maintenant",
+    "upgrade": "Améliorer",
+    "downgrade": "Rétrograder"
+  },
+  "auth": {
+    "login": {
+      "title": "Bon Retour",
+      "subtitle": "Connectez-vous pour continuer votre parcours d'apprentissage",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "Entrez votre email",
+      "passwordLabel": "Mot de Passe",
+      "passwordPlaceholder": "Entrez votre mot de passe",
+      "rememberMe": "Se souvenir de moi",
+      "forgotPassword": "Mot de passe oublié ?",
+      "submitButton": "Se Connecter",
+      "loadingButton": "Connexion...",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signupLink": "S'inscrire",
+      "orContinueWith": "Ou continuer avec",
+      "googleButton": "Continuer avec Google",
+      "error": {
+        "invalidCredentials": "Email ou mot de passe invalide",
+        "accountLocked": "Compte temporairement verrouillé. Veuillez réessayer plus tard.",
+        "emailNotVerified": "Veuillez vérifier votre adresse email",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    },
+    "signup": {
+      "title": "Créez Votre Compte",
+      "subtitle": "Commencez votre parcours vers la réussite A-Level dès aujourd'hui",
+      "firstNameLabel": "Prénom",
+      "firstNamePlaceholder": "Entrez votre prénom",
+      "lastNameLabel": "Nom",
+      "lastNamePlaceholder": "Entrez votre nom",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "Entrez votre email",
+      "passwordLabel": "Mot de Passe",
+      "passwordPlaceholder": "Créez un mot de passe",
+      "passwordRequirements": "Le mot de passe doit contenir au moins 8 caractères avec majuscules, minuscules et chiffres",
+      "confirmPasswordLabel": "Confirmer le Mot de Passe",
+      "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+      "termsLabel": "J'accepte les",
+      "termsLink": "Conditions d'Utilisation",
+      "and": "et",
+      "privacyLink": "Politique de Confidentialité",
+      "submitButton": "Créer un Compte",
+      "loadingButton": "Création du compte...",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "loginLink": "Se connecter",
+      "error": {
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "weakPassword": "Le mot de passe est trop faible",
+        "emailExists": "Un compte existe déjà avec cet email",
+        "termsRequired": "Vous devez accepter les Conditions d'Utilisation",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser Votre Mot de Passe",
+      "subtitle": "Entrez votre email et nous vous enverrons les instructions",
+      "emailLabel": "Adresse Email",
+      "emailPlaceholder": "Entrez votre email",
+      "submitButton": "Envoyer le Lien",
+      "loadingButton": "Envoi...",
+      "backToLogin": "Retour à la connexion",
+      "successMessage": "Vérifiez votre email pour les instructions",
+      "error": {
+        "emailNotFound": "Aucun compte trouvé avec cet email",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    },
+    "resetPassword": {
+      "title": "Définir un Nouveau Mot de Passe",
+      "subtitle": "Entrez votre nouveau mot de passe ci-dessous",
+      "passwordLabel": "Nouveau Mot de Passe",
+      "confirmPasswordLabel": "Confirmer le Nouveau Mot de Passe",
+      "submitButton": "Réinitialiser le Mot de Passe",
+      "loadingButton": "Réinitialisation...",
+      "successMessage": "Mot de passe réinitialisé avec succès",
+      "error": {
+        "invalidToken": "Token invalide ou expiré",
+        "passwordMismatch": "Les mots de passe ne correspondent pas",
+        "generic": "Une erreur s'est produite. Veuillez réessayer."
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Maîtrisez les Examens A-Level avec l'Apprentissage IA",
+      "subtitle": "Obtenez des commentaires instantanés et détaillés sur vos essais, fiches et quiz. Tutorat personnalisé pour l'Économie et la Géographie.",
+      "ctaPrimary": "Commencer Gratuitement",
+      "ctaSecondary": "Voir Comment Ça Marche",
+      "stats": {
+        "students": "10,000+ Étudiants",
+        "accuracy": "95% Précision",
+        "subjects": "2 Matières",
+        "satisfaction": "4.9/5 Note"
+      }
+    },
+    "features": {
+      "title": "Tout Ce Dont Vous Avez Besoin pour Exceller",
+      "subtitle": "Outils complets conçus pour la réussite A-Level",
+      "essayGrading": {
+        "title": "Notation IA des Essais",
+        "description": "Obtenez des commentaires instantanés et détaillés avec des remarques d'examinateur et des recommandations de bande."
+      },
+      "flashcards": {
+        "title": "Fiches Intelligentes",
+        "description": "Créez et étudiez des fiches avec répétition espacée pour maximiser la rétention."
+      },
+      "quizzes": {
+        "title": "Quiz Adaptatifs",
+        "description": "Testez vos connaissances avec des quiz générés par IA qui s'adaptent à votre progression."
+      },
+      "documents": {
+        "title": "Analyse de Documents",
+        "description": "Téléchargez et analysez des matériaux d'étude avec résumé et Q&R par IA."
+      },
+      "library": {
+        "title": "Bibliothèque d'Étude",
+        "description": "Accédez aux examens passés, schémas de notation et ressources d'étude organisées."
+      },
+      "progress": {
+        "title": "Suivi de Progression",
+        "description": "Surveillez votre amélioration avec des analyses détaillées et des informations personnalisées."
+      }
+    },
+    "subjects": {
+      "title": "Matières que Nous Couvrons",
+      "subtitle": "Tutorat expert par IA pour les matières A-Level populaires",
+      "economics": {
+        "name": "Économie",
+        "description": "Maîtrisez la microéconomie, la macroéconomie et les techniques de rédaction d'essais.",
+        "topics": "Structures de Marché, Politique Fiscale, Commerce International, Développement"
+      },
+      "geography": {
+        "name": "Géographie",
+        "description": "Excellez en géographie physique et humaine avec analyse d'études de cas.",
+        "topics": "Côtes, Urbanisation, Changement Climatique, Mondialisation"
+      }
+    },
+    "howItWorks": {
+      "title": "Comment Fonctionne Sandstone",
+      "subtitle": "Trois étapes simples pour de meilleures notes",
+      "step1": {
+        "title": "Soumettez Votre Travail",
+        "description": "Téléchargez votre essai, créez des fiches ou commencez un quiz."
+      },
+      "step2": {
+        "title": "Obtenez des Commentaires IA",
+        "description": "Recevez des commentaires détaillés d'examinateur en quelques secondes."
+      },
+      "step3": {
+        "title": "Améliorez et Répétez",
+        "description": "Apprenez des commentaires et suivez votre progression dans le temps."
+      }
+    },
+    "testimonials": {
+      "title": "Ce Que Disent les Étudiants",
+      "subtitle": "Rejoignez des milliers d'étudiants atteignant leurs objectifs",
+      "quote1": {
+        "text": "Sandstone m'a aidé à améliorer mes essais d'Économie d'un C à un A. Les commentaires IA sont incroyablement détaillés !",
+        "author": "Sarah M.",
+        "role": "Étudiante A-Level"
+      },
+      "quote2": {
+        "text": "Les fiches avec répétition espacée m'ont fait gagner des heures de révision. Hautement recommandé !",
+        "author": "James L.",
+        "role": "Étudiant en Terminale"
+      },
+      "quote3": {
+        "text": "Meilleur investissement pour ma Géographie A-Level. L'analyse d'études de cas est parfaite.",
+        "author": "Emma T.",
+        "role": "Étudiante A-Level"
+      }
+    },
+    "pricing": {
+      "title": "Tarification Simple et Transparente",
+      "subtitle": "Choisissez le plan qui vous convient",
+      "free": {
+        "name": "Gratuit",
+        "price": "£0",
+        "period": "/mois",
+        "description": "Parfait pour essayer Sandstone",
+        "features": [
+          "5 notations d'essais par mois",
+          "50 fiches",
+          "10 quiz par mois",
+          "Suivi de progression basique"
+        ],
+        "cta": "Commencer"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "£9.99",
+        "period": "/mois",
+        "description": "Pour les étudiants A-Level sérieux",
+        "features": [
+          "Notations d'essais illimitées",
+          "Fiches illimitées",
+          "Quiz illimités",
+          "Analyses avancées",
+          "Analyse de documents",
+          "Support prioritaire"
+        ],
+        "cta": "Passer à Pro",
+        "popular": "Plus Populaire"
+      },
+      "team": {
+        "name": "École",
+        "price": "Sur Mesure",
+        "description": "Pour les écoles et centres de tutorat",
+        "features": [
+          "Tout dans Pro",
+          "Tableau de bord admin",
+          "Gestion des étudiants",
+          "Analyses d'utilisation",
+          "Support dédié",
+          "Intégrations personnalisées"
+        ],
+        "cta": "Contacter les Ventes"
+      }
+    },
+    "cta": {
+      "title": "Prêt à Réussir Vos A-Levels ?",
+      "subtitle": "Rejoignez des milliers d'étudiants utilisant déjà Sandstone",
+      "button": "Commencer Gratuitement"
+    },
+    "footer": {
+      "product": "Produit",
+      "features": "Fonctionnalités",
+      "pricing": "Tarification",
+      "changelog": "Journal des Modifications",
+      "roadmap": "Feuille de Route",
+      "company": "Entreprise",
+      "about": "À Propos",
+      "blog": "Blog",
+      "careers": "Carrières",
+      "press": "Presse",
+      "resources": "Ressources",
+      "help": "Centre d'Aide",
+      "guides": "Guides",
+      "api": "API",
+      "community": "Communauté",
+      "legal": "Légal",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "cookies": "Cookies",
+      "licenses": "Licences",
+      "copyright": "© {year} Sandstone. Tous droits réservés."
+    }
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "welcome": "Bon retour, {name} !",
+    "subtitle": "Voici votre progression d'apprentissage",
+    "stats": {
+      "essaysGraded": "Essais Notés",
+      "flashcardsStudied": "Fiches Étudiées",
+      "quizzesCompleted": "Quiz Complétés",
+      "studyStreak": "Série d'Étude",
+      "days": "jours"
+    },
+    "quickActions": {
+      "title": "Actions Rapides",
+      "gradeEssay": "Noter un Essai",
+      "createFlashcards": "Créer des Fiches",
+      "startQuiz": "Commencer un Quiz",
+      "browseLibrary": "Explorer la Bibliothèque"
+    },
+    "recentActivity": {
+      "title": "Activité Récente",
+      "empty": "Aucune activité récente",
+      "viewAll": "Voir Tout"
+    },
+    "progress": {
+      "title": "Votre Progression",
+      "weeklyGoal": "Objectif Hebdomadaire",
+      "completed": "complété",
+      "subjects": {
+        "economics": "Économie",
+        "geography": "Géographie"
+      }
+    },
+    "recommendations": {
+      "title": "Recommandé pour Vous",
+      "basedOn": "Basé sur votre activité récente"
+    }
+  },
+  "grade": {
+    "title": "Notation d'Essais",
+    "subtitle": "Obtenez des commentaires IA sur vos essais",
+    "form": {
+      "subjectLabel": "Matière",
+      "subjectPlaceholder": "Sélectionner une matière",
+      "topicLabel": "Sujet",
+      "topicPlaceholder": "Entrez le sujet ou la question de l'essai",
+      "essayLabel": "Votre Essai",
+      "essayPlaceholder": "Collez ou tapez votre essai ici...",
+      "wordCount": "Nombre de mots : {count}",
+      "submitButton": "Obtenir des Commentaires",
+      "loadingButton": "Analyse..."
+    },
+    "subjects": {
+      "economics": "Économie",
+      "geography": "Géographie"
+    },
+    "results": {
+      "title": "Résultats des Commentaires",
+      "overallScore": "Note Globale",
+      "band": "Bande {band}",
+      "breakdown": {
+        "title": "Détail des Notes",
+        "knowledge": "Connaissance et Compréhension",
+        "application": "Application",
+        "analysis": "Analyse",
+        "evaluation": "Évaluation"
+      },
+      "strengths": "Points Forts",
+      "improvements": "Points à Améliorer",
+      "detailedFeedback": "Commentaires Détaillés",
+      "exampleResponse": "Réponse Exemple",
+      "saveButton": "Enregistrer les Commentaires",
+      "shareButton": "Partager",
+      "newEssay": "Noter un Autre Essai"
+    },
+    "history": {
+      "title": "Essais Précédents",
+      "empty": "Aucun essai noté encore",
+      "date": "Date",
+      "topic": "Sujet",
+      "score": "Note",
+      "view": "Voir"
+    },
+    "tips": {
+      "title": "Conseils de Rédaction",
+      "tip1": "Définissez toujours les termes clés dans votre introduction",
+      "tip2": "Utilisez des exemples réels pour soutenir vos arguments",
+      "tip3": "Incluez des diagrammes lorsque c'est approprié",
+      "tip4": "Évaluez les deux côtés d'un argument",
+      "tip5": "Concluez avec un jugement justifié"
+    }
+  },
+  "flashcards": {
+    "title": "Fiches",
+    "subtitle": "Étudiez plus intelligemment avec la répétition espacée",
+    "stats": {
+      "total": "Total de Fiches",
+      "toReview": "À Réviser",
+      "mastered": "Maîtrisées",
+      "learning": "En Apprentissage"
+    },
+    "actions": {
+      "create": "Créer des Fiches",
+      "study": "Étudier Maintenant",
+      "import": "Importer",
+      "export": "Exporter"
+    },
+    "decks": {
+      "title": "Vos Paquets",
+      "empty": "Pas encore de paquets",
+      "cards": "{count} fiches",
+      "lastStudied": "Dernier étude : {date}",
+      "never": "Jamais"
+    },
+    "study": {
+      "title": "Session d'Étude",
+      "progress": "Fiche {current} sur {total}",
+      "showAnswer": "Montrer la Réponse",
+      "rate": {
+        "again": "Encore",
+        "hard": "Difficile",
+        "good": "Bien",
+        "easy": "Facile"
+      },
+      "completed": {
+        "title": "Session Terminée !",
+        "message": "Vous avez révisé toutes les fiches pour l'instant",
+        "stats": "Vous avez noté {again} encore, {hard} difficile, {good} bien, {easy} facile",
+        "continue": "Continuer à Étudier",
+        "back": "Retour aux Paquets"
+      }
+    },
+    "create": {
+      "title": "Créer des Fiches",
+      "frontLabel": "Recto (Question)",
+      "backLabel": "Verso (Réponse)",
+      "addButton": "Ajouter une Fiche",
+      "saveButton": "Enregistrer le Paquet",
+      "deckNameLabel": "Nom du Paquet",
+      "subjectLabel": "Matière",
+      "tagsLabel": "Tags (optionnel)"
+    },
+    "aiGenerate": {
+      "title": "Générer des Fiches avec IA",
+      "promptLabel": "Pour quel sujet devons-nous générer des fiches ?",
+      "countLabel": "Nombre de fiches",
+      "generateButton": "Générer",
+      "generatingButton": "Génération..."
+    }
+  },
+  "quiz": {
+    "title": "Quiz",
+    "subtitle": "Testez vos connaissances avec des quiz adaptatifs",
+    "setup": {
+      "title": "Configuration du Quiz",
+      "subjectLabel": "Matière",
+      "topicLabel": "Sujet (optionnel)",
+      "difficultyLabel": "Difficulté",
+      "questionsLabel": "Nombre de Questions",
+      "startButton": "Commencer le Quiz",
+      "difficulty": {
+        "easy": "Facile",
+        "medium": "Moyen",
+        "hard": "Difficile",
+        "mixed": "Mixte"
+      }
+    },
+    "question": {
+      "progress": "Question {current} sur {total}",
+      "multipleChoice": "Sélectionnez la bonne réponse",
+      "trueFalse": "Vrai ou Faux ?",
+      "shortAnswer": "Tapez votre réponse",
+      "essay": "Écrivez votre réponse",
+      "submit": "Soumettre la Réponse",
+      "skip": "Passer",
+      "flag": "Marquer pour révision"
+    },
+    "results": {
+      "title": "Résultats du Quiz",
+      "score": "Vous avez obtenu {score}%",
+      "correct": "{correct} correct sur {total}",
+      "time": "Temps : {time}",
+      "breakdown": "Détail des Questions",
+      "retake": "Refaire le Quiz",
+      "newQuiz": "Nouveau Quiz",
+      "review": "Réviser les Réponses"
+    },
+    "review": {
+      "title": "Réviser les Réponses",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "explanation": "Explication"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Téléchargez et analysez vos matériaux d'étude",
+    "upload": {
+      "title": "Télécharger un Document",
+      "dragDrop": "Glissez et déposez les fichiers ici",
+      "or": "ou",
+      "browse": "Parcourir les fichiers",
+      "supported": "Supportés : PDF, DOCX, TXT (max 10Mo)",
+      "uploading": "Téléchargement..."
+    },
+    "list": {
+      "title": "Vos Documents",
+      "empty": "Aucun document téléchargé encore",
+      "name": "Nom",
+      "date": "Téléchargé",
+      "size": "Taille",
+      "actions": "Actions"
+    },
+    "actions": {
+      "summarize": "Résumer",
+      "ask": "Poser des Questions",
+      "flashcards": "Générer des Fiches",
+      "quiz": "Générer un Quiz",
+      "delete": "Supprimer"
+    },
+    "chat": {
+      "title": "Question sur le Document",
+      "placeholder": "Posez une question sur ce document...",
+      "send": "Envoyer",
+      "thinking": "Réflexion..."
+    }
+  },
+  "library": {
+    "title": "Bibliothèque d'Étude",
+    "subtitle": "Accédez aux examens passés, schémas de notation et ressources",
+    "filters": {
+      "subject": "Matière",
+      "type": "Type de Ressource",
+      "year": "Année",
+      "board": "Conseil d'Examen"
+    },
+    "types": {
+      "pastPaper": "Examen Passé",
+      "markScheme": "Schéma de Notation",
+      "specification": "Spécification",
+      "notes": "Notes d'Étude",
+      "video": "Tutoriel Vidéo"
+    },
+    "search": {
+      "placeholder": "Rechercher des ressources...",
+      "noResults": "Aucune ressource trouvée"
+    }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Gérez votre compte et préférences",
+    "sections": {
+      "profile": "Profil",
+      "account": "Compte",
+      "notifications": "Notifications",
+      "appearance": "Apparence",
+      "language": "Langue",
+      "subscription": "Abonnement",
+      "security": "Sécurité",
+      "data": "Données et Confidentialité"
+    },
+    "profile": {
+      "title": "Informations du Profil",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse Email",
+      "bio": "Biographie",
+      "school": "École/Institution",
+      "subjects": "En Étude",
+      "saveButton": "Enregistrer les Modifications",
+      "avatar": {
+        "title": "Photo de Profil",
+        "change": "Changer",
+        "remove": "Supprimer"
+      }
+    },
+    "notifications": {
+      "title": "Préférences de Notification",
+      "email": {
+        "title": "Notifications par Email",
+        "marketing": "Mises à jour marketing",
+        "product": "Annonces de produits",
+        "weekly": "Rapport hebdomadaire de progression",
+        "reminders": "Rappels d'étude"
+      },
+      "push": {
+        "title": "Notifications Push",
+        "studyReminders": "Rappels d'étude",
+        "newFeatures": "Nouvelles fonctionnalités",
+        "achievements": "Réalisations"
+      }
+    },
+    "appearance": {
+      "title": "Apparence",
+      "theme": "Thème",
+      "themes": {
+        "light": "Clair",
+        "dark": "Sombre",
+        "system": "Système"
+      },
+      "fontSize": "Taille de Police",
+      "fontSizes": {
+        "small": "Petite",
+        "medium": "Moyenne",
+        "large": "Grande"
+      }
+    },
+    "language": {
+      "title": "Langue",
+      "selectLabel": "Sélectionner la Langue",
+      "current": "Langue Actuelle",
+      "note": "Les changements s'appliqueront immédiatement"
+    },
+    "subscription": {
+      "title": "Votre Abonnement",
+      "currentPlan": "Plan Actuel",
+      "status": "Statut",
+      "renewal": "Renouvellement le",
+      "upgradeButton": "Améliorer le Plan",
+      "manageButton": "Gérer l'Abonnement",
+      "cancelButton": "Annuler l'Abonnement",
+      "features": "Fonctionnalités du Plan"
+    },
+    "security": {
+      "title": "Sécurité",
+      "changePassword": "Changer le Mot de Passe",
+      "twoFactor": "Authentification à Deux Facteurs",
+      "sessions": "Sessions Actives",
+      "logoutAll": "Déconnexion de Tous les Appareils"
+    },
+    "data": {
+      "title": "Données et Confidentialité",
+      "export": "Exporter Vos Données",
+      "delete": "Supprimer le Compte",
+      "deleteWarning": "Cette action ne peut pas être annulée. Toutes vos données seront définitivement supprimées."
+    }
+  },
+  "errors": {
+    "generic": "Une erreur s'est produite. Veuillez réessayer.",
+    "notFound": {
+      "title": "Page Non Trouvée",
+      "message": "La page que vous recherchez n'existe pas.",
+      "back": "Retour à l'Accueil"
+    },
+    "unauthorized": {
+      "title": "Non Autorisé",
+      "message": "Vous devez être connecté pour accéder à cette page.",
+      "login": "Se Connecter"
+    },
+    "forbidden": {
+      "title": "Accès Refusé",
+      "message": "Vous n'avez pas la permission d'accéder à cette ressource."
+    },
+    "server": {
+      "title": "Erreur Serveur",
+      "message": "Une erreur s'est produite de notre côté. Veuillez réessayer plus tard."
+    },
+    "offline": {
+      "title": "Vous êtes Hors Ligne",
+      "message": "Veuillez vérifier votre connexion internet et réessayer."
+    },
+    "rateLimit": {
+      "title": "Trop de Requêtes",
+      "message": "Veuillez attendre un moment avant de réessayer."
+    }
+  },
+  "common": {
+    "loading": "Chargement...",
+    "saving": "Enregistrement...",
+    "processing": "Traitement...",
+    "success": "Succès !",
+    "error": "Erreur",
+    "warning": "Avertissement",
+    "info": "Info",
+    "confirm": "Êtes-vous sûr ?",
+    "yes": "Oui",
+    "no": "Non",
+    "ok": "OK",
+    "done": "Terminé",
+    "retry": "Réessayer",
+    "refresh": "Actualiser",
+    "more": "Plus",
+    "less": "Moins",
+    "all": "Tout",
+    "none": "Aucun",
+    "or": "ou",
+    "and": "et",
+    "from": "de",
+    "to": "à",
+    "of": "de",
+    "by": "par",
+    "on": "sur",
+    "at": "à",
+    "in": "dans",
+    "with": "avec",
+    "for": "pour",
+    "about": "à propos",
+    "per": "par",
+    "each": "chaque",
+    "every": "chaque",
+    "other": "autre",
+    "another": "autre",
+    "new": "Nouveau",
+    "old": "Ancien",
+    "first": "Premier",
+    "last": "Dernier",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "current": "Actuel",
+    "total": "Total",
+    "average": "Moyenne",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "required": "Requis",
+    "optional": "Optionnel",
+    "default": "Par défaut",
+    "custom": "Personnalisé",
+    "standard": "Standard",
+    "premium": "Premium",
+    "basic": "Basique",
+    "advanced": "Avancé",
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "expert": "Expert",
+    "active": "Actif",
+    "inactive": "Inactif",
+    "pending": "En Attente",
+    "completed": "Terminé",
+    "inProgress": "En Cours",
+    "notStarted": "Non Commencé",
+    "enabled": "Activé",
+    "disabled": "Désactivé",
+    "visible": "Visible",
+    "hidden": "Caché",
+    "public": "Public",
+    "private": "Privé",
+    "shared": "Partagé",
+    "personal": "Personnel"
+  },
+  "time": {
+    "now": "À l'instant",
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "tomorrow": "Demain",
+    "thisWeek": "Cette semaine",
+    "lastWeek": "La semaine dernière",
+    "nextWeek": "La semaine prochaine",
+    "thisMonth": "Ce mois",
+    "lastMonth": "Le mois dernier",
+    "nextMonth": "Le mois prochain",
+    "thisYear": "Cette année",
+    "lastYear": "L'année dernière",
+    "ago": "il y a {time}",
+    "in": "dans {time}",
+    "seconds": "{count} secondes",
+    "minutes": "{count} minutes",
+    "hours": "{count} heures",
+    "days": "{count} jours",
+    "weeks": "{count} semaines",
+    "months": "{count} mois",
+    "years": "{count} ans"
+  },
+  "accessibility": {
+    "skipToMain": "Passer au contenu principal",
+    "menu": "Menu",
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "expand": "Développer",
+    "collapse": "Réduire",
+    "loading": "Chargement du contenu",
+    "error": "Une erreur s'est produite",
+    "success": "Action réussie",
+    "required": "Champ requis",
+    "optional": "Champ optionnel",
+    "selected": "Sélectionné",
+    "unselected": "Non sélectionné",
+    "checked": "Coché",
+    "unchecked": "Non coché",
+    "pressed": "Pressé",
+    "notPressed": "Non pressé",
+    "current": "Actuel",
+    "completed": "Terminé",
+    "incomplete": "Incomplet",
+    "newNotification": "Nouvelle notification",
+    "breadcrumb": "Navigation fil d'Ariane",
+    "pagination": "Pagination",
+    "search": "Rechercher",
+    "results": "Résultats de recherche"
+  }
+}

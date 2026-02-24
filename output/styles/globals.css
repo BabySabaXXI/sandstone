@@ -1,0 +1,964 @@
+/* ============================================================================
+   SANDSTONE GLOBAL STYLES - FIXED & ORGANIZED
+   ============================================================================
+   
+   This is the main entry point for all global styles in the Sandstone app.
+   It consolidates all CSS into a well-organized, maintainable structure.
+   
+   Organization:
+   1. Tailwind directives
+   2. CSS Custom Properties (Design Tokens)
+   3. Base styles
+   4. Utility classes
+   5. Animation keyframes
+   6. Responsive utilities
+   7. Print styles
+   
+   ============================================================================ */
+
+/* ============================================================================
+   1. TAILWIND DIRECTIVES
+   ============================================================================ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================================
+   2. CSS CUSTOM PROPERTIES - DESIGN TOKENS
+   ============================================================================ */
+
+@layer base {
+  :root {
+    /* ========================================
+       COLOR PALETTE - SAND (Warm Neutrals)
+       ======================================== */
+    --sand-50: 45 14% 98%;
+    --sand-100: 45 14% 95%;
+    --sand-200: 45 14% 91%;
+    --sand-300: 45 14% 85%;
+    --sand-400: 45 14% 70%;
+    --sand-500: 45 10% 50%;
+    --sand-600: 45 10% 40%;
+    --sand-700: 45 10% 30%;
+    --sand-800: 45 10% 20%;
+    --sand-900: 45 10% 10%;
+
+    /* ========================================
+       COLOR PALETTE - PEACH (Primary Accent)
+       ======================================== */
+    --peach-50: 30 50% 97%;
+    --peach-100: 30 45% 92%;
+    --peach-200: 30 40% 84%;
+    --peach-300: 30 35% 76%;
+    --peach-400: 30 35% 68%;
+    --peach-500: 25 45% 55%;
+    --peach-600: 22 51% 43%;
+    --peach-700: 20 55% 35%;
+    --peach-800: 18 60% 28%;
+    --peach-900: 15 65% 20%;
+
+    /* ========================================
+       COLOR PALETTE - SAGE (Secondary Accent)
+       ======================================== */
+    --sage-50: 120 20% 97%;
+    --sage-100: 120 20% 92%;
+    --sage-200: 120 20% 72%;
+    --sage-300: 120 20% 52%;
+    --sage-400: 120 25% 42%;
+    --sage-500: 120 30% 35%;
+    --sage-600: 120 35% 28%;
+    --sage-700: 120 40% 22%;
+    --sage-800: 120 45% 18%;
+    --sage-900: 120 50% 12%;
+
+    /* ========================================
+       COLOR PALETTE - BLUE (Info Accent)
+       ======================================== */
+    --blue-50: 200 30% 97%;
+    --blue-100: 200 30% 92%;
+    --blue-200: 200 30% 75%;
+    --blue-300: 200 30% 55%;
+    --blue-400: 200 35% 45%;
+    --blue-500: 210 50% 40%;
+    --blue-600: 220 60% 35%;
+    --blue-700: 225 65% 28%;
+    --blue-800: 230 70% 22%;
+    --blue-900: 235 75% 15%;
+
+    /* ========================================
+       COLOR PALETTE - STATUS COLORS
+       ======================================== */
+    --success-50: 142 76% 97%;
+    --success-100: 142 76% 92%;
+    --success-200: 142 76% 82%;
+    --success-300: 142 76% 72%;
+    --success-400: 142 71% 60%;
+    --success-500: 142 76% 45%;
+    --success-600: 142 76% 36%;
+    --success-700: 142 76% 29%;
+    --success-800: 142 76% 22%;
+    --success-900: 142 76% 15%;
+
+    --warning-50: 48 100% 96%;
+    --warning-100: 48 100% 91%;
+    --warning-200: 48 100% 81%;
+    --warning-300: 48 100% 71%;
+    --warning-400: 48 100% 60%;
+    --warning-500: 48 96% 53%;
+    --warning-600: 45 90% 45%;
+    --warning-700: 42 85% 38%;
+    --warning-800: 40 80% 30%;
+    --warning-900: 38 75% 22%;
+
+    --error-50: 0 86% 97%;
+    --error-100: 0 86% 92%;
+    --error-200: 0 86% 82%;
+    --error-300: 0 86% 72%;
+    --error-400: 0 84% 60%;
+    --error-500: 0 84% 50%;
+    --error-600: 0 72% 41%;
+    --error-700: 0 72% 33%;
+    --error-800: 0 72% 26%;
+    --error-900: 0 72% 18%;
+
+    /* ========================================
+       SHADCN/UI THEME VARIABLES - LIGHT
+       ======================================== */
+    --background: 45 14% 97%;
+    --foreground: 0 0% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+    --primary: 22 51% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 14% 95%;
+    --secondary-foreground: 0 0% 13%;
+    --muted: 45 14% 93%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 22 51% 43%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 41%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 45 14% 88%;
+    --input: 45 14% 88%;
+    --ring: 22 51% 43%;
+    --radius: 0.75rem;
+
+    /* ========================================
+       SEMANTIC COLOR TOKENS - LIGHT
+       ======================================== */
+    --bg-default: hsl(var(--sand-50));
+    --bg-primary: hsl(0 0% 100%);
+    --bg-secondary: hsl(var(--sand-100));
+    --bg-tertiary: hsl(var(--sand-200));
+    --bg-elevated: hsl(0 0% 100%);
+    --bg-overlay: hsl(0 0% 0% / 0.5);
+    --bg-inverse: hsl(var(--sand-900));
+
+    --fg-default: hsl(var(--sand-900));
+    --fg-primary: hsl(var(--sand-900));
+    --fg-secondary: hsl(var(--sand-700));
+    --fg-tertiary: hsl(var(--sand-500));
+    --fg-quaternary: hsl(var(--sand-400));
+    --fg-inverse: hsl(0 0% 100%);
+
+    --border-default: hsl(var(--sand-300));
+    --border-subtle: hsl(var(--sand-200));
+    --border-strong: hsl(var(--sand-400));
+    --border-focus: hsl(var(--peach-400));
+
+    /* ========================================
+       SPACING TOKENS (4px base unit)
+       ======================================== */
+    --space-unit: 0.25rem;
+    --space-0: 0;
+    --space-px: 1px;
+    --space-0-5: 0.125rem;
+    --space-1: 0.25rem;
+    --space-1-5: 0.375rem;
+    --space-2: 0.5rem;
+    --space-2-5: 0.625rem;
+    --space-3: 0.75rem;
+    --space-3-5: 0.875rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 1.75rem;
+    --space-8: 2rem;
+    --space-9: 2.25rem;
+    --space-10: 2.5rem;
+    --space-11: 2.75rem;
+    --space-12: 3rem;
+    --space-14: 3.5rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+    --space-28: 7rem;
+    --space-32: 8rem;
+    --space-36: 9rem;
+    --space-40: 10rem;
+    --space-44: 11rem;
+    --space-48: 12rem;
+    --space-52: 13rem;
+    --space-56: 14rem;
+    --space-60: 15rem;
+    --space-64: 16rem;
+    --space-72: 18rem;
+    --space-80: 20rem;
+
+    /* Semantic spacing */
+    --space-component-xs: var(--space-1);
+    --space-component-sm: var(--space-2);
+    --space-component-md: var(--space-3);
+    --space-component-lg: var(--space-4);
+    --space-component-xl: var(--space-6);
+
+    --space-content-xs: var(--space-2);
+    --space-content-sm: var(--space-3);
+    --space-content-md: var(--space-4);
+    --space-content-lg: var(--space-6);
+    --space-content-xl: var(--space-8);
+    --space-content-2xl: var(--space-10);
+
+    --space-layout-xs: var(--space-4);
+    --space-layout-sm: var(--space-6);
+    --space-layout-md: var(--space-8);
+    --space-layout-lg: var(--space-12);
+    --space-layout-xl: var(--space-16);
+    --space-layout-2xl: var(--space-20);
+
+    --space-section-xs: var(--space-8);
+    --space-section-sm: var(--space-12);
+    --space-section-md: var(--space-16);
+    --space-section-lg: var(--space-20);
+    --space-section-xl: var(--space-24);
+    --space-section-2xl: var(--space-32);
+
+    /* Container spacing (responsive) */
+    --space-container: var(--space-4);
+    --space-container-sm: var(--space-6);
+    --space-container-md: var(--space-8);
+    --space-container-lg: var(--space-12);
+    --space-container-xl: var(--space-16);
+
+    /* ========================================
+       TYPOGRAPHY TOKENS
+       ======================================== */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', monospace;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 1.875rem;
+    --text-4xl: 2.25rem;
+
+    --leading-none: 1;
+    --leading-tight: 1.25;
+    --leading-snug: 1.375;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.625;
+    --leading-loose: 2;
+
+    /* ========================================
+       BORDER RADIUS TOKENS
+       ======================================== */
+    --radius-none: 0;
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
+    --radius-full: 9999px;
+
+    /* ========================================
+       SHADOW TOKENS
+       ======================================== */
+    --shadow-none: none;
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.02);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.04);
+    --shadow-md: 0 4px 6px rgb(0 0 0 / 0.04);
+    --shadow-lg: 0 8px 16px rgb(0 0 0 / 0.06);
+    --shadow-xl: 0 12px 24px rgb(0 0 0 / 0.08);
+    --shadow-card: 0 1px 3px rgb(0 0 0 / 0.04);
+    --shadow-card-hover: 0 4px 12px rgb(0 0 0 / 0.08);
+    --shadow-dropdown: 0 4px 16px rgb(0 0 0 / 0.12);
+    --shadow-modal: 0 24px 48px rgb(0 0 0 / 0.16);
+
+    /* ========================================
+       TRANSITION TOKENS
+       ======================================== */
+    --duration-instant: 100ms;
+    --duration-fast: 150ms;
+    --duration-normal: 200ms;
+    --duration-slow: 300ms;
+    --duration-slower: 500ms;
+
+    --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ========================================
+       Z-INDEX TOKENS
+       ======================================== */
+    --z-base: 0;
+    --z-dropdown: 100;
+    --z-sticky: 200;
+    --z-fixed: 300;
+    --z-modal-backdrop: 400;
+    --z-modal: 500;
+    --z-popover: 600;
+    --z-tooltip: 700;
+    --z-toast: 800;
+
+    /* ========================================
+       LAYOUT TOKENS
+       ======================================== */
+    --sidebar-width: 280px;
+    --sidebar-width-collapsed: 72px;
+    --header-height: 64px;
+    --container-max: 1440px;
+    --container-narrow: 768px;
+  }
+
+  /* ========================================
+     DARK MODE VARIABLES
+     ======================================== */
+  .dark {
+    /* SHADCN/UI THEME VARIABLES - DARK */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 22 70% 72%;
+    --primary-foreground: 0 0% 8%;
+    --secondary: 0 0% 14%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 22 70% 72%;
+    --accent-foreground: 0 0% 8%;
+    --destructive: 0 62% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 22 70% 72%;
+
+    /* SEMANTIC COLOR TOKENS - DARK */
+    --bg-default: hsl(0 0% 8%);
+    --bg-primary: hsl(0 0% 10%);
+    --bg-secondary: hsl(0 0% 14%);
+    --bg-tertiary: hsl(0 0% 18%);
+    --bg-elevated: hsl(0 0% 12%);
+    --bg-overlay: hsl(0 0% 0% / 0.8);
+    --bg-inverse: hsl(var(--sand-100));
+
+    --fg-default: hsl(var(--sand-100));
+    --fg-primary: hsl(var(--sand-100));
+    --fg-secondary: hsl(var(--sand-300));
+    --fg-tertiary: hsl(var(--sand-500));
+    --fg-quaternary: hsl(var(--sand-600));
+    --fg-inverse: hsl(var(--sand-900));
+
+    --border-default: hsl(0 0% 20%);
+    --border-subtle: hsl(0 0% 16%);
+    --border-strong: hsl(0 0% 28%);
+    --border-focus: hsl(var(--peach-400));
+
+    /* Dark mode shadows */
+    --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.2);
+    --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.3);
+    --shadow-md: 0 4px 6px rgb(0 0 0 / 0.3);
+    --shadow-lg: 0 8px 16px rgb(0 0 0 / 0.4);
+    --shadow-xl: 0 12px 24px rgb(0 0 0 / 0.5);
+    --shadow-card: 0 1px 3px rgb(0 0 0 / 0.3);
+    --shadow-card-hover: 0 4px 12px rgb(0 0 0 / 0.4);
+    --shadow-dropdown: 0 4px 16px rgb(0 0 0 / 0.5);
+    --shadow-modal: 0 24px 48px rgb(0 0 0 / 0.6);
+  }
+}
+
+/* ============================================================================
+   3. BASE STYLES
+   ============================================================================ */
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    transition: background-color var(--duration-normal) var(--ease-default),
+                color var(--duration-normal) var(--ease-default);
+  }
+
+  /* Focus visible styles */
+  :focus-visible {
+    @apply outline-none;
+    outline: none;
+    box-shadow: 0 0 0 2px hsl(var(--background)),
+                0 0 0 4px hsl(var(--ring));
+  }
+
+  /* Selection styles */
+  ::selection {
+    background-color: hsl(var(--primary) / 0.3);
+    color: hsl(var(--foreground));
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ============================================================================
+   4. UTILITY CLASSES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     SHADOW UTILITIES
+     ======================================== */
+  .shadow-soft {
+    box-shadow: var(--shadow-sm);
+  }
+
+  .shadow-soft-md {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-soft-lg {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: var(--shadow-xl);
+  }
+
+  /* ========================================
+     BACKGROUND UTILITIES
+     ======================================== */
+  .bg-default {
+    background-color: var(--bg-default);
+  }
+
+  .bg-primary-soft {
+    background-color: var(--bg-primary);
+  }
+
+  .bg-secondary-soft {
+    background-color: var(--bg-secondary);
+  }
+
+  .bg-tertiary-soft {
+    background-color: var(--bg-tertiary);
+  }
+
+  .bg-elevated {
+    background-color: var(--bg-elevated);
+  }
+
+  /* ========================================
+     TEXT COLOR UTILITIES
+     ======================================== */
+  .text-default {
+    color: var(--fg-default);
+  }
+
+  .text-primary-soft {
+    color: var(--fg-primary);
+  }
+
+  .text-secondary-soft {
+    color: var(--fg-secondary);
+  }
+
+  .text-tertiary-soft {
+    color: var(--fg-tertiary);
+  }
+
+  .text-quaternary-soft {
+    color: var(--fg-quaternary);
+  }
+
+  /* ========================================
+     BORDER UTILITIES
+     ======================================== */
+  .border-default {
+    border-color: var(--border-default);
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+
+  /* ========================================
+     SCROLLBAR UTILITIES
+     ======================================== */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ========================================
+     GLASS MORPHISM
+     ======================================== */
+  .glass {
+    background-color: hsl(0 0% 100% / 0.7);
+    backdrop-filter: blur(12px);
+  }
+
+  .dark .glass {
+    background-color: hsl(0 0% 0% / 0.7);
+  }
+
+  .glass-strong {
+    background-color: hsl(0 0% 100% / 0.9);
+    backdrop-filter: blur(20px);
+  }
+
+  .dark .glass-strong {
+    background-color: hsl(0 0% 0% / 0.9);
+  }
+
+  /* ========================================
+     FOCUS RING UTILITIES
+     ======================================== */
+  .focus-ring {
+    @apply focus:outline-none;
+  }
+
+  .focus-ring:focus-visible {
+    box-shadow: 0 0 0 2px hsl(var(--background)),
+                0 0 0 4px hsl(var(--ring));
+  }
+
+  /* ========================================
+     LINE CLAMP UTILITIES
+     ======================================== */
+  .line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ========================================
+     TEXT BALANCE
+     ======================================== */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* ========================================
+     GPU ACCELERATION
+     ======================================== */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* ============================================================================
+   5. ANIMATION KEYFRAMES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     FADE ANIMATIONS
+     ======================================== */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes fade-out {
+    from { opacity: 1; }
+    to { opacity: 0; }
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ========================================
+     SCALE ANIMATIONS
+     ======================================== */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scale-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  /* ========================================
+     SLIDE ANIMATIONS
+     ======================================== */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-down {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ========================================
+     SPIN & PULSE ANIMATIONS
+     ======================================== */
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+      animation-timing-function: var(--ease-out-expo);
+    }
+    50% {
+      transform: translateY(-10px);
+      animation-timing-function: var(--ease-out-expo);
+    }
+  }
+
+  /* ========================================
+     SHIMMER LOADING
+     ======================================== */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  /* ========================================
+     ANIMATION UTILITY CLASSES
+     ======================================== */
+  .animate-fade-in {
+    animation: fade-in var(--duration-normal) var(--ease-out-expo) forwards;
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up var(--duration-slow) var(--ease-out-expo) forwards;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down var(--duration-slow) var(--ease-out-expo) forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in var(--duration-normal) var(--ease-out-back) forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up var(--duration-slow) var(--ease-out-expo) forwards;
+  }
+
+  .animate-slide-down {
+    animation: slide-down var(--duration-slow) var(--ease-out-expo) forwards;
+  }
+
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s var(--ease-default) infinite;
+  }
+
+  .animate-bounce {
+    animation: bounce 1s var(--ease-out-expo) infinite;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 1.5s linear infinite;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--muted) / 0.5),
+      transparent
+    );
+    background-size: 200% 100%;
+  }
+
+  /* Animation delays */
+  .animate-delay-100 { animation-delay: 100ms; }
+  .animate-delay-200 { animation-delay: 200ms; }
+  .animate-delay-300 { animation-delay: 300ms; }
+  .animate-delay-400 { animation-delay: 400ms; }
+  .animate-delay-500 { animation-delay: 500ms; }
+
+  /* Animation fill modes */
+  .animate-fill-forwards { animation-fill-mode: forwards; }
+  .animate-fill-both { animation-fill-mode: both; }
+}
+
+/* ============================================================================
+   6. RESPONSIVE UTILITIES
+   ============================================================================ */
+
+/* Mobile-first responsive container spacing */
+@media (min-width: 640px) {
+  :root {
+    --space-container: var(--space-container-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --space-container: var(--space-container-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --space-container: var(--space-container-lg);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --space-container: var(--space-container-xl);
+  }
+}
+
+/* Mobile visibility utilities */
+@media (max-width: 639px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .show-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Touch target sizes */
+@layer utilities {
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .touch-target-sm {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .touch-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  /* Prevent text selection on interactive elements */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Remove tap highlight on mobile */
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-area-x {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Viewport height fix for mobile browsers */
+@supports (height: 100dvh) {
+  .h-screen-dvh {
+    height: 100dvh;
+  }
+
+  .min-h-screen-dvh {
+    min-height: 100dvh;
+  }
+}
+
+/* ============================================================================
+   7. PRINT STYLES
+   ============================================================================ */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  /* Ensure text is readable when printed */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

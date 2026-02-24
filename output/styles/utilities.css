@@ -1,0 +1,672 @@
+/* ============================================================================
+   SANDSTONE UTILITY CLASSES - FIXED
+   ============================================================================
+   
+   Additional utility classes that complement Tailwind CSS.
+   These provide commonly used patterns not covered by default Tailwind.
+   
+   Contents:
+   1. Layout utilities
+   2. Spacing utilities
+   3. Typography utilities
+   4. Visual utilities
+   5. Interactive utilities
+   6. Responsive utilities
+   ============================================================================ */
+
+/* ============================================================================
+   1. LAYOUT UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     CONTAINER UTILITIES
+     ======================================== */
+  .container-narrow {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container-default {
+    max-width: 64rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container-wide {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container-full {
+    max-width: 100%;
+  }
+
+  /* ========================================
+     ASPECT RATIO UTILITIES
+     ======================================== */
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aspect-portrait {
+    aspect-ratio: 3 / 4;
+  }
+
+  .aspect-landscape {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* ========================================
+     POSITION UTILITIES
+     ======================================== */
+  .inset-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .inset-x-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .inset-y-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  /* ========================================
+     STACK LAYOUT (Vertical rhythm)
+     ======================================== */
+  .stack > * + * {
+    margin-top: var(--space-content-md);
+  }
+
+  .stack-sm > * + * {
+    margin-top: var(--space-content-sm);
+  }
+
+  .stack-lg > * + * {
+    margin-top: var(--space-content-lg);
+  }
+
+  .stack-xl > * + * {
+    margin-top: var(--space-content-xl);
+  }
+
+  /* ========================================
+     INLINE STACK (Horizontal rhythm)
+     ======================================== */
+  .inline-stack {
+    display: flex;
+    align-items: center;
+  }
+
+  .inline-stack > * + * {
+    margin-left: var(--space-content-md);
+  }
+
+  .inline-stack-sm > * + * {
+    margin-left: var(--space-content-sm);
+  }
+
+  .inline-stack-lg > * + * {
+    margin-left: var(--space-content-lg);
+  }
+
+  /* ========================================
+     GRID UTILITIES
+     ======================================== */
+  .grid-auto-fit {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  .grid-auto-fill {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  /* ========================================
+     FLEX UTILITIES
+     ======================================== */
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .flex-around {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* ============================================================================
+   2. SPACING UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     SECTION SPACING
+     ======================================== */
+  .section-xs {
+    padding-top: var(--space-section-xs);
+    padding-bottom: var(--space-section-xs);
+  }
+
+  .section-sm {
+    padding-top: var(--space-section-sm);
+    padding-bottom: var(--space-section-sm);
+  }
+
+  .section-md {
+    padding-top: var(--space-section-md);
+    padding-bottom: var(--space-section-md);
+  }
+
+  .section-lg {
+    padding-top: var(--space-section-lg);
+    padding-bottom: var(--space-section-lg);
+  }
+
+  .section-xl {
+    padding-top: var(--space-section-xl);
+    padding-bottom: var(--space-section-xl);
+  }
+
+  /* ========================================
+     COMPONENT SPACING
+     ======================================== */
+  .component-xs {
+    padding: var(--space-component-xs);
+  }
+
+  .component-sm {
+    padding: var(--space-component-sm);
+  }
+
+  .component-md {
+    padding: var(--space-component-md);
+  }
+
+  .component-lg {
+    padding: var(--space-component-lg);
+  }
+
+  .component-xl {
+    padding: var(--space-component-xl);
+  }
+
+  /* ========================================
+     CONTAINER PADDING
+     ======================================== */
+  .container-padded {
+    padding-left: var(--space-container);
+    padding-right: var(--space-container);
+  }
+}
+
+/* ============================================================================
+   3. TYPOGRAPHY UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     TEXT TRUNCATION
+     ======================================== */
+  .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .text-truncate-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* ========================================
+     TEXT BALANCE
+     ======================================== */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* ========================================
+     TEXT PRETTY
+     ======================================== */
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* ========================================
+     PROSE WIDTH
+     ======================================== */
+  .prose-narrow {
+    max-width: 60ch;
+  }
+
+  .prose-default {
+    max-width: 70ch;
+  }
+
+  .prose-wide {
+    max-width: 80ch;
+  }
+
+  /* ========================================
+     FONT SMOOTHING
+     ======================================== */
+  .text-smooth {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* ========================================
+     LETTER SPACING
+     ======================================== */
+  .tracking-tight {
+    letter-spacing: -0.025em;
+  }
+
+  .tracking-wide {
+    letter-spacing: 0.025em;
+  }
+
+  .tracking-wider {
+    letter-spacing: 0.05em;
+  }
+
+  /* ========================================
+     WORD BREAKING
+     ======================================== */
+  .break-words {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .break-all {
+    word-break: break-all;
+  }
+
+  .keep-all {
+    word-break: keep-all;
+  }
+
+  /* ========================================
+     WHITESPACE
+     ======================================== */
+  .whitespace-pre-wrap {
+    white-space: pre-wrap;
+  }
+
+  .whitespace-break-spaces {
+    white-space: break-spaces;
+  }
+}
+
+/* ============================================================================
+   4. VISUAL UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     VISIBILITY
+     ======================================== */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ========================================
+     OPACITY
+     ======================================== */
+  .opacity-0 { opacity: 0; }
+  .opacity-25 { opacity: 0.25; }
+  .opacity-50 { opacity: 0.5; }
+  .opacity-75 { opacity: 0.75; }
+  .opacity-100 { opacity: 1; }
+
+  /* ========================================
+     BLUR
+     ======================================== */
+  .blur-none { filter: blur(0); }
+  .blur-sm { filter: blur(4px); }
+  .blur-md { filter: blur(8px); }
+  .blur-lg { filter: blur(16px); }
+
+  /* ========================================
+     BACKDROP BLUR
+     ======================================== */
+  .backdrop-blur-none { backdrop-filter: blur(0); }
+  .backdrop-blur-sm { backdrop-filter: blur(4px); }
+  .backdrop-blur-md { backdrop-filter: blur(8px); }
+  .backdrop-blur-lg { backdrop-filter: blur(16px); }
+
+  /* ========================================
+     GRADIENTS
+     ======================================== */
+  .gradient-to-r {
+    background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  }
+
+  .gradient-to-b {
+    background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+  }
+
+  /* ========================================
+     RING UTILITIES
+     ======================================== */
+  .ring-offset-0 {
+    --tw-ring-offset-width: 0px;
+  }
+
+  .ring-offset-1 {
+    --tw-ring-offset-width: 1px;
+  }
+
+  .ring-offset-2 {
+    --tw-ring-offset-width: 2px;
+  }
+
+  .ring-offset-4 {
+    --tw-ring-offset-width: 4px;
+  }
+}
+
+/* ============================================================================
+   5. INTERACTIVE UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     CURSOR
+     ======================================== */
+  .cursor-grab {
+    cursor: grab;
+  }
+
+  .cursor-grabbing {
+    cursor: grabbing;
+  }
+
+  /* ========================================
+     POINTER EVENTS
+     ======================================== */
+  .pointer-events-none {
+    pointer-events: none;
+  }
+
+  .pointer-events-auto {
+    pointer-events: auto;
+  }
+
+  /* ========================================
+     USER SELECT
+     ======================================== */
+  .select-none {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .select-text {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .select-all {
+    user-select: all;
+    -webkit-user-select: all;
+  }
+
+  /* ========================================
+     TOUCH ACTION
+     ======================================== */
+  .touch-none {
+    touch-action: none;
+  }
+
+  .touch-pan-x {
+    touch-action: pan-x;
+  }
+
+  .touch-pan-y {
+    touch-action: pan-y;
+  }
+
+  .touch-pan-left {
+    touch-action: pan-left;
+  }
+
+  .touch-pan-right {
+    touch-action: pan-right;
+  }
+
+  .touch-pan-up {
+    touch-action: pan-up;
+  }
+
+  .touch-pan-down {
+    touch-action: pan-down;
+  }
+
+  .touch-pinch-zoom {
+    touch-action: pinch-zoom;
+  }
+
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* ========================================
+     RESIZE
+     ======================================== */
+  .resize-none {
+    resize: none;
+  }
+
+  .resize-y {
+    resize: vertical;
+  }
+
+  .resize-x {
+    resize: horizontal;
+  }
+
+  .resize {
+    resize: both;
+  }
+}
+
+/* ============================================================================
+   6. RESPONSIVE UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     MOBILE HIDE/SHOW
+     ======================================== */
+  @media (max-width: 639px) {
+    .hide-mobile {
+      display: none !important;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .show-mobile-only {
+      display: none !important;
+    }
+  }
+
+  /* ========================================
+     TABLET HIDE/SHOW
+     ======================================== */
+  @media (min-width: 640px) and (max-width: 1023px) {
+    .hide-tablet {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 639px), (min-width: 1024px) {
+    .show-tablet-only {
+      display: none !important;
+    }
+  }
+
+  /* ========================================
+     DESKTOP HIDE/SHOW
+     ======================================== */
+  @media (min-width: 1024px) {
+    .hide-desktop {
+      display: none !important;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .show-desktop-only {
+      display: none !important;
+    }
+  }
+}
+
+/* ============================================================================
+   7. SCROLLBAR UTILITIES
+   ============================================================================ */
+
+@layer utilities {
+  /* ========================================
+     CUSTOM SCROLLBAR
+     ======================================== */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.3) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 3px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: hsl(var(--muted-foreground) / 0.5);
+  }
+
+  /* ========================================
+     HIDE SCROLLBAR
+     ======================================== */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ========================================
+     DEFAULT SCROLLBAR
+     ======================================== */
+  .scrollbar-default {
+    scrollbar-width: auto;
+    scrollbar-color: auto;
+  }
+
+  .scrollbar-default::-webkit-scrollbar {
+    display: block;
+    width: auto;
+    height: auto;
+  }
+}
+
+/* ============================================================================
+   8. GPU ACCELERATION
+   ============================================================================ */
+
+@layer utilities {
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+}
+
+/* ============================================================================
+   9. DEBUG UTILITIES (Development only)
+   ============================================================================ */
+
+@layer utilities {
+  .debug * {
+    outline: 1px solid rgba(255, 0, 0, 0.2);
+  }
+
+  .debug *:hover {
+    outline: 1px solid rgba(255, 0, 0, 0.5);
+  }
+
+  .debug-grid {
+    background-image: 
+      linear-gradient(to right, rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+}

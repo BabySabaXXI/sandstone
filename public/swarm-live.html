@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐝 Sandstone Swarm - 100 Agents Running</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+    }
+    .header {
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .stats {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      background: #111;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    .stat-box span { color: #888; }
+    .stat-box strong { margin-left: 5px; }
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+      transition: width 0.3s ease;
+    }
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    .agent-card {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px;
+      position: relative;
+      transition: all 0.3s;
+    }
+    .agent-card.running { border-color: #22c55e; }
+    .agent-card.completed { border-color: #3b82f6; background: rgba(59, 130, 246, 0.1); }
+    .agent-id {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 10px;
+      color: #666;
+    }
+    .agent-status {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .agent-status.running { background: #22c55e; animation: pulse 1s infinite; }
+    .agent-status.completed { background: #3b82f6; }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .squad-badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+    .squad-Backend { background: #3b82f6; }
+    .squad-Frontend { background: #22c55e; }
+    .squad-UI\/UX { background: #8b5cf6; }
+    .squad-Auth { background: #f97316; }
+    .squad-Bug\\ Fix { background: #ef4444; }
+    .squad-Features { background: #06b6d4; }
+    .squad-Deploy { background: #ec4899; }
+    .agent-name {
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .agent-progress {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 3px;
+    }
+    .agent-progress-bar {
+      height: 100%;
+      background: #22c55e;
+      transition: width 0.3s;
+    }
+    .agent-progress-bar.completed { background: #3b82f6; }
+    .agent-progress-text {
+      font-size: 10px;
+      color: #888;
+    }
+    .legend {
+      margin-top: 20px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      font-size: 12px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🐝 Sandstone Swarm Dashboard</h1>
+    <p>100 Agents Running Simultaneously</p>
+  </div>
+
+  <div class="stats">
+    <div class="stat-box"><span>Total:</span><strong id="total">100</strong></div>
+    <div class="stat-box"><span>Running:</span><strong id="running" style="color:#22c55e">0</strong></div>
+    <div class="stat-box"><span>Completed:</span><strong id="completed" style="color:#3b82f6">0</strong></div>
+    <div class="stat-box"><span>Avg Progress:</span><strong id="avgProgress">0%</strong></div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="overallProgress" style="width:0%"></div>
+  </div>
+
+  <div class="agent-grid" id="agentGrid"></div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#22c55e;animation:pulse 1s infinite"></div><span>Running</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div><span>Completed</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3b82f6"></div><span>Backend</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#22c55e"></div><span>Frontend</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#8b5cf6"></div><span>UI/UX</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f97316"></div><span>Auth</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ef4444"></div><span>Bug Fix</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#06b6d4"></div><span>Features</span></div>
+    <div class="legend-item"><div class="legend-dot" style="background:#ec4899"></div><span>Deploy</span></div>
+  </div>
+
+  <script>
+    const squads = [
+      { name: 'Backend', count: 15, color: '#3b82f6' },
+      { name: 'Frontend', count: 20, color: '#22c55e' },
+      { name: 'UI/UX', count: 15, color: '#8b5cf6' },
+      { name: 'Auth', count: 10, color: '#f97316' },
+      { name: 'Bug Fix', count: 15, color: '#ef4444' },
+      { name: 'Features', count: 15, color: '#06b6d4' },
+      { name: 'Deploy', count: 10, color: '#ec4899' },
+    ];
+
+    const agents = [];
+    let id = 1;
+    squads.forEach(squad => {
+      for (let i = 0; i < squad.count; i++) {
+        agents.push({
+          id: id++,
+          name: `${squad.name} ${i + 1}`,
+          squad: squad.name,
+          status: 'idle',
+          progress: 0,
+          task: `Task ${i + 1}`
+        });
+      }
+    });
+
+    function renderAgents() {
+      const grid = document.getElementById('agentGrid');
+      grid.innerHTML = agents.map(agent => `
+        <div class="agent-card ${agent.status}" id="agent-${agent.id}">
+          <div class="agent-status ${agent.status}"></div>
+          <div class="agent-id">#${agent.id}</div>
+          <div class="squad-badge squad-${agent.squad}">${agent.squad}</div>
+          <div class="agent-name">${agent.name}</div>
+          <div class="agent-progress">
+            <div class="agent-progress-bar ${agent.status}" style="width:${agent.progress}%"></div>
+          </div>
+          <div class="agent-progress-text">${agent.progress}%</div>
+        </div>
+      `).join('');
+    }
+
+    function updateStats() {
+      const running = agents.filter(a => a.status === 'running').length;
+      const completed = agents.filter(a => a.status === 'completed').length;
+      const avg = Math.round(agents.reduce((acc, a) => acc + a.progress, 0) / agents.length);
+      
+      document.getElementById('running').textContent = running;
+      document.getElementById('completed').textContent = completed;
+      document.getElementById('avgProgress').textContent = avg + '%';
+      document.getElementById('overallProgress').style.width = avg + '%';
+    }
+
+    async function runAgent(agent) {
+      agent.status = 'running';
+      renderAgents();
+      updateStats();
+
+      // Simulate work
+      const steps = 10;
+      for (let i = 0; i <= steps; i++) {
+        await new Promise(r => setTimeout(r, 100 + Math.random() * 200));
+        agent.progress = Math.round((i / steps) * 100);
+        
+        const card = document.getElementById(`agent-${agent.id}`);
+        if (card) {
+          card.querySelector('.agent-progress-bar').style.width = agent.progress + '%';
+          card.querySelector('.agent-progress-text').textContent = agent.progress + '%';
+        }
+        updateStats();
+      }
+
+      agent.status = 'completed';
+      const card = document.getElementById(`agent-${agent.id}`);
+      if (card) {
+        card.className = 'agent-card completed';
+        card.querySelector('.agent-status').className = 'agent-status completed';
+        card.querySelector('.agent-progress-bar').className = 'agent-progress-bar completed';
+      }
+      updateStats();
+    }
+
+    async function runAllAgents() {
+      renderAgents();
+      
+      // Run all agents in parallel
+      const promises = agents.map(agent => runAgent(agent));
+      await Promise.all(promises);
+      
+      document.querySelector('.header h1').textContent = '🐝 Sandstone Swarm - Complete!';
+    }
+
+    // Start immediately
+    runAllAgents();
+  </script>
+</body>
+</html>

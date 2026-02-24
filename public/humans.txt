@@ -1,0 +1,16 @@
+/* TEAM */
+    Developer: Sandstone Team
+    Contact: contact [at] sandstone.app
+    From: United Kingdom
+
+/* THANKS */
+    Edexcel: For curriculum standards
+    A-Level Students: For feedback and testing
+
+/* SITE */
+    Last update: 2024
+    Language: English (UK)
+    Doctype: HTML5
+    Standards: Next.js 14, React 18, TypeScript
+    Components: Tailwind CSS, Radix UI
+    Software: VS Code, Git, Node.js

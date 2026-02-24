@@ -1,0 +1,198 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Sandstone Database Monitoring",
+    "tags": ["sandstone", "database", "postgresql"],
+    "timezone": "browser",
+    "schemaVersion": 36,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Database Health Status",
+        "type": "stat",
+        "targets": [
+          {
+            "rawSql": "SELECT status, 1 as value FROM (SELECT (health_check_detailed()->'health'->>'status') as status) sub",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {"options": {"healthy": {"color": "green", "text": "Healthy"}}, "type": "value"},
+              {"options": {"degraded": {"color": "yellow", "text": "Degraded"}}, "type": "value"},
+              {"options": {"unhealthy": {"color": "red", "text": "Unhealthy"}}, "type": "value"}
+            ]
+          }
+        },
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "Connection Usage %",
+        "type": "gauge",
+        "targets": [
+          {
+            "rawSql": "SELECT ROUND(100.0 * COUNT(*) / NULLIF((SELECT setting::int FROM pg_settings WHERE name = 'max_connections'), 0), 2) as usage FROM pg_stat_activity",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "min": 0,
+            "max": 100,
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": 0},
+                {"color": "yellow", "value": 70},
+                {"color": "red", "value": 90}
+              ]
+            },
+            "unit": "percent"
+          }
+        },
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Active Connections",
+        "type": "stat",
+        "targets": [
+          {
+            "rawSql": "SELECT COUNT(*) as active FROM pg_stat_activity WHERE state = 'active'",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Cache Hit Ratio",
+        "type": "stat",
+        "targets": [
+          {
+            "rawSql": "SELECT ROUND(100 * SUM(heap_blks_hit)::numeric / NULLIF(SUM(heap_blks_hit) + SUM(heap_blks_read), 0), 2) as ratio FROM pg_statio_user_tables",
+            "format": "table"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "id": 5,
+        "title": "Connection History",
+        "type": "timeseries",
+        "targets": [
+          {
+            "rawSql": "SELECT recorded_at, total_connections, active_connections, idle_connections FROM monitoring_connection_history WHERE recorded_at > NOW() - INTERVAL '24 hours' ORDER BY recorded_at",
+            "format": "time_series"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+      },
+      {
+        "id": 6,
+        "title": "Query Performance",
+        "type": "timeseries",
+        "targets": [
+          {
+            "rawSql": "SELECT recorded_at, avg_time_ms FROM monitoring_query_performance_history WHERE recorded_at > NOW() - INTERVAL '24 hours' ORDER BY recorded_at",
+            "format": "time_series"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+      },
+      {
+        "id": 7,
+        "title": "Table Sizes",
+        "type": "table",
+        "targets": [
+          {
+            "rawSql": "SELECT relname as table_name, n_live_tup as rows, pg_size_pretty(pg_total_relation_size(relid)) as size FROM pg_stat_user_tables WHERE schemaname = 'public' ORDER BY pg_total_relation_size(relid) DESC LIMIT 20",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 12}
+      },
+      {
+        "id": 8,
+        "title": "Slow Queries",
+        "type": "table",
+        "targets": [
+          {
+            "rawSql": "SELECT LEFT(query, 80) as query, calls, ROUND(mean_exec_time::numeric, 2) as avg_ms FROM pg_stat_statements WHERE mean_exec_time > 100 AND calls > 10 ORDER BY mean_exec_time DESC LIMIT 20",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 12}
+      },
+      {
+        "id": 9,
+        "title": "Errors (Last 24h)",
+        "type": "timeseries",
+        "targets": [
+          {
+            "rawSql": "SELECT DATE_TRUNC('hour', created_at) as time, COUNT(*) as errors FROM monitoring_error_logs WHERE created_at > NOW() - INTERVAL '24 hours' GROUP BY DATE_TRUNC('hour', created_at) ORDER BY time",
+            "format": "time_series"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20}
+      },
+      {
+        "id": 10,
+        "title": "Active Alerts",
+        "type": "table",
+        "targets": [
+          {
+            "rawSql": "SELECT alert_name, severity, message, metric_value, threshold_value, fired_at FROM monitoring_alert_history WHERE status IN ('firing', 'acknowledged') ORDER BY fired_at DESC",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20}
+      },
+      {
+        "id": 11,
+        "title": "User Activity (Last 24h)",
+        "type": "timeseries",
+        "targets": [
+          {
+            "rawSql": "SELECT hour, unique_users FROM dashboard_user_activity WHERE hour > NOW() - INTERVAL '24 hours' ORDER BY hour",
+            "format": "time_series"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 28}
+      },
+      {
+        "id": 12,
+        "title": "Feature Usage",
+        "type": "piechart",
+        "targets": [
+          {
+            "rawSql": "SELECT feature, total_count FROM dashboard_feature_usage",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 28}
+      },
+      {
+        "id": 13,
+        "title": "Index Usage",
+        "type": "table",
+        "targets": [
+          {
+            "rawSql": "SELECT indexrelname as index, relname as table, idx_scan as scans, pg_size_pretty(pg_relation_size(indexrelid)) as size FROM pg_stat_user_indexes WHERE schemaname = 'public' ORDER BY idx_scan DESC NULLS LAST LIMIT 20",
+            "format": "table"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 36}
+      }
+    ]
+  }
+}

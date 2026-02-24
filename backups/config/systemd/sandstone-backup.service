@@ -1,0 +1,36 @@
+[Unit]
+Description=Sandstone Database Backup Service
+Documentation=https://github.com/BabySabaXXI/sandstone/blob/main/docs/BACKUP.md
+After=network.target
+
+[Service]
+Type=oneshot
+User=backup
+Group=backup
+
+# Working directory
+WorkingDirectory=/opt/sandstone/backups
+
+# Environment file
+EnvironmentFile=/opt/sandstone/backups/config/backup.env
+
+# Execute backup script
+ExecStart=/opt/sandstone/backups/scripts/supabase-backup.sh %i
+
+# Logging
+StandardOutput=append:/var/log/sandstone/backup.log
+StandardError=append:/var/log/sandstone/backup-error.log
+
+# Security settings
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/sandstone/backups/storage /var/log/sandstone
+
+# Resource limits
+MemoryMax=512M
+CPUQuota=50%
+TimeoutSec=3600
+
+[Install]
+WantedBy=multi-user.target

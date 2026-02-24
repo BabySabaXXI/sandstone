@@ -1,0 +1,614 @@
+/**
+ * Sandstone Global Styles - Extended with Spacing System
+ * 
+ * This file extends the existing globals.css with spacing system integration.
+ * Import this after the main globals.css to add spacing variables.
+ */
+
+/* ============================================
+   BASE SPACING VARIABLES
+   ============================================ */
+
+:root {
+  /* Base Unit - 4px */
+  --space-unit: 0.25rem;
+  
+  /* ==========================================
+     BASE SPACING SCALE
+     ========================================== */
+  
+  /* Micro spacing (4px - 12px) */
+  --space-0: 0;
+  --space-px: 1px;
+  --space-0-5: 0.125rem;   /* 2px */
+  --space-1: 0.25rem;      /* 4px */
+  --space-1-5: 0.375rem;   /* 6px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-2-5: 0.625rem;   /* 10px */
+  --space-3: 0.75rem;      /* 12px */
+  
+  /* Small spacing (14px - 28px) */
+  --space-3-5: 0.875rem;   /* 14px */
+  --space-4: 1rem;         /* 16px */
+  --space-4-5: 1.125rem;   /* 18px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-5-5: 1.375rem;   /* 22px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-7: 1.75rem;      /* 28px */
+  
+  /* Medium spacing (32px - 48px) */
+  --space-8: 2rem;         /* 32px */
+  --space-9: 2.25rem;      /* 36px */
+  --space-10: 2.5rem;      /* 40px */
+  --space-11: 2.75rem;     /* 44px */
+  --space-12: 3rem;        /* 48px */
+  
+  /* Large spacing (56px - 80px) */
+  --space-14: 3.5rem;      /* 56px */
+  --space-16: 4rem;        /* 64px */
+  --space-18: 4.5rem;      /* 72px */
+  --space-20: 5rem;        /* 80px */
+  
+  /* Extra large spacing (96px - 160px) */
+  --space-24: 6rem;        /* 96px */
+  --space-28: 7rem;        /* 112px */
+  --space-32: 8rem;        /* 128px */
+  --space-36: 9rem;        /* 144px */
+  --space-40: 10rem;       /* 160px */
+  
+  /* Section spacing (176px - 320px) */
+  --space-44: 11rem;       /* 176px */
+  --space-48: 12rem;       /* 192px */
+  --space-52: 13rem;       /* 208px */
+  --space-56: 14rem;       /* 224px */
+  --space-60: 15rem;       /* 240px */
+  --space-64: 16rem;       /* 256px */
+  --space-72: 18rem;       /* 288px */
+  --space-80: 20rem;       /* 320px */
+  
+  /* ==========================================
+     SEMANTIC SPACING TOKENS
+     ========================================== */
+  
+  /* Component spacing */
+  --space-component-xs: var(--space-1);
+  --space-component-sm: var(--space-2);
+  --space-component-md: var(--space-3);
+  --space-component-lg: var(--space-4);
+  --space-component-xl: var(--space-6);
+  
+  /* Content spacing */
+  --space-content-xs: var(--space-2);
+  --space-content-sm: var(--space-3);
+  --space-content-md: var(--space-4);
+  --space-content-lg: var(--space-6);
+  --space-content-xl: var(--space-8);
+  --space-content-2xl: var(--space-10);
+  
+  /* Layout spacing */
+  --space-layout-xs: var(--space-4);
+  --space-layout-sm: var(--space-6);
+  --space-layout-md: var(--space-8);
+  --space-layout-lg: var(--space-12);
+  --space-layout-xl: var(--space-16);
+  --space-layout-2xl: var(--space-20);
+  
+  /* Section spacing */
+  --space-section-xs: var(--space-8);
+  --space-section-sm: var(--space-12);
+  --space-section-md: var(--space-16);
+  --space-section-lg: var(--space-20);
+  --space-section-xl: var(--space-24);
+  --space-section-2xl: var(--space-32);
+  
+  /* Grid gaps */
+  --space-grid-xs: var(--space-1);
+  --space-grid-sm: var(--space-2);
+  --space-grid-md: var(--space-3);
+  --space-grid-lg: var(--space-4);
+  --space-grid-xl: var(--space-6);
+  --space-grid-2xl: var(--space-8);
+  
+  /* Card spacing */
+  --space-card-xs: var(--space-2);
+  --space-card-sm: var(--space-3);
+  --space-card-md: var(--space-4);
+  --space-card-lg: var(--space-5);
+  --space-card-xl: var(--space-6);
+  
+  /* Form spacing */
+  --space-form-label: var(--space-1-5);
+  --space-form-field: var(--space-4);
+  --space-form-group: var(--space-6);
+  --space-form-section: var(--space-8);
+  
+  /* Stack spacing */
+  --space-stack-xs: var(--space-1);
+  --space-stack-sm: var(--space-2);
+  --space-stack-md: var(--space-3);
+  --space-stack-lg: var(--space-4);
+  --space-stack-xl: var(--space-6);
+  --space-stack-2xl: var(--space-8);
+  --space-stack-3xl: var(--space-12);
+  
+  /* Inline spacing */
+  --space-inline-xs: var(--space-1);
+  --space-inline-sm: var(--space-2);
+  --space-inline-md: var(--space-3);
+  --space-inline-lg: var(--space-4);
+  --space-inline-xl: var(--space-6);
+  --space-inline-2xl: var(--space-8);
+  
+  /* ==========================================
+     RESPONSIVE CONTAINER SPACING
+     ========================================== */
+  
+  --space-container: var(--space-4);
+  --space-container-sm: var(--space-6);
+  --space-container-md: var(--space-8);
+  --space-container-lg: var(--space-12);
+  --space-container-xl: var(--space-16);
+}
+
+/* ============================================
+   RESPONSIVE CONTAINER SPACING
+   ============================================ */
+
+@media (min-width: 640px) {
+  :root {
+    --space-container: var(--space-container-sm);
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --space-container: var(--space-container-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --space-container: var(--space-container-lg);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --space-container: var(--space-container-xl);
+  }
+}
+
+/* ============================================
+   BASE ELEMENT SPACING
+   ============================================ */
+
+/* Reset margins for consistent base */
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+/* Consistent heading spacing */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: var(--space-content-md);
+  line-height: 1.2;
+}
+
+/* Paragraph spacing */
+p {
+  margin-bottom: var(--space-content-md);
+}
+
+/* List spacing */
+ul, ol {
+  margin-bottom: var(--space-content-md);
+  padding-left: var(--space-content-lg);
+}
+
+li {
+  margin-bottom: var(--space-content-xs);
+}
+
+/* Last child spacing reset */
+h1:last-child, h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:last-child,
+p:last-child, ul:last-child, ol:last-child, figure:last-child, blockquote:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   VISUAL RHYTHM UTILITIES
+   ============================================ */
+
+/* 8-point grid baseline */
+.baseline-grid {
+  --baseline: 8px;
+  line-height: var(--baseline);
+}
+
+/* Vertical rhythm flow */
+.flow > * + * {
+  margin-top: var(--space-content-md);
+}
+
+.flow-sm > * + * {
+  margin-top: var(--space-content-sm);
+}
+
+.flow-lg > * + * {
+  margin-top: var(--space-content-lg);
+}
+
+.flow-xl > * + * {
+  margin-top: var(--space-content-xl);
+}
+
+/* Horizontal rhythm flow */
+.flow-inline > * + * {
+  margin-left: var(--space-content-md);
+}
+
+.flow-inline-sm > * + * {
+  margin-left: var(--space-content-sm);
+}
+
+.flow-inline-lg > * + * {
+  margin-left: var(--space-content-lg);
+}
+
+/* ============================================
+   CONTAINER UTILITIES
+   ============================================ */
+
+.container-narrow {
+  max-width: 48rem; /* 768px */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-default {
+  max-width: 64rem; /* 1024px */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-wide {
+  max-width: 80rem; /* 1280px */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-full {
+  max-width: 100%;
+}
+
+/* Container with responsive padding */
+.container-padded {
+  padding-left: var(--space-container);
+  padding-right: var(--space-container);
+}
+
+/* ============================================
+   SECTION SPACING UTILITIES
+   ============================================ */
+
+.section-xs {
+  padding-top: var(--space-section-xs);
+  padding-bottom: var(--space-section-xs);
+}
+
+.section-sm {
+  padding-top: var(--space-section-sm);
+  padding-bottom: var(--space-section-sm);
+}
+
+.section-md {
+  padding-top: var(--space-section-md);
+  padding-bottom: var(--space-section-md);
+}
+
+.section-lg {
+  padding-top: var(--space-section-lg);
+  padding-bottom: var(--space-section-lg);
+}
+
+.section-xl {
+  padding-top: var(--space-section-xl);
+  padding-bottom: var(--space-section-xl);
+}
+
+.section-2xl {
+  padding-top: var(--space-section-2xl);
+  padding-bottom: var(--space-section-2xl);
+}
+
+/* ============================================
+   COMPONENT SPACING UTILITIES
+   ============================================ */
+
+.component-xs {
+  padding: var(--space-component-xs);
+}
+
+.component-sm {
+  padding: var(--space-component-sm);
+}
+
+.component-md {
+  padding: var(--space-component-md);
+}
+
+.component-lg {
+  padding: var(--space-component-lg);
+}
+
+.component-xl {
+  padding: var(--space-component-xl);
+}
+
+/* ============================================
+   CARD SPACING UTILITIES
+   ============================================ */
+
+.card-xs {
+  padding: var(--space-card-xs);
+}
+
+.card-sm {
+  padding: var(--space-card-sm);
+}
+
+.card-md {
+  padding: var(--space-card-md);
+}
+
+.card-lg {
+  padding: var(--space-card-lg);
+}
+
+.card-xl {
+  padding: var(--space-card-xl);
+}
+
+/* ============================================
+   GRID GAP UTILITIES
+   ============================================ */
+
+.gap-grid-xs {
+  gap: var(--space-grid-xs);
+}
+
+.gap-grid-sm {
+  gap: var(--space-grid-sm);
+}
+
+.gap-grid-md {
+  gap: var(--space-grid-md);
+}
+
+.gap-grid-lg {
+  gap: var(--space-grid-lg);
+}
+
+.gap-grid-xl {
+  gap: var(--space-grid-xl);
+}
+
+.gap-grid-2xl {
+  gap: var(--space-grid-2xl);
+}
+
+/* ============================================
+   STACK UTILITIES (Vertical rhythm)
+   ============================================ */
+
+.stack-xs > * + * {
+  margin-top: var(--space-stack-xs);
+}
+
+.stack-sm > * + * {
+  margin-top: var(--space-stack-sm);
+}
+
+.stack-md > * + * {
+  margin-top: var(--space-stack-md);
+}
+
+.stack-lg > * + * {
+  margin-top: var(--space-stack-lg);
+}
+
+.stack-xl > * + * {
+  margin-top: var(--space-stack-xl);
+}
+
+.stack-2xl > * + * {
+  margin-top: var(--space-stack-2xl);
+}
+
+.stack-3xl > * + * {
+  margin-top: var(--space-stack-3xl);
+}
+
+/* ============================================
+   INLINE UTILITIES (Horizontal rhythm)
+   ============================================ */
+
+.inline-xs > * + * {
+  margin-left: var(--space-inline-xs);
+}
+
+.inline-sm > * + * {
+  margin-left: var(--space-inline-sm);
+}
+
+.inline-md > * + * {
+  margin-left: var(--space-inline-md);
+}
+
+.inline-lg > * + * {
+  margin-left: var(--space-inline-lg);
+}
+
+.inline-xl > * + * {
+  margin-left: var(--space-inline-xl);
+}
+
+.inline-2xl > * + * {
+  margin-left: var(--space-inline-2xl);
+}
+
+/* ============================================
+   SPACING RESET UTILITIES
+   ============================================ */
+
+.reset-spacing {
+  margin: 0;
+  padding: 0;
+}
+
+.reset-margin {
+  margin: 0;
+}
+
+.reset-padding {
+  padding: 0;
+}
+
+.reset-space-y > * + * {
+  margin-top: 0;
+}
+
+.reset-space-x > * + * {
+  margin-left: 0;
+}
+
+/* ============================================
+   FORM SPACING UTILITIES
+   ============================================ */
+
+.form-field + .form-field {
+  margin-top: var(--space-form-field);
+}
+
+.form-group + .form-group {
+  margin-top: var(--space-form-group);
+}
+
+.form-section + .form-section {
+  margin-top: var(--space-form-section);
+}
+
+.form-label {
+  margin-bottom: var(--space-form-label);
+}
+
+/* ============================================
+   RESPONSIVE SPACING UTILITIES
+   ============================================ */
+
+@media (min-width: 640px) {
+  .sm\:section-sm {
+    padding-top: var(--space-section-sm);
+    padding-bottom: var(--space-section-sm);
+  }
+  
+  .sm\:section-md {
+    padding-top: var(--space-section-md);
+    padding-bottom: var(--space-section-md);
+  }
+  
+  .sm\:gap-grid-md {
+    gap: var(--space-grid-md);
+  }
+  
+  .sm\:gap-grid-lg {
+    gap: var(--space-grid-lg);
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:section-md {
+    padding-top: var(--space-section-md);
+    padding-bottom: var(--space-section-md);
+  }
+  
+  .md\:section-lg {
+    padding-top: var(--space-section-lg);
+    padding-bottom: var(--space-section-lg);
+  }
+  
+  .md\:gap-grid-lg {
+    gap: var(--space-grid-lg);
+  }
+  
+  .md\:gap-grid-xl {
+    gap: var(--space-grid-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:section-lg {
+    padding-top: var(--space-section-lg);
+    padding-bottom: var(--space-section-lg);
+  }
+  
+  .lg\:section-xl {
+    padding-top: var(--space-section-xl);
+    padding-bottom: var(--space-section-xl);
+  }
+  
+  .lg\:gap-grid-xl {
+    gap: var(--space-grid-xl);
+  }
+  
+  .lg\:gap-grid-2xl {
+    gap: var(--space-grid-2xl);
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:section-xl {
+    padding-top: var(--space-section-xl);
+    padding-bottom: var(--space-section-xl);
+  }
+  
+  .xl\:section-2xl {
+    padding-top: var(--space-section-2xl);
+    padding-bottom: var(--space-section-2xl);
+  }
+}
+
+/* ============================================
+   DEBUG UTILITIES (Development only)
+   ============================================ */
+
+.debug-spacing * {
+  outline: 1px solid rgba(255, 0, 0, 0.2);
+}
+
+.debug-spacing *:hover {
+  outline: 1px solid rgba(255, 0, 0, 0.5);
+}
+
+/* Baseline grid overlay for debugging */
+.baseline-overlay {
+  position: relative;
+}
+
+.baseline-overlay::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 7px,
+    rgba(255, 0, 0, 0.05) 7px,
+    rgba(255, 0, 0, 0.05) 8px
+  );
+  z-index: 9999;
+}

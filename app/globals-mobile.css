@@ -1,0 +1,414 @@
+/* Mobile-specific styles for Sandstone */
+
+/* ============================================
+   SAFE AREA INSETS (iPhone X+ support)
+   ============================================ */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-area-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-area-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .safe-area-pb {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 0.5rem);
+  }
+  
+  .safe-area-pt {
+    padding-top: calc(env(safe-area-inset-top) + 0.5rem);
+  }
+}
+
+/* ============================================
+   TOUCH OPTIMIZATIONS
+   ============================================ */
+@layer utilities {
+  /* Prevent text selection on interactive elements */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  /* Allow text selection where needed */
+  .touch-selectable {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  
+  /* Remove tap highlight on mobile */
+  .no-tap-highlight {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Smooth scrolling */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Momentum scrolling for iOS */
+  .ios-scroll {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* ============================================
+   TOUCH TARGET SIZES (44px minimum)
+   ============================================ */
+@layer utilities {
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+  
+  .touch-target-sm {
+    min-width: 36px;
+    min-height: 36px;
+  }
+  
+  .touch-target-lg {
+    min-width: 48px;
+    min-height: 48px;
+  }
+  
+  .touch-target-xl {
+    min-width: 56px;
+    min-height: 56px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+@layer utilities {
+  /* Fluid typography that scales with viewport */
+  .text-fluid-xs {
+    font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  }
+  
+  .text-fluid-sm {
+    font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  }
+  
+  .text-fluid-base {
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  }
+  
+  .text-fluid-lg {
+    font-size: clamp(1.125rem, 1rem + 0.65vw, 1.5rem);
+  }
+  
+  .text-fluid-xl {
+    font-size: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
+  }
+  
+  .text-fluid-2xl {
+    font-size: clamp(1.875rem, 1.5rem + 1.875vw, 3rem);
+  }
+}
+
+/* ============================================
+   MOBILE-SPECIFIC SPACING
+   ============================================ */
+@layer utilities {
+  /* Bottom sheet spacing */
+  .bottom-sheet-spacing {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+  
+  /* Keyboard-aware spacing */
+  .keyboard-spacing {
+    padding-bottom: env(keyboard-inset-height, 0px);
+  }
+}
+
+/* ============================================
+   PULL TO REFRESH ANIMATIONS
+   ============================================ */
+@layer utilities {
+  @keyframes pull-indicator {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+  }
+  
+  .animate-pull-indicator {
+    animation: pull-indicator 0.3s ease-out;
+  }
+  
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .animate-spin-slow {
+    animation: spin-slow 1s linear infinite;
+  }
+}
+
+/* ============================================
+   BOTTOM SHEET STYLES
+   ============================================ */
+@layer utilities {
+  .bottom-sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: hsl(var(--card));
+    border-radius: 1.5rem 1.5rem 0 0;
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 50;
+  }
+  
+  .bottom-sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: hsl(var(--muted-foreground) / 0.3);
+    border-radius: 2px;
+    margin: 0.75rem auto;
+  }
+  
+  .bottom-sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 40;
+  }
+}
+
+/* ============================================
+   MOBILE CARD STYLES
+   ============================================ */
+@layer utilities {
+  .card-mobile {
+    @apply rounded-2xl bg-card border border-border shadow-soft;
+    @apply p-4;
+  }
+  
+  .card-mobile-pressable {
+    @apply card-mobile cursor-pointer;
+    @apply active:scale-[0.98] active:shadow-soft-md;
+    @apply transition-all duration-150;
+    touch-action: manipulation;
+  }
+}
+
+/* ============================================
+   HAPTIC FEEDBACK INDICATORS
+   ============================================ */
+@layer utilities {
+  .haptic-light:active {
+    opacity: 0.8;
+  }
+  
+  .haptic-medium:active {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  
+  .haptic-heavy:active {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+}
+
+/* ============================================
+   GESTURE INDICATORS
+   ============================================ */
+@layer utilities {
+  .swipe-indicator {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .swipe-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 4px;
+    height: 40%;
+    background: hsl(var(--accent));
+    border-radius: 2px 0 0 2px;
+    transform: translateY(-50%);
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   MOBILE FORM OPTIMIZATIONS
+   ============================================ */
+@layer utilities {
+  /* Prevent zoom on input focus (iOS) */
+  .input-mobile {
+    font-size: 16px; /* Prevents iOS zoom */
+    @apply touch-manipulation;
+  }
+  
+  /* Larger touch targets for form elements */
+  .checkbox-mobile {
+    @apply w-6 h-6 min-w-[24px] min-h-[24px];
+  }
+  
+  .radio-mobile {
+    @apply w-6 h-6 min-w-[24px] min-h-[24px];
+  }
+}
+
+/* ============================================
+   DARK MODE MOBILE ADJUSTMENTS
+   ============================================ */
+@media (prefers-color-scheme: dark) {
+  .mobile-dark-adjust {
+    /* Slightly brighter borders for visibility */
+    border-color: hsl(var(--border) / 1.2);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION SUPPORT
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .scroll-smooth {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================================
+   VIEWPORT HEIGHT FIX (Mobile browsers)
+   ============================================ */
+@supports (height: 100dvh) {
+  .h-screen-mobile {
+    height: 100dvh;
+  }
+  
+  .min-h-screen-mobile {
+    min-height: 100dvh;
+  }
+}
+
+/* Fallback for browsers without dvh support */
+@supports not (height: 100dvh) {
+  .h-screen-mobile {
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
+  
+  .min-h-screen-mobile {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* ============================================
+   MOBILE NAVIGATION BAR
+   ============================================ */
+@layer utilities {
+  .mobile-nav-item {
+    @apply flex flex-col items-center justify-center;
+    @apply min-w-[64px] min-h-[56px];
+    @apply rounded-2xl;
+    @apply transition-all duration-200;
+    @apply touch-manipulation;
+    @apply active:scale-95;
+  }
+  
+  .mobile-nav-item-active {
+    @apply bg-accent/30 text-foreground;
+  }
+  
+  .mobile-nav-item-inactive {
+    @apply text-muted-foreground hover:text-foreground;
+  }
+}
+
+/* ============================================
+   TOAST NOTIFICATIONS (Mobile)
+   ============================================ */
+@layer utilities {
+  .toast-mobile {
+    @apply fixed bottom-24 left-4 right-4;
+    @apply z-50;
+  }
+  
+  @media (min-width: 640px) {
+    .toast-mobile {
+      @apply bottom-auto top-4 left-1/2 -translate-x-1/2;
+      @apply w-auto max-w-md;
+    }
+  }
+}
+
+/* ============================================
+   SCROLLBAR HIDING (Mobile)
+   ============================================ */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Thin scrollbar for desktop, hidden on mobile */
+  .scrollbar-responsive {
+    @apply scrollbar-hide;
+  }
+  
+  @media (min-width: 1024px) {
+    .scrollbar-responsive {
+      scrollbar-width: thin;
+    }
+    
+    .scrollbar-responsive::-webkit-scrollbar {
+      display: block;
+      width: 6px;
+    }
+    
+    .scrollbar-responsive::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .scrollbar-responsive::-webkit-scrollbar-thumb {
+      background-color: hsl(var(--muted-foreground) / 0.3);
+      border-radius: 3px;
+    }
+  }
+}

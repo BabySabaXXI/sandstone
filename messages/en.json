@@ -1,0 +1,789 @@
+{
+  "metadata": {
+    "title": "Sandstone - AI-Powered A-Level Learning",
+    "description": "AI-powered A-Level response grading with detailed examiner feedback. Master Economics and Geography with personalized AI tutoring.",
+    "keywords": "A-Level, Economics, Geography, AI tutoring, exam preparation, essay grading, Edexcel, study app, UK education"
+  },
+  "navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "grade": "Grade Essay",
+    "flashcards": "Flashcards",
+    "quiz": "Quiz",
+    "documents": "Documents",
+    "library": "Library",
+    "settings": "Settings",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "profile": "Profile",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "skip": "Skip",
+    "continue": "Continue",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "close": "Close",
+    "open": "Open",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "view": "View",
+    "download": "Download",
+    "share": "Share",
+    "copy": "Copy",
+    "paste": "Paste",
+    "cut": "Cut",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "showMore": "Show More",
+    "showLess": "Show Less",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started",
+    "tryNow": "Try Now",
+    "upgrade": "Upgrade",
+    "downgrade": "Downgrade"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to continue your learning journey",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign In",
+      "loadingButton": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "orContinueWith": "Or continue with",
+      "googleButton": "Continue with Google",
+      "error": {
+        "invalidCredentials": "Invalid email or password",
+        "accountLocked": "Account temporarily locked. Please try again later.",
+        "emailNotVerified": "Please verify your email address",
+        "generic": "An error occurred. Please try again."
+      }
+    },
+    "signup": {
+      "title": "Create Your Account",
+      "subtitle": "Start your A-Level success journey today",
+      "firstNameLabel": "First Name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastNameLabel": "Last Name",
+      "lastNamePlaceholder": "Enter your last name",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create a password",
+      "passwordRequirements": "Password must be at least 8 characters with uppercase, lowercase, and number",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm your password",
+      "termsLabel": "I agree to the",
+      "termsLink": "Terms of Service",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "submitButton": "Create Account",
+      "loadingButton": "Creating account...",
+      "hasAccount": "Already have an account?",
+      "loginLink": "Sign in",
+      "error": {
+        "passwordMismatch": "Passwords do not match",
+        "weakPassword": "Password is too weak",
+        "emailExists": "An account with this email already exists",
+        "termsRequired": "You must agree to the Terms of Service",
+        "generic": "An error occurred. Please try again."
+      }
+    },
+    "forgotPassword": {
+      "title": "Reset Your Password",
+      "subtitle": "Enter your email and we'll send you reset instructions",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "Enter your email",
+      "submitButton": "Send Reset Link",
+      "loadingButton": "Sending...",
+      "backToLogin": "Back to login",
+      "successMessage": "Check your email for reset instructions",
+      "error": {
+        "emailNotFound": "No account found with this email",
+        "generic": "An error occurred. Please try again."
+      }
+    },
+    "resetPassword": {
+      "title": "Set New Password",
+      "subtitle": "Enter your new password below",
+      "passwordLabel": "New Password",
+      "confirmPasswordLabel": "Confirm New Password",
+      "submitButton": "Reset Password",
+      "loadingButton": "Resetting...",
+      "successMessage": "Password reset successfully",
+      "error": {
+        "invalidToken": "Invalid or expired reset token",
+        "passwordMismatch": "Passwords do not match",
+        "generic": "An error occurred. Please try again."
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Master A-Level Exams with AI-Powered Learning",
+      "subtitle": "Get instant, detailed feedback on your essays, flashcards, and quizzes. Personalized tutoring for Economics and Geography.",
+      "ctaPrimary": "Start Learning Free",
+      "ctaSecondary": "See How It Works",
+      "stats": {
+        "students": "10,000+ Students",
+        "accuracy": "95% Accuracy",
+        "subjects": "2 Subjects",
+        "satisfaction": "4.9/5 Rating"
+      }
+    },
+    "features": {
+      "title": "Everything You Need to Excel",
+      "subtitle": "Comprehensive tools designed for A-Level success",
+      "essayGrading": {
+        "title": "AI Essay Grading",
+        "description": "Get instant, detailed feedback on your essays with examiner-style comments and band recommendations."
+      },
+      "flashcards": {
+        "title": "Smart Flashcards",
+        "description": "Create and study flashcards with spaced repetition to maximize retention."
+      },
+      "quizzes": {
+        "title": "Adaptive Quizzes",
+        "description": "Test your knowledge with AI-generated quizzes that adapt to your learning progress."
+      },
+      "documents": {
+        "title": "Document Analysis",
+        "description": "Upload and analyze study materials with AI-powered summarization and Q&A."
+      },
+      "library": {
+        "title": "Study Library",
+        "description": "Access past papers, mark schemes, and curated study resources."
+      },
+      "progress": {
+        "title": "Progress Tracking",
+        "description": "Monitor your improvement with detailed analytics and personalized insights."
+      }
+    },
+    "subjects": {
+      "title": "Subjects We Cover",
+      "subtitle": "Expert AI tutoring for popular A-Level subjects",
+      "economics": {
+        "name": "Economics",
+        "description": "Master microeconomics, macroeconomics, and essay writing techniques.",
+        "topics": "Market Structures, Fiscal Policy, International Trade, Development"
+      },
+      "geography": {
+        "name": "Geography",
+        "description": "Excel in physical and human geography with case study analysis.",
+        "topics": "Coasts, Urbanization, Climate Change, Globalization"
+      }
+    },
+    "howItWorks": {
+      "title": "How Sandstone Works",
+      "subtitle": "Three simple steps to better grades",
+      "step1": {
+        "title": "Submit Your Work",
+        "description": "Upload your essay, create flashcards, or start a quiz."
+      },
+      "step2": {
+        "title": "Get AI Feedback",
+        "description": "Receive detailed, examiner-style feedback in seconds."
+      },
+      "step3": {
+        "title": "Improve & Repeat",
+        "description": "Learn from feedback and track your progress over time."
+      }
+    },
+    "testimonials": {
+      "title": "What Students Say",
+      "subtitle": "Join thousands of students achieving their goals",
+      "quote1": {
+        "text": "Sandstone helped me improve my Economics essays from a C to an A. The AI feedback is incredibly detailed!",
+        "author": "Sarah M.",
+        "role": "A-Level Student"
+      },
+      "quote2": {
+        "text": "The flashcards with spaced repetition saved me hours of revision time. Highly recommend!",
+        "author": "James L.",
+        "role": "Year 13 Student"
+      },
+      "quote3": {
+        "text": "Best investment for my Geography A-Level. The case study analysis is spot on.",
+        "author": "Emma T.",
+        "role": "A-Level Student"
+      }
+    },
+    "pricing": {
+      "title": "Simple, Transparent Pricing",
+      "subtitle": "Choose the plan that works for you",
+      "free": {
+        "name": "Free",
+        "price": "£0",
+        "period": "/month",
+        "description": "Perfect for trying out Sandstone",
+        "features": [
+          "5 essay gradings per month",
+          "50 flashcards",
+          "10 quizzes per month",
+          "Basic progress tracking"
+        ],
+        "cta": "Get Started"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "£9.99",
+        "period": "/month",
+        "description": "For serious A-Level students",
+        "features": [
+          "Unlimited essay gradings",
+          "Unlimited flashcards",
+          "Unlimited quizzes",
+          "Advanced analytics",
+          "Document analysis",
+          "Priority support"
+        ],
+        "cta": "Upgrade to Pro",
+        "popular": "Most Popular"
+      },
+      "team": {
+        "name": "School",
+        "price": "Custom",
+        "description": "For schools and tutoring centers",
+        "features": [
+          "Everything in Pro",
+          "Admin dashboard",
+          "Student management",
+          "Usage analytics",
+          "Dedicated support",
+          "Custom integrations"
+        ],
+        "cta": "Contact Sales"
+      }
+    },
+    "cta": {
+      "title": "Ready to Ace Your A-Levels?",
+      "subtitle": "Join thousands of students already using Sandstone",
+      "button": "Start Learning Free"
+    },
+    "footer": {
+      "product": "Product",
+      "features": "Features",
+      "pricing": "Pricing",
+      "changelog": "Changelog",
+      "roadmap": "Roadmap",
+      "company": "Company",
+      "about": "About",
+      "blog": "Blog",
+      "careers": "Careers",
+      "press": "Press",
+      "resources": "Resources",
+      "help": "Help Center",
+      "guides": "Guides",
+      "api": "API",
+      "community": "Community",
+      "legal": "Legal",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookies",
+      "licenses": "Licenses",
+      "copyright": "© {year} Sandstone. All rights reserved."
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}!",
+    "subtitle": "Here's your learning progress",
+    "stats": {
+      "essaysGraded": "Essays Graded",
+      "flashcardsStudied": "Flashcards Studied",
+      "quizzesCompleted": "Quizzes Completed",
+      "studyStreak": "Study Streak",
+      "days": "days"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "gradeEssay": "Grade Essay",
+      "createFlashcards": "Create Flashcards",
+      "startQuiz": "Start Quiz",
+      "browseLibrary": "Browse Library"
+    },
+    "recentActivity": {
+      "title": "Recent Activity",
+      "empty": "No recent activity",
+      "viewAll": "View All"
+    },
+    "progress": {
+      "title": "Your Progress",
+      "weeklyGoal": "Weekly Goal",
+      "completed": "completed",
+      "subjects": {
+        "economics": "Economics",
+        "geography": "Geography"
+      }
+    },
+    "recommendations": {
+      "title": "Recommended for You",
+      "basedOn": "Based on your recent activity"
+    }
+  },
+  "grade": {
+    "title": "Essay Grading",
+    "subtitle": "Get AI-powered feedback on your essays",
+    "form": {
+      "subjectLabel": "Subject",
+      "subjectPlaceholder": "Select subject",
+      "topicLabel": "Topic",
+      "topicPlaceholder": "Enter essay topic or question",
+      "essayLabel": "Your Essay",
+      "essayPlaceholder": "Paste or type your essay here...",
+      "wordCount": "Word count: {count}",
+      "submitButton": "Get Feedback",
+      "loadingButton": "Analyzing..."
+    },
+    "subjects": {
+      "economics": "Economics",
+      "geography": "Geography"
+    },
+    "results": {
+      "title": "Feedback Results",
+      "overallScore": "Overall Score",
+      "band": "Band {band}",
+      "breakdown": {
+        "title": "Score Breakdown",
+        "knowledge": "Knowledge & Understanding",
+        "application": "Application",
+        "analysis": "Analysis",
+        "evaluation": "Evaluation"
+      },
+      "strengths": "Strengths",
+      "improvements": "Areas for Improvement",
+      "detailedFeedback": "Detailed Feedback",
+      "exampleResponse": "Example Response",
+      "saveButton": "Save Feedback",
+      "shareButton": "Share",
+      "newEssay": "Grade Another Essay"
+    },
+    "history": {
+      "title": "Previous Essays",
+      "empty": "No essays graded yet",
+      "date": "Date",
+      "topic": "Topic",
+      "score": "Score",
+      "view": "View"
+    },
+    "tips": {
+      "title": "Essay Writing Tips",
+      "tip1": "Always define key terms in your introduction",
+      "tip2": "Use real-world examples to support your arguments",
+      "tip3": "Include diagrams where appropriate",
+      "tip4": "Evaluate both sides of an argument",
+      "tip5": "Conclude with a justified judgment"
+    }
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "subtitle": "Study smarter with spaced repetition",
+    "stats": {
+      "total": "Total Cards",
+      "toReview": "To Review",
+      "mastered": "Mastered",
+      "learning": "Learning"
+    },
+    "actions": {
+      "create": "Create Cards",
+      "study": "Study Now",
+      "import": "Import",
+      "export": "Export"
+    },
+    "decks": {
+      "title": "Your Decks",
+      "empty": "No decks yet",
+      "cards": "{count} cards",
+      "lastStudied": "Last studied: {date}",
+      "never": "Never"
+    },
+    "study": {
+      "title": "Study Session",
+      "progress": "Card {current} of {total}",
+      "showAnswer": "Show Answer",
+      "rate": {
+        "again": "Again",
+        "hard": "Hard",
+        "good": "Good",
+        "easy": "Easy"
+      },
+      "completed": {
+        "title": "Session Complete!",
+        "message": "You've reviewed all cards for now",
+        "stats": "You rated {again} again, {hard} hard, {good} good, {easy} easy",
+        "continue": "Continue Studying",
+        "back": "Back to Decks"
+      }
+    },
+    "create": {
+      "title": "Create Flashcards",
+      "frontLabel": "Front (Question)",
+      "backLabel": "Back (Answer)",
+      "addButton": "Add Card",
+      "saveButton": "Save Deck",
+      "deckNameLabel": "Deck Name",
+      "subjectLabel": "Subject",
+      "tagsLabel": "Tags (optional)"
+    },
+    "aiGenerate": {
+      "title": "AI Generate Cards",
+      "promptLabel": "What topic should we generate cards for?",
+      "countLabel": "Number of cards",
+      "generateButton": "Generate",
+      "generatingButton": "Generating..."
+    }
+  },
+  "quiz": {
+    "title": "Quiz",
+    "subtitle": "Test your knowledge with adaptive quizzes",
+    "setup": {
+      "title": "Quiz Setup",
+      "subjectLabel": "Subject",
+      "topicLabel": "Topic (optional)",
+      "difficultyLabel": "Difficulty",
+      "questionsLabel": "Number of Questions",
+      "startButton": "Start Quiz",
+      "difficulty": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard",
+        "mixed": "Mixed"
+      }
+    },
+    "question": {
+      "progress": "Question {current} of {total}",
+      "multipleChoice": "Select the correct answer",
+      "trueFalse": "True or False?",
+      "shortAnswer": "Type your answer",
+      "essay": "Write your response",
+      "submit": "Submit Answer",
+      "skip": "Skip",
+      "flag": "Flag for review"
+    },
+    "results": {
+      "title": "Quiz Results",
+      "score": "You scored {score}%",
+      "correct": "{correct} correct out of {total}",
+      "time": "Time taken: {time}",
+      "breakdown": "Question Breakdown",
+      "retake": "Retake Quiz",
+      "newQuiz": "New Quiz",
+      "review": "Review Answers"
+    },
+    "review": {
+      "title": "Review Answers",
+      "correct": "Correct",
+      "incorrect": "Incorrect",
+      "explanation": "Explanation"
+    }
+  },
+  "documents": {
+    "title": "Documents",
+    "subtitle": "Upload and analyze your study materials",
+    "upload": {
+      "title": "Upload Document",
+      "dragDrop": "Drag and drop files here",
+      "or": "or",
+      "browse": "Browse files",
+      "supported": "Supported: PDF, DOCX, TXT (max 10MB)",
+      "uploading": "Uploading..."
+    },
+    "list": {
+      "title": "Your Documents",
+      "empty": "No documents uploaded yet",
+      "name": "Name",
+      "date": "Uploaded",
+      "size": "Size",
+      "actions": "Actions"
+    },
+    "actions": {
+      "summarize": "Summarize",
+      "ask": "Ask Questions",
+      "flashcards": "Generate Flashcards",
+      "quiz": "Generate Quiz",
+      "delete": "Delete"
+    },
+    "chat": {
+      "title": "Ask About Document",
+      "placeholder": "Ask a question about this document...",
+      "send": "Send",
+      "thinking": "Thinking..."
+    }
+  },
+  "library": {
+    "title": "Study Library",
+    "subtitle": "Access past papers, mark schemes, and resources",
+    "filters": {
+      "subject": "Subject",
+      "type": "Resource Type",
+      "year": "Year",
+      "board": "Exam Board"
+    },
+    "types": {
+      "pastPaper": "Past Paper",
+      "markScheme": "Mark Scheme",
+      "specification": "Specification",
+      "notes": "Study Notes",
+      "video": "Video Tutorial"
+    },
+    "search": {
+      "placeholder": "Search resources...",
+      "noResults": "No resources found"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and preferences",
+    "sections": {
+      "profile": "Profile",
+      "account": "Account",
+      "notifications": "Notifications",
+      "appearance": "Appearance",
+      "language": "Language",
+      "subscription": "Subscription",
+      "security": "Security",
+      "data": "Data & Privacy"
+    },
+    "profile": {
+      "title": "Profile Information",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email Address",
+      "bio": "Bio",
+      "school": "School/Institution",
+      "subjects": "Studying",
+      "saveButton": "Save Changes",
+      "avatar": {
+        "title": "Profile Picture",
+        "change": "Change",
+        "remove": "Remove"
+      }
+    },
+    "notifications": {
+      "title": "Notification Preferences",
+      "email": {
+        "title": "Email Notifications",
+        "marketing": "Marketing updates",
+        "product": "Product announcements",
+        "weekly": "Weekly progress report",
+        "reminders": "Study reminders"
+      },
+      "push": {
+        "title": "Push Notifications",
+        "studyReminders": "Study reminders",
+        "newFeatures": "New features",
+        "achievements": "Achievements"
+      }
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "fontSize": "Font Size",
+      "fontSizes": {
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large"
+      }
+    },
+    "language": {
+      "title": "Language",
+      "selectLabel": "Select Language",
+      "current": "Current Language",
+      "note": "Changes will apply immediately"
+    },
+    "subscription": {
+      "title": "Your Subscription",
+      "currentPlan": "Current Plan",
+      "status": "Status",
+      "renewal": "Renews on",
+      "upgradeButton": "Upgrade Plan",
+      "manageButton": "Manage Subscription",
+      "cancelButton": "Cancel Subscription",
+      "features": "Plan Features"
+    },
+    "security": {
+      "title": "Security",
+      "changePassword": "Change Password",
+      "twoFactor": "Two-Factor Authentication",
+      "sessions": "Active Sessions",
+      "logoutAll": "Log Out All Devices"
+    },
+    "data": {
+      "title": "Data & Privacy",
+      "export": "Export Your Data",
+      "delete": "Delete Account",
+      "deleteWarning": "This action cannot be undone. All your data will be permanently deleted."
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "notFound": {
+      "title": "Page Not Found",
+      "message": "The page you're looking for doesn't exist.",
+      "back": "Go Back Home"
+    },
+    "unauthorized": {
+      "title": "Unauthorized",
+      "message": "You need to be logged in to access this page.",
+      "login": "Sign In"
+    },
+    "forbidden": {
+      "title": "Access Denied",
+      "message": "You don't have permission to access this resource."
+    },
+    "server": {
+      "title": "Server Error",
+      "message": "Something went wrong on our end. Please try again later."
+    },
+    "offline": {
+      "title": "You're Offline",
+      "message": "Please check your internet connection and try again."
+    },
+    "rateLimit": {
+      "title": "Too Many Requests",
+      "message": "Please wait a moment before trying again."
+    }
+  },
+  "common": {
+    "loading": "Loading...",
+    "saving": "Saving...",
+    "processing": "Processing...",
+    "success": "Success!",
+    "error": "Error",
+    "warning": "Warning",
+    "info": "Info",
+    "confirm": "Are you sure?",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "done": "Done",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "more": "More",
+    "less": "Less",
+    "all": "All",
+    "none": "None",
+    "or": "or",
+    "and": "and",
+    "from": "from",
+    "to": "to",
+    "of": "of",
+    "by": "by",
+    "on": "on",
+    "at": "at",
+    "in": "in",
+    "with": "with",
+    "for": "for",
+    "about": "about",
+    "per": "per",
+    "each": "each",
+    "every": "every",
+    "other": "other",
+    "another": "another",
+    "new": "New",
+    "old": "Old",
+    "first": "First",
+    "last": "Last",
+    "next": "Next",
+    "previous": "Previous",
+    "current": "Current",
+    "total": "Total",
+    "average": "Average",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "required": "Required",
+    "optional": "Optional",
+    "default": "Default",
+    "custom": "Custom",
+    "standard": "Standard",
+    "premium": "Premium",
+    "basic": "Basic",
+    "advanced": "Advanced",
+    "beginner": "Beginner",
+    "intermediate": "Intermediate",
+    "expert": "Expert",
+    "active": "Active",
+    "inactive": "Inactive",
+    "pending": "Pending",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "notStarted": "Not Started",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "visible": "Visible",
+    "hidden": "Hidden",
+    "public": "Public",
+    "private": "Private",
+    "shared": "Shared",
+    "personal": "Personal"
+  },
+  "time": {
+    "now": "Just now",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "thisWeek": "This week",
+    "lastWeek": "Last week",
+    "nextWeek": "Next week",
+    "thisMonth": "This month",
+    "lastMonth": "Last month",
+    "nextMonth": "Next month",
+    "thisYear": "This year",
+    "lastYear": "Last year",
+    "ago": "{time} ago",
+    "in": "in {time}",
+    "seconds": "{count} seconds",
+    "minutes": "{count} minutes",
+    "hours": "{count} hours",
+    "days": "{count} days",
+    "weeks": "{count} weeks",
+    "months": "{count} months",
+    "years": "{count} years"
+  },
+  "accessibility": {
+    "skipToMain": "Skip to main content",
+    "menu": "Menu",
+    "close": "Close",
+    "open": "Open",
+    "expand": "Expand",
+    "collapse": "Collapse",
+    "loading": "Loading content",
+    "error": "Error occurred",
+    "success": "Action successful",
+    "required": "Required field",
+    "optional": "Optional field",
+    "selected": "Selected",
+    "unselected": "Not selected",
+    "checked": "Checked",
+    "unchecked": "Unchecked",
+    "pressed": "Pressed",
+    "notPressed": "Not pressed",
+    "current": "Current",
+    "completed": "Completed",
+    "incomplete": "Incomplete",
+    "newNotification": "New notification",
+    "breadcrumb": "Breadcrumb navigation",
+    "pagination": "Pagination",
+    "search": "Search",
+    "results": "Search results"
+  }
+}

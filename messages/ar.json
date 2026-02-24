@@ -1,0 +1,789 @@
+{
+  "metadata": {
+    "title": "Sandstone - التعلم A-Level المدعوم بالذكاء الاصطناعي",
+    "description": "تقييم إجابات A-Level بالذكاء الاصطناعي مع تعليقات مفصلة من المصححين. أتقن الاقتصاد والجغرافيا مع التدريس الشخصي.",
+    "keywords": "A-Level, الاقتصاد, الجغرافيا, التدريس بالذكاء الاصطناعي, التحضير للامتحانات, تقييم المقالات, Edexcel, تطبيق التعلم"
+  },
+  "navigation": {
+    "home": "الرئيسية",
+    "dashboard": "لوحة التحكم",
+    "grade": "تقييم المقال",
+    "flashcards": "البطاقات التعليمية",
+    "quiz": "اختبار",
+    "documents": "المستندات",
+    "library": "المكتبة",
+    "settings": "الإعدادات",
+    "login": "تسجيل الدخول",
+    "signup": "التسجيل",
+    "logout": "تسجيل الخروج",
+    "profile": "الملف الشخصي",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "skip": "تخطي",
+    "continue": "متابعة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "إنشاء",
+    "close": "إغلاق",
+    "open": "فتح",
+    "search": "بحث",
+    "filter": "تصفية",
+    "sort": "فرز",
+    "view": "عرض",
+    "download": "تحميل",
+    "share": "مشاركة",
+    "copy": "نسخ",
+    "paste": "لصق",
+    "cut": "قص",
+    "selectAll": "تحديد الكل",
+    "deselectAll": "إلغاء تحديد الكل",
+    "expand": "توسيع",
+    "collapse": "طي",
+    "showMore": "عرض المزيد",
+    "showLess": "عرض أقل",
+    "learnMore": "معرفة المزيد",
+    "getStarted": "البدء",
+    "tryNow": "جرب الآن",
+    "upgrade": "ترقية",
+    "downgrade": "تخفيض"
+  },
+  "auth": {
+    "login": {
+      "title": "مرحباً بعودتك",
+      "subtitle": "سجل الدخول لمواصلة رحلة التعلم",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أدخل كلمة المرور",
+      "rememberMe": "تذكرني",
+      "forgotPassword": "نسيت كلمة المرور؟",
+      "submitButton": "تسجيل الدخول",
+      "loadingButton": "جاري تسجيل الدخول...",
+      "noAccount": "ليس لديك حساب؟",
+      "signupLink": "سجل",
+      "orContinueWith": "أو تابع باستخدام",
+      "googleButton": "المتابعة مع Google",
+      "error": {
+        "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+        "accountLocked": "الحساب مغلق مؤقتاً. يرجى المحاولة لاحقاً.",
+        "emailNotVerified": "يرجى تأكيد بريدك الإلكتروني",
+        "generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "signup": {
+      "title": "إنشاء حسابك",
+      "subtitle": "ابدأ رحلة النجاح في A-Level اليوم",
+      "firstNameLabel": "الاسم الأول",
+      "firstNamePlaceholder": "أدخل اسمك الأول",
+      "lastNameLabel": "اسم العائلة",
+      "lastNamePlaceholder": "أدخل اسم العائلة",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "passwordLabel": "كلمة المرور",
+      "passwordPlaceholder": "أنشئ كلمة مرور",
+      "passwordRequirements": "يجب أن تحتوي كلمة المرور على 8 أحرف على الأقل مع أحرف كبيرة وصغيرة وأرقام",
+      "confirmPasswordLabel": "تأكيد كلمة المرور",
+      "confirmPasswordPlaceholder": "أكد كلمة المرور",
+      "termsLabel": "أوافق على",
+      "termsLink": "شروط الخدمة",
+      "and": "و",
+      "privacyLink": "سياسة الخصوصية",
+      "submitButton": "إنشاء حساب",
+      "loadingButton": "جاري إنشاء الحساب...",
+      "hasAccount": "لديك حساب بالفعل؟",
+      "loginLink": "تسجيل الدخول",
+      "error": {
+        "passwordMismatch": "كلمتا المرور غير متطابقتين",
+        "weakPassword": "كلمة المرور ضعيفة جداً",
+        "emailExists": "يوجد حساب بهذا البريد الإلكتروني بالفعل",
+        "termsRequired": "يجب الموافقة على شروط الخدمة",
+        "generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "forgotPassword": {
+      "title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل بريدك الإلكتروني وسنرسل لك التعليمات",
+      "emailLabel": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "submitButton": "إرسال رابط إعادة التعيين",
+      "loadingButton": "جاري الإرسال...",
+      "backToLogin": "العودة لتسجيل الدخول",
+      "successMessage": "تحقق من بريدك الإلكتروني للتعليمات",
+      "error": {
+        "emailNotFound": "لم يتم العثور على حساب بهذا البريد",
+        "generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+      }
+    },
+    "resetPassword": {
+      "title": "تعيين كلمة مرور جديدة",
+      "subtitle": "أدخل كلمة المرور الجديدة أدناه",
+      "passwordLabel": "كلمة المرور الجديدة",
+      "confirmPasswordLabel": "تأكيد كلمة المرور الجديدة",
+      "submitButton": "إعادة تعيين كلمة المرور",
+      "loadingButton": "جاري إعادة التعيين...",
+      "successMessage": "تم إعادة تعيين كلمة المرور بنجاح",
+      "error": {
+        "invalidToken": "رمز غير صالح أو منتهي الصلاحية",
+        "passwordMismatch": "كلمتا المرور غير متطابقتين",
+        "generic": "حدث خطأ. يرجى المحاولة مرة أخرى."
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "أتقن امتحانات A-Level بالتعلم المدعوم بالذكاء الاصطناعي",
+      "subtitle": "احصل على ملاحظات فورية ومفصلة على مقالاتك وبطاقاتك واختباراتك. تدريس شخصي للاقتصاد والجغرافيا.",
+      "ctaPrimary": "ابدأ التعلم مجاناً",
+      "ctaSecondary": "شاهد كيف يعمل",
+      "stats": {
+        "students": "10,000+ طالب",
+        "accuracy": "95% دقة",
+        "subjects": "2 مادة",
+        "satisfaction": "4.9/5 تقييم"
+      }
+    },
+    "features": {
+      "title": "كل ما تحتاجه للتفوق",
+      "subtitle": "أدوات شاملة مصممة لنجاح A-Level",
+      "essayGrading": {
+        "title": "تقييم المقالات بالذكاء الاصطناعي",
+        "description": "احصل على ملاحظات فورية ومفصلة مع تعليقات المصححين وتوصيات المستوى."
+      },
+      "flashcards": {
+        "title": "بطاقات تعليمية ذكية",
+        "description": "أنشئ وادرس البطاقات التعليمية مع التكرار المتباعد لتعظيم الاحتفاظ."
+      },
+      "quizzes": {
+        "title": "اختبارات تكيفية",
+        "description": "اختبر معرفتك مع اختبارات مولدة بالذكاء الاصطناعي تتكيف مع تقدمك."
+      },
+      "documents": {
+        "title": "تحليل المستندات",
+        "description": "حمّل وحلل مواد الدراسة مع التلخيص والأسئلة والأجوبة بالذكاء الاصطناعي."
+      },
+      "library": {
+        "title": "مكتبة الدراسة",
+        "description": "الوصول إلى الامتحانات السابقة ونماذج التصحيح وموارد الدراسة المختارة."
+      },
+      "progress": {
+        "title": "تتبع التقدم",
+        "description": "راقب تحسنك مع تحليلات مفصلة ورؤى شخصية."
+      }
+    },
+    "subjects": {
+      "title": "المواد التي نغطيها",
+      "subtitle": "تدريس خبير بالذكاء الاصطناعي لمواد A-Level الشائعة",
+      "economics": {
+        "name": "الاقتصاد",
+        "description": "أتقن الاقتصاد الجزئي والكلي وتقنيات كتابة المقالات.",
+        "topics": "هياكل السوق، السياسة المالية، التجارة الدولية، التنمية"
+      },
+      "geography": {
+        "name": "الجغرافيا",
+        "description": "تفوق في الجغرافيا الطبيعية والبشرية مع تحليل دراسات الحالة.",
+        "topics": "السواحل، التحضر، تغير المناخ، العولمة"
+      }
+    },
+    "howItWorks": {
+      "title": "كيف يعمل Sandstone",
+      "subtitle": "ثلاث خطوات بسيطة لدرجات أفضل",
+      "step1": {
+        "title": "قدم عملك",
+        "description": "حمّل مقالتك، أنشئ بطاقات تعليمية، أو ابدأ اختباراً."
+      },
+      "step2": {
+        "title": "احصل على ملاحظات الذكاء الاصطناعي",
+        "description": "استلم ملاحظات مفصلة من المصححين في ثوانٍ."
+      },
+      "step3": {
+        "title": "حسّن وكرر",
+        "description": "تعلم من الملاحظات وتابع تقدمك مع مرور الوقت."
+      }
+    },
+    "testimonials": {
+      "title": "ما يقوله الطلاب",
+      "subtitle": "انضم إلى آلاف الطلاب الذين يحققون أهدافهم",
+      "quote1": {
+        "text": "ساعدني Sandstone على تحسين مقالات الاقتصاد من C إلى A. ملاحظات الذكاء الاصطناعي مفصلة بشكل لا يصدق!",
+        "author": "سارة م.",
+        "role": "طالبة A-Level"
+      },
+      "quote2": {
+        "text": "وفرت لي البطاقات التعليمية مع التكرار المتباعد ساعات من مراجعة. موصى به للغاية!",
+        "author": "جيمس ل.",
+        "role": "طالب السنة 13"
+      },
+      "quote3": {
+        "text": "أفضل استثمار لجغرافيا A-Level. تحليل دراسات الحالة دقيق.",
+        "author": "إيما ت.",
+        "role": "طالبة A-Level"
+      }
+    },
+    "pricing": {
+      "title": "أسعار بسيطة وشفافة",
+      "subtitle": "اختر الخطة التي تناسبك",
+      "free": {
+        "name": "مجاني",
+        "price": "£0",
+        "period": "/شهر",
+        "description": "مثالي لتجربة Sandstone",
+        "features": [
+          "5 تقييمات مقالات شهرياً",
+          "50 بطاقة تعليمية",
+          "10 اختبارات شهرياً",
+          "تتبع تقدم أساسي"
+        ],
+        "cta": "البدء"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "£9.99",
+        "period": "/شهر",
+        "description": "للطلاب الجادين في A-Level",
+        "features": [
+          "تقييمات مقالات غير محدودة",
+          "بطاقات تعليمية غير محدودة",
+          "اختبارات غير محدودة",
+          "تحليلات متقدمة",
+          "تحليل المستندات",
+          "دعم أولوي"
+        ],
+        "cta": "الترقية إلى Pro",
+        "popular": "الأكثر شعبية"
+      },
+      "team": {
+        "name": "المدرسة",
+        "price": "مخصص",
+        "description": "للمدارس ومراكز التدريس",
+        "features": [
+          "كل ما في Pro",
+          "لوحة تحكم المشرف",
+          "إدارة الطلاب",
+          "تحليلات الاستخدام",
+          "دعم مخصص",
+          "تكاملات مخصصة"
+        ],
+        "cta": "التواصل مع المبيعات"
+      }
+    },
+    "cta": {
+      "title": "مستعد للنجاح في A-Level؟",
+      "subtitle": "انضم إلى آلاف الطلاب الذين يستخدمون Sandstone بالفعل",
+      "button": "ابدأ التعلم مجاناً"
+    },
+    "footer": {
+      "product": "المنتج",
+      "features": "الميزات",
+      "pricing": "الأسعار",
+      "changelog": "سجل التغييرات",
+      "roadmap": "خارطة الطريق",
+      "company": "الشركة",
+      "about": "من نحن",
+      "blog": "المدونة",
+      "careers": "الوظائف",
+      "press": "الصحافة",
+      "resources": "الموارد",
+      "help": "مركز المساعدة",
+      "guides": "الأدلة",
+      "api": "API",
+      "community": "المجتمع",
+      "legal": "قانوني",
+      "privacy": "الخصوصية",
+      "terms": "الشروط",
+      "cookies": "ملفات تعريف الارتباط",
+      "licenses": "التراخيص",
+      "copyright": "© {year} Sandstone. جميع الحقوق محفوظة."
+    }
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً بعودتك، {name}!",
+    "subtitle": "هذا هو تقدمك في التعلم",
+    "stats": {
+      "essaysGraded": "المقالات المقيمة",
+      "flashcardsStudied": "البطاقات المدروسة",
+      "quizzesCompleted": "الاختبارات المكتملة",
+      "studyStreak": "سلسلة الدراسة",
+      "days": "أيام"
+    },
+    "quickActions": {
+      "title": "إجراءات سريعة",
+      "gradeEssay": "تقييم مقال",
+      "createFlashcards": "إنشاء بطاقات",
+      "startQuiz": "بدء اختبار",
+      "browseLibrary": "تصفح المكتبة"
+    },
+    "recentActivity": {
+      "title": "النشاط الأخير",
+      "empty": "لا يوجد نشاط حديث",
+      "viewAll": "عرض الكل"
+    },
+    "progress": {
+      "title": "تقدمك",
+      "weeklyGoal": "الهدف الأسبوعي",
+      "completed": "مكتمل",
+      "subjects": {
+        "economics": "الاقتصاد",
+        "geography": "الجغرافيا"
+      }
+    },
+    "recommendations": {
+      "title": "موصى به لك",
+      "basedOn": "بناءً على نشاطك الأخير"
+    }
+  },
+  "grade": {
+    "title": "تقييم المقالات",
+    "subtitle": "احصل على ملاحظات مدعومة بالذكاء الاصطناعي على مقالاتك",
+    "form": {
+      "subjectLabel": "المادة",
+      "subjectPlaceholder": "اختر المادة",
+      "topicLabel": "الموضوع",
+      "topicPlaceholder": "أدخل موضوع أو سؤال المقال",
+      "essayLabel": "مقالتك",
+      "essayPlaceholder": "الصق أو اكتب مقالتك هنا...",
+      "wordCount": "عدد الكلمات: {count}",
+      "submitButton": "الحصول على الملاحظات",
+      "loadingButton": "جاري التحليل..."
+    },
+    "subjects": {
+      "economics": "الاقتصاد",
+      "geography": "الجغرافيا"
+    },
+    "results": {
+      "title": "نتائج الملاحظات",
+      "overallScore": "الدرجة الإجمالية",
+      "band": "المستوى {band}",
+      "breakdown": {
+        "title": "تفصيل الدرجات",
+        "knowledge": "المعرفة والفهم",
+        "application": "التطبيق",
+        "analysis": "التحليل",
+        "evaluation": "التقييم"
+      },
+      "strengths": "نقاط القوة",
+      "improvements": "مجالات التحسين",
+      "detailedFeedback": "ملاحظات مفصلة",
+      "exampleResponse": "رد نموذجي",
+      "saveButton": "حفظ الملاحظات",
+      "shareButton": "مشاركة",
+      "newEssay": "تقييم مقال آخر"
+    },
+    "history": {
+      "title": "المقالات السابقة",
+      "empty": "لم يتم تقييم أي مقالات بعد",
+      "date": "التاريخ",
+      "topic": "الموضوع",
+      "score": "الدرجة",
+      "view": "عرض"
+    },
+    "tips": {
+      "title": "نصائح كتابة المقالات",
+      "tip1": "حدد المصطلحات الرئيسية دائماً في مقدمتك",
+      "tip2": "استخدم أمثلة من الواقع لدعم حججك",
+      "tip3": "تضمن مخططات حيثما هو مناسب",
+      "tip4": "قيم كلا جانبي الحجة",
+      "tip5": "اختتم بحكم مبرر"
+    }
+  },
+  "flashcards": {
+    "title": "البطاقات التعليمية",
+    "subtitle": "ادرس بذكاء مع التكرار المتباعد",
+    "stats": {
+      "total": "إجمالي البطاقات",
+      "toReview": "للمراجعة",
+      "mastered": "تم إتقانها",
+      "learning": "قيد التعلم"
+    },
+    "actions": {
+      "create": "إنشاء بطاقات",
+      "study": "ادرس الآن",
+      "import": "استيراد",
+      "export": "تصدير"
+    },
+    "decks": {
+      "title": "مجموعاتك",
+      "empty": "لا توجد مجموعات بعد",
+      "cards": "{count} بطاقة",
+      "lastStudied": "آخر دراسة: {date}",
+      "never": "أبداً"
+    },
+    "study": {
+      "title": "جلسة الدراسة",
+      "progress": "بطاقة {current} من {total}",
+      "showAnswer": "عرض الإجابة",
+      "rate": {
+        "again": "مرة أخرى",
+        "hard": "صعب",
+        "good": "جيد",
+        "easy": "سهل"
+      },
+      "completed": {
+        "title": "اكتملت الجلسة!",
+        "message": "لقد راجعت جميع البطاقات لهذا الوقت",
+        "stats": "قيمت {again} مرة أخرى، {hard} صعب، {good} جيد، {easy} سهل",
+        "continue": "مواصلة الدراسة",
+        "back": "العودة إلى المجموعات"
+      }
+    },
+    "create": {
+      "title": "إنشاء بطاقات تعليمية",
+      "frontLabel": "الوجه (السؤال)",
+      "backLabel": "الظهر (الإجابة)",
+      "addButton": "إضافة بطاقة",
+      "saveButton": "حفظ المجموعة",
+      "deckNameLabel": "اسم المجموعة",
+      "subjectLabel": "المادة",
+      "tagsLabel": "الوسوم (اختياري)"
+    },
+    "aiGenerate": {
+      "title": "توليد بطاقات بالذكاء الاصطناعي",
+      "promptLabel": "ما هو الموضوع الذي يجب أن نولد له بطاقات؟",
+      "countLabel": "عدد البطاقات",
+      "generateButton": "توليد",
+      "generatingButton": "جاري التوليد..."
+    }
+  },
+  "quiz": {
+    "title": "اختبار",
+    "subtitle": "اختبر معرفتك مع اختبارات تكيفية",
+    "setup": {
+      "title": "إعداد الاختبار",
+      "subjectLabel": "المادة",
+      "topicLabel": "الموضوع (اختياري)",
+      "difficultyLabel": "الصعوبة",
+      "questionsLabel": "عدد الأسئلة",
+      "startButton": "بدء الاختبار",
+      "difficulty": {
+        "easy": "سهل",
+        "medium": "متوسط",
+        "hard": "صعب",
+        "mixed": "مختلط"
+      }
+    },
+    "question": {
+      "progress": "سؤال {current} من {total}",
+      "multipleChoice": "اختر الإجابة الصحيحة",
+      "trueFalse": "صحيح أم خطأ؟",
+      "shortAnswer": "اكتب إجابتك",
+      "essay": "اكتب ردك",
+      "submit": "إرسال الإجابة",
+      "skip": "تخطي",
+      "flag": "وضع علامة للمراجعة"
+    },
+    "results": {
+      "title": "نتائج الاختبار",
+      "score": "حصلت على {score}%",
+      "correct": "{correct} صحيح من {total}",
+      "time": "الوقت: {time}",
+      "breakdown": "تفصيل الأسئلة",
+      "retake": "إعادة الاختبار",
+      "newQuiz": "اختبار جديد",
+      "review": "مراجعة الإجابات"
+    },
+    "review": {
+      "title": "مراجعة الإجابات",
+      "correct": "صحيح",
+      "incorrect": "خطأ",
+      "explanation": "الشرح"
+    }
+  },
+  "documents": {
+    "title": "المستندات",
+    "subtitle": "حمّل وحلل مواد الدراسة",
+    "upload": {
+      "title": "رفع مستند",
+      "dragDrop": "اسحب وأفلت الملفات هنا",
+      "or": "أو",
+      "browse": "تصفح الملفات",
+      "supported": "مدعوم: PDF، DOCX، TXT (بحد أقصى 10 ميجابايت)",
+      "uploading": "جاري الرفع..."
+    },
+    "list": {
+      "title": "مستنداتك",
+      "empty": "لم يتم رفع أي مستندات بعد",
+      "name": "الاسم",
+      "date": "تم الرفع",
+      "size": "الحجم",
+      "actions": "الإجراءات"
+    },
+    "actions": {
+      "summarize": "تلخيص",
+      "ask": "طرح أسئلة",
+      "flashcards": "توليد بطاقات",
+      "quiz": "توليد اختبار",
+      "delete": "حذف"
+    },
+    "chat": {
+      "title": "السؤال عن المستند",
+      "placeholder": "اطرح سؤالاً حول هذا المستند...",
+      "send": "إرسال",
+      "thinking": "جاري التفكير..."
+    }
+  },
+  "library": {
+    "title": "مكتبة الدراسة",
+    "subtitle": "الوصول إلى الامتحانات السابقة ونماذج التصحيح والموارد",
+    "filters": {
+      "subject": "المادة",
+      "type": "نوع المورد",
+      "year": "السنة",
+      "board": "مجلس الامتحانات"
+    },
+    "types": {
+      "pastPaper": "امتحان سابق",
+      "markScheme": "نموذج تصحيح",
+      "specification": "مواصفات",
+      "notes": "ملاحظات دراسية",
+      "video": "فيديو تعليمي"
+    },
+    "search": {
+      "placeholder": "البحث في الموارد...",
+      "noResults": "لم يتم العثور على موارد"
+    }
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "subtitle": "إدارة حسابك وتفضيلاتك",
+    "sections": {
+      "profile": "الملف الشخصي",
+      "account": "الحساب",
+      "notifications": "الإشعارات",
+      "appearance": "المظهر",
+      "language": "اللغة",
+      "subscription": "الاشتراك",
+      "security": "الأمان",
+      "data": "البيانات والخصوصية"
+    },
+    "profile": {
+      "title": "معلومات الملف الشخصي",
+      "firstName": "الاسم الأول",
+      "lastName": "اسم العائلة",
+      "email": "البريد الإلكتروني",
+      "bio": "نبذة",
+      "school": "المدرسة/المؤسسة",
+      "subjects": "الدراسة",
+      "saveButton": "حفظ التغييرات",
+      "avatar": {
+        "title": "صورة الملف الشخصي",
+        "change": "تغيير",
+        "remove": "إزالة"
+      }
+    },
+    "notifications": {
+      "title": "تفضيلات الإشعارات",
+      "email": {
+        "title": "إشعارات البريد الإلكتروني",
+        "marketing": "تحديثات التسويق",
+        "product": "إعلانات المنتجات",
+        "weekly": "تقرير التقدم الأسبوعي",
+        "reminders": "تذكيرات الدراسة"
+      },
+      "push": {
+        "title": "إشعارات الدفع",
+        "studyReminders": "تذكيرات الدراسة",
+        "newFeatures": "ميزات جديدة",
+        "achievements": "الإنجازات"
+      }
+    },
+    "appearance": {
+      "title": "المظهر",
+      "theme": "السمة",
+      "themes": {
+        "light": "فاتح",
+        "dark": "داكن",
+        "system": "النظام"
+      },
+      "fontSize": "حجم الخط",
+      "fontSizes": {
+        "small": "صغير",
+        "medium": "متوسط",
+        "large": "كبير"
+      }
+    },
+    "language": {
+      "title": "اللغة",
+      "selectLabel": "اختر اللغة",
+      "current": "اللغة الحالية",
+      "note": "سيتم تطبيق التغييرات فوراً"
+    },
+    "subscription": {
+      "title": "اشتراكك",
+      "currentPlan": "الخطة الحالية",
+      "status": "الحالة",
+      "renewal": "التجديد في",
+      "upgradeButton": "ترقية الخطة",
+      "manageButton": "إدارة الاشتراك",
+      "cancelButton": "إلغاء الاشتراك",
+      "features": "ميزات الخطة"
+    },
+    "security": {
+      "title": "الأمان",
+      "changePassword": "تغيير كلمة المرور",
+      "twoFactor": "المصادقة الثنائية",
+      "sessions": "الجلسات النشطة",
+      "logoutAll": "تسجيل الخروج من جميع الأجهزة"
+    },
+    "data": {
+      "title": "البيانات والخصوصية",
+      "export": "تصدير بياناتك",
+      "delete": "حذف الحساب",
+      "deleteWarning": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف جميع بياناتك بشكل دائم."
+    }
+  },
+  "errors": {
+    "generic": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "notFound": {
+      "title": "الصفحة غير موجودة",
+      "message": "الصفحة التي تبحث عنها غير موجودة.",
+      "back": "العودة إلى الرئيسية"
+    },
+    "unauthorized": {
+      "title": "غير مصرح",
+      "message": "يجب تسجيل الدخول للوصول إلى هذه الصفحة.",
+      "login": "تسجيل الدخول"
+    },
+    "forbidden": {
+      "title": "الوصول مرفوض",
+      "message": "ليس لديك إذن للوصول إلى هذا المورد."
+    },
+    "server": {
+      "title": "خطأ في الخادم",
+      "message": "حدث خطأ ما من جانبنا. يرجى المحاولة لاحقاً."
+    },
+    "offline": {
+      "title": "أنت غير متصل",
+      "message": "يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى."
+    },
+    "rateLimit": {
+      "title": "طلبات كثيرة جداً",
+      "message": "يرجى الانتظار قليلاً قبل المحاولة مرة أخرى."
+    }
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "saving": "جاري الحفظ...",
+    "processing": "جاري المعالجة...",
+    "success": "نجاح!",
+    "error": "خطأ",
+    "warning": "تحذير",
+    "info": "معلومات",
+    "confirm": "هل أنت متأكد؟",
+    "yes": "نعم",
+    "no": "لا",
+    "ok": "موافق",
+    "done": "تم",
+    "retry": "إعادة المحاولة",
+    "refresh": "تحديث",
+    "more": "المزيد",
+    "less": "أقل",
+    "all": "الكل",
+    "none": "لا شيء",
+    "or": "أو",
+    "and": "و",
+    "from": "من",
+    "to": "إلى",
+    "of": "من",
+    "by": "بواسطة",
+    "on": "على",
+    "at": "في",
+    "in": "في",
+    "with": "مع",
+    "for": "لـ",
+    "about": "حول",
+    "per": "لكل",
+    "each": "كل",
+    "every": "كل",
+    "other": "آخر",
+    "another": "آخر",
+    "new": "جديد",
+    "old": "قديم",
+    "first": "أول",
+    "last": "أخير",
+    "next": "التالي",
+    "previous": "السابق",
+    "current": "الحالي",
+    "total": "الإجمالي",
+    "average": "متوسط",
+    "minimum": "الحد الأدنى",
+    "maximum": "الحد الأقصى",
+    "required": "مطلوب",
+    "optional": "اختياري",
+    "default": "افتراضي",
+    "custom": "مخصص",
+    "standard": "قياسي",
+    "premium": "متميز",
+    "basic": "أساسي",
+    "advanced": "متقدم",
+    "beginner": "مبتدئ",
+    "intermediate": "متوسط",
+    "expert": "خبير",
+    "active": "نشط",
+    "inactive": "غير نشط",
+    "pending": "معلق",
+    "completed": "مكتمل",
+    "inProgress": "قيد التقدم",
+    "notStarted": "لم يبدأ",
+    "enabled": "ممكّن",
+    "disabled": "معطّل",
+    "visible": "مرئي",
+    "hidden": "مخفي",
+    "public": "عام",
+    "private": "خاص",
+    "shared": "مشترك",
+    "personal": "شخصي"
+  },
+  "time": {
+    "now": "الآن",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "tomorrow": "غداً",
+    "thisWeek": "هذا الأسبوع",
+    "lastWeek": "الأسبوع الماضي",
+    "nextWeek": "الأسبوع القادم",
+    "thisMonth": "هذا الشهر",
+    "lastMonth": "الشهر الماضي",
+    "nextMonth": "الشهر القادم",
+    "thisYear": "هذا العام",
+    "lastYear": "العام الماضي",
+    "ago": "منذ {time}",
+    "in": "في {time}",
+    "seconds": "{count} ثانية",
+    "minutes": "{count} دقيقة",
+    "hours": "{count} ساعة",
+    "days": "{count} يوم",
+    "weeks": "{count} أسبوع",
+    "months": "{count} شهر",
+    "years": "{count} سنة"
+  },
+  "accessibility": {
+    "skipToMain": "انتقل إلى المحتوى الرئيسي",
+    "menu": "القائمة",
+    "close": "إغلاق",
+    "open": "فتح",
+    "expand": "توسيع",
+    "collapse": "طي",
+    "loading": "جاري تحميل المحتوى",
+    "error": "حدث خطأ",
+    "success": "تمت العملية بنجاح",
+    "required": "حقل مطلوب",
+    "optional": "حقل اختياري",
+    "selected": "محدد",
+    "unselected": "غير محدد",
+    "checked": "محدد",
+    "unchecked": "غير محدد",
+    "pressed": "مضغوط",
+    "notPressed": "غير مضغوط",
+    "current": "الحالي",
+    "completed": "مكتمل",
+    "incomplete": "غير مكتمل",
+    "newNotification": "إشعار جديد",
+    "breadcrumb": "تنقل التنقل",
+    "pagination": "ترقيم الصفحات",
+    "search": "بحث",
+    "results": "نتائج البحث"
+  }
+}

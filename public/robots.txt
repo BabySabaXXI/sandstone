@@ -1,0 +1,196 @@
+# Sandstone - AI-Powered Learning Platform
+# https://sandstone.app
+# Last updated: 2024
+
+# ============================================
+# Main Crawlers - Full Access (with restrictions)
+# ============================================
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /auth/
+Disallow: /settings
+Disallow: /dashboard
+Disallow: /documents
+Disallow: /*?*
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /icons/
+Allow: /screenshots/
+Allow: /og-image.png
+Disallow: /api/
+
+User-agent: Googlebot-Video
+Allow: /
+Disallow: /api/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /auth/
+Disallow: /settings
+Disallow: /dashboard
+Disallow: /documents
+Crawl-delay: 1
+
+# ============================================
+# Social Media Crawlers
+# ============================================
+User-agent: Twitterbot
+Allow: /
+Allow: /icons/
+Allow: /og-image.png
+Allow: /screenshots/
+
+User-agent: facebookexternalhit
+Allow: /
+Allow: /icons/
+Allow: /og-image.png
+Allow: /screenshots/
+
+User-agent: LinkedInBot
+Allow: /
+Allow: /icons/
+Allow: /og-image.png
+
+User-agent: WhatsApp
+Allow: /
+Allow: /icons/
+Allow: /og-image.png
+
+# ============================================
+# SEO Tools Crawlers
+# ============================================
+User-agent: AhrefsBot
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Crawl-delay: 2
+
+User-agent: SemrushBot
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Crawl-delay: 2
+
+User-agent: MJ12bot
+Allow: /
+Disallow: /api/
+Crawl-delay: 2
+
+User-agent: DotBot
+Allow: /
+Disallow: /api/
+Crawl-delay: 2
+
+# ============================================
+# Other Search Engines
+# ============================================
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Crawl-delay: 1
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+Crawl-delay: 2
+
+# ============================================
+# AI Crawlers (Respectful access)
+# ============================================
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+User-agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+# ============================================
+# Archive Crawlers
+# ============================================
+User-agent: ia_archiver
+Allow: /
+Disallow: /api/
+Disallow: /login
+Disallow: /signup
+
+# ============================================
+# Default - All other crawlers
+# ============================================
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /login
+Disallow: /signup
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /auth/
+Disallow: /settings
+Disallow: /dashboard
+Disallow: /documents
+Disallow: /*?*
+Crawl-delay: 2
+
+# ============================================
+# Sitemap Locations
+# ============================================
+Sitemap: https://sandstone.app/sitemap.xml
+Sitemap: https://sandstone.app/sitemap-images.xml
+
+# ============================================
+# Host Directive
+# ============================================
+Host: https://sandstone.app

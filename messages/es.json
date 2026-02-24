@@ -1,0 +1,789 @@
+{
+  "metadata": {
+    "title": "Sandstone - Aprendizaje A-Level con IA",
+    "description": "Calificación de respuestas A-Level con IA y retroalimentación detallada. Domina Economía y Geografía con tutoría personalizada.",
+    "keywords": "A-Level, Economía, Geografía, tutoría IA, preparación exámenes, calificación ensayos, Edexcel, app estudio"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "dashboard": "Panel",
+    "grade": "Calificar Ensayo",
+    "flashcards": "Tarjetas",
+    "quiz": "Cuestionario",
+    "documents": "Documentos",
+    "library": "Biblioteca",
+    "settings": "Ajustes",
+    "login": "Iniciar Sesión",
+    "signup": "Registrarse",
+    "logout": "Cerrar Sesión",
+    "profile": "Perfil",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "skip": "Omitir",
+    "continue": "Continuar",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "close": "Cerrar",
+    "open": "Abrir",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "view": "Ver",
+    "download": "Descargar",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "paste": "Pegar",
+    "cut": "Cortar",
+    "selectAll": "Seleccionar Todo",
+    "deselectAll": "Deseleccionar Todo",
+    "expand": "Expandir",
+    "collapse": "Contraer",
+    "showMore": "Mostrar Más",
+    "showLess": "Mostrar Menos",
+    "learnMore": "Más Información",
+    "getStarted": "Comenzar",
+    "tryNow": "Probar Ahora",
+    "upgrade": "Mejorar",
+    "downgrade": "Reducir"
+  },
+  "auth": {
+    "login": {
+      "title": "Bienvenido de Nuevo",
+      "subtitle": "Inicia sesión para continuar tu viaje de aprendizaje",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Ingresa tu contraseña",
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submitButton": "Iniciar Sesión",
+      "loadingButton": "Iniciando sesión...",
+      "noAccount": "¿No tienes una cuenta?",
+      "signupLink": "Regístrate",
+      "orContinueWith": "O continuar con",
+      "googleButton": "Continuar con Google",
+      "error": {
+        "invalidCredentials": "Correo o contraseña incorrectos",
+        "accountLocked": "Cuenta temporalmente bloqueada. Inténtalo más tarde.",
+        "emailNotVerified": "Por favor verifica tu correo electrónico",
+        "generic": "Ocurrió un error. Por favor inténtalo de nuevo."
+      }
+    },
+    "signup": {
+      "title": "Crea tu Cuenta",
+      "subtitle": "Comienza tu viaje al éxito A-Level hoy",
+      "firstNameLabel": "Nombre",
+      "firstNamePlaceholder": "Ingresa tu nombre",
+      "lastNameLabel": "Apellido",
+      "lastNamePlaceholder": "Ingresa tu apellido",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Crea una contraseña",
+      "passwordRequirements": "La contraseña debe tener al menos 8 caracteres con mayúsculas, minúsculas y números",
+      "confirmPasswordLabel": "Confirmar Contraseña",
+      "confirmPasswordPlaceholder": "Confirma tu contraseña",
+      "termsLabel": "Acepto los",
+      "termsLink": "Términos de Servicio",
+      "and": "y",
+      "privacyLink": "Política de Privacidad",
+      "submitButton": "Crear Cuenta",
+      "loadingButton": "Creando cuenta...",
+      "hasAccount": "¿Ya tienes una cuenta?",
+      "loginLink": "Inicia sesión",
+      "error": {
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "weakPassword": "La contraseña es demasiado débil",
+        "emailExists": "Ya existe una cuenta con este correo",
+        "termsRequired": "Debes aceptar los Términos de Servicio",
+        "generic": "Ocurrió un error. Por favor inténtalo de nuevo."
+      }
+    },
+    "forgotPassword": {
+      "title": "Restablecer tu Contraseña",
+      "subtitle": "Ingresa tu correo y te enviaremos instrucciones",
+      "emailLabel": "Correo Electrónico",
+      "emailPlaceholder": "Ingresa tu correo",
+      "submitButton": "Enviar Enlace",
+      "loadingButton": "Enviando...",
+      "backToLogin": "Volver al inicio de sesión",
+      "successMessage": "Revisa tu correo para las instrucciones",
+      "error": {
+        "emailNotFound": "No se encontró cuenta con este correo",
+        "generic": "Ocurrió un error. Por favor inténtalo de nuevo."
+      }
+    },
+    "resetPassword": {
+      "title": "Establecer Nueva Contraseña",
+      "subtitle": "Ingresa tu nueva contraseña abajo",
+      "passwordLabel": "Nueva Contraseña",
+      "confirmPasswordLabel": "Confirmar Nueva Contraseña",
+      "submitButton": "Restablecer Contraseña",
+      "loadingButton": "Restableciendo...",
+      "successMessage": "Contraseña restablecida exitosamente",
+      "error": {
+        "invalidToken": "Token inválido o expirado",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "generic": "Ocurrió un error. Por favor inténtalo de nuevo."
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Domina los Exámenes A-Level con Aprendizaje IA",
+      "subtitle": "Obtén retroalimentación instantánea y detallada en tus ensayos, tarjetas y cuestionarios. Tutoría personalizada para Economía y Geografía.",
+      "ctaPrimary": "Comienza Gratis",
+      "ctaSecondary": "Ver Cómo Funciona",
+      "stats": {
+        "students": "10,000+ Estudiantes",
+        "accuracy": "95% Precisión",
+        "subjects": "2 Asignaturas",
+        "satisfaction": "4.9/5 Calificación"
+      }
+    },
+    "features": {
+      "title": "Todo lo que Necesitas para Sobresalir",
+      "subtitle": "Herramientas integrales diseñadas para el éxito A-Level",
+      "essayGrading": {
+        "title": "Calificación IA de Ensayos",
+        "description": "Obtén retroalimentación instantánea y detallada con comentarios tipo examinador y recomendaciones de banda."
+      },
+      "flashcards": {
+        "title": "Tarjetas Inteligentes",
+        "description": "Crea y estudia tarjetas con repetición espaciada para maximizar la retención."
+      },
+      "quizzes": {
+        "title": "Cuestionarios Adaptativos",
+        "description": "Prueba tus conocimientos con cuestionarios generados por IA que se adaptan a tu progreso."
+      },
+      "documents": {
+        "title": "Análisis de Documentos",
+        "description": "Sube y analiza materiales de estudio con resumen y preguntas respuestas por IA."
+      },
+      "library": {
+        "title": "Biblioteca de Estudio",
+        "description": "Accede a exámenes pasados, esquemas de calificación y recursos de estudio curados."
+      },
+      "progress": {
+        "title": "Seguimiento de Progreso",
+        "description": "Monitorea tu mejora con análisis detallados e información personalizada."
+      }
+    },
+    "subjects": {
+      "title": "Asignaturas que Cubrimos",
+      "subtitle": "Tutoría experta con IA para asignaturas A-Level populares",
+      "economics": {
+        "name": "Economía",
+        "description": "Domina microeconomía, macroeconomía y técnicas de redacción de ensayos.",
+        "topics": "Estructuras de Mercado, Política Fiscal, Comercio Internacional, Desarrollo"
+      },
+      "geography": {
+        "name": "Geografía",
+        "description": "Destaca en geografía física y humana con análisis de casos de estudio.",
+        "topics": "Costas, Urbanización, Cambio Climático, Globalización"
+      }
+    },
+    "howItWorks": {
+      "title": "Cómo Funciona Sandstone",
+      "subtitle": "Tres simples pasos para mejores calificaciones",
+      "step1": {
+        "title": "Envía tu Trabajo",
+        "description": "Sube tu ensayo, crea tarjetas o comienza un cuestionario."
+      },
+      "step2": {
+        "title": "Obtén Retroalimentación IA",
+        "description": "Recibe retroalimentación detallada tipo examinador en segundos."
+      },
+      "step3": {
+        "title": "Mejora y Repite",
+        "description": "Aprende de la retroalimentación y sigue tu progreso con el tiempo."
+      }
+    },
+    "testimonials": {
+      "title": "Lo que Dicen los Estudiantes",
+      "subtitle": "Únete a miles de estudiantes logrando sus metas",
+      "quote1": {
+        "text": "Sandstone me ayudó a mejorar mis ensayos de Economía de una C a una A. ¡La retroalimentación de IA es increíblemente detallada!",
+        "author": "Sarah M.",
+        "role": "Estudiante A-Level"
+      },
+      "quote2": {
+        "text": "Las tarjetas con repetición espaciada me ahorraron horas de tiempo de revisión. ¡Altamente recomendado!",
+        "author": "James L.",
+        "role": "Estudiante de Año 13"
+      },
+      "quote3": {
+        "text": "La mejor inversión para mi Geografía A-Level. El análisis de casos de estudio es preciso.",
+        "author": "Emma T.",
+        "role": "Estudiante A-Level"
+      }
+    },
+    "pricing": {
+      "title": "Precios Simples y Transparentes",
+      "subtitle": "Elige el plan que funcione para ti",
+      "free": {
+        "name": "Gratis",
+        "price": "£0",
+        "period": "/mes",
+        "description": "Perfecto para probar Sandstone",
+        "features": [
+          "5 calificaciones de ensayos por mes",
+          "50 tarjetas",
+          "10 cuestionarios por mes",
+          "Seguimiento básico de progreso"
+        ],
+        "cta": "Comenzar"
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "£9.99",
+        "period": "/mes",
+        "description": "Para estudiantes A-Level serios",
+        "features": [
+          "Calificaciones de ensayos ilimitadas",
+          "Tarjetas ilimitadas",
+          "Cuestionarios ilimitados",
+          "Análisis avanzado",
+          "Análisis de documentos",
+          "Soporte prioritario"
+        ],
+        "cta": "Mejorar a Pro",
+        "popular": "Más Popular"
+      },
+      "team": {
+        "name": "Escuela",
+        "price": "Personalizado",
+        "description": "Para escuelas y centros de tutoría",
+        "features": [
+          "Todo en Pro",
+          "Panel de administración",
+          "Gestión de estudiantes",
+          "Análisis de uso",
+          "Soporte dedicado",
+          "Integraciones personalizadas"
+        ],
+        "cta": "Contactar Ventas"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para Aprobar tus A-Levels?",
+      "subtitle": "Únete a miles de estudiantes usando Sandstone",
+      "button": "Comienza Gratis"
+    },
+    "footer": {
+      "product": "Producto",
+      "features": "Características",
+      "pricing": "Precios",
+      "changelog": "Registro de Cambios",
+      "roadmap": "Hoja de Ruta",
+      "company": "Empresa",
+      "about": "Acerca de",
+      "blog": "Blog",
+      "careers": "Carreras",
+      "press": "Prensa",
+      "resources": "Recursos",
+      "help": "Centro de Ayuda",
+      "guides": "Guías",
+      "api": "API",
+      "community": "Comunidad",
+      "legal": "Legal",
+      "privacy": "Privacidad",
+      "terms": "Términos",
+      "cookies": "Cookies",
+      "licenses": "Licencias",
+      "copyright": "© {year} Sandstone. Todos los derechos reservados."
+    }
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "¡Bienvenido de nuevo, {name}!",
+    "subtitle": "Aquí está tu progreso de aprendizaje",
+    "stats": {
+      "essaysGraded": "Ensayos Calificados",
+      "flashcardsStudied": "Tarjetas Estudiadas",
+      "quizzesCompleted": "Cuestionarios Completados",
+      "studyStreak": "Racha de Estudio",
+      "days": "días"
+    },
+    "quickActions": {
+      "title": "Acciones Rápidas",
+      "gradeEssay": "Calificar Ensayo",
+      "createFlashcards": "Crear Tarjetas",
+      "startQuiz": "Iniciar Cuestionario",
+      "browseLibrary": "Explorar Biblioteca"
+    },
+    "recentActivity": {
+      "title": "Actividad Reciente",
+      "empty": "No hay actividad reciente",
+      "viewAll": "Ver Todo"
+    },
+    "progress": {
+      "title": "Tu Progreso",
+      "weeklyGoal": "Meta Semanal",
+      "completed": "completado",
+      "subjects": {
+        "economics": "Economía",
+        "geography": "Geografía"
+      }
+    },
+    "recommendations": {
+      "title": "Recomendado para Ti",
+      "basedOn": "Basado en tu actividad reciente"
+    }
+  },
+  "grade": {
+    "title": "Calificación de Ensayos",
+    "subtitle": "Obtén retroalimentación con IA en tus ensayos",
+    "form": {
+      "subjectLabel": "Asignatura",
+      "subjectPlaceholder": "Seleccionar asignatura",
+      "topicLabel": "Tema",
+      "topicPlaceholder": "Ingresa el tema o pregunta del ensayo",
+      "essayLabel": "Tu Ensayo",
+      "essayPlaceholder": "Pega o escribe tu ensayo aquí...",
+      "wordCount": "Conteo de palabras: {count}",
+      "submitButton": "Obtener Retroalimentación",
+      "loadingButton": "Analizando..."
+    },
+    "subjects": {
+      "economics": "Economía",
+      "geography": "Geografía"
+    },
+    "results": {
+      "title": "Resultados de Retroalimentación",
+      "overallScore": "Puntuación General",
+      "band": "Banda {band}",
+      "breakdown": {
+        "title": "Desglose de Puntuación",
+        "knowledge": "Conocimiento y Comprensión",
+        "application": "Aplicación",
+        "analysis": "Análisis",
+        "evaluation": "Evaluación"
+      },
+      "strengths": "Fortalezas",
+      "improvements": "Áreas de Mejora",
+      "detailedFeedback": "Retroalimentación Detallada",
+      "exampleResponse": "Respuesta de Ejemplo",
+      "saveButton": "Guardar Retroalimentación",
+      "shareButton": "Compartir",
+      "newEssay": "Calificar Otro Ensayo"
+    },
+    "history": {
+      "title": "Ensayos Anteriores",
+      "empty": "Aún no hay ensayos calificados",
+      "date": "Fecha",
+      "topic": "Tema",
+      "score": "Puntuación",
+      "view": "Ver"
+    },
+    "tips": {
+      "title": "Consejos para Escribir Ensayos",
+      "tip1": "Siempre define los términos clave en tu introducción",
+      "tip2": "Usa ejemplos del mundo real para respaldar tus argumentos",
+      "tip3": "Incluye diagramas cuando sea apropiado",
+      "tip4": "Evalúa ambos lados de un argumento",
+      "tip5": "Concluye con un juicio justificado"
+    }
+  },
+  "flashcards": {
+    "title": "Tarjetas",
+    "subtitle": "Estudia mejor con repetición espaciada",
+    "stats": {
+      "total": "Total de Tarjetas",
+      "toReview": "Para Revisar",
+      "mastered": "Dominadas",
+      "learning": "Aprendiendo"
+    },
+    "actions": {
+      "create": "Crear Tarjetas",
+      "study": "Estudiar Ahora",
+      "import": "Importar",
+      "export": "Exportar"
+    },
+    "decks": {
+      "title": "Tus Mazos",
+      "empty": "Aún no hay mazos",
+      "cards": "{count} tarjetas",
+      "lastStudied": "Último estudio: {date}",
+      "never": "Nunca"
+    },
+    "study": {
+      "title": "Sesión de Estudio",
+      "progress": "Tarjeta {current} de {total}",
+      "showAnswer": "Mostrar Respuesta",
+      "rate": {
+        "again": "Otra Vez",
+        "hard": "Difícil",
+        "good": "Bien",
+        "easy": "Fácil"
+      },
+      "completed": {
+        "title": "¡Sesión Completada!",
+        "message": "Has revisado todas las tarjetas por ahora",
+        "stats": "Calificaste {again} otra vez, {hard} difícil, {good} bien, {easy} fácil",
+        "continue": "Continuar Estudiando",
+        "back": "Volver a Mazos"
+      }
+    },
+    "create": {
+      "title": "Crear Tarjetas",
+      "frontLabel": "Frente (Pregunta)",
+      "backLabel": "Reverso (Respuesta)",
+      "addButton": "Agregar Tarjeta",
+      "saveButton": "Guardar Mazo",
+      "deckNameLabel": "Nombre del Mazo",
+      "subjectLabel": "Asignatura",
+      "tagsLabel": "Etiquetas (opcional)"
+    },
+    "aiGenerate": {
+      "title": "Generar Tarjetas con IA",
+      "promptLabel": "¿Sobre qué tema debemos generar tarjetas?",
+      "countLabel": "Número de tarjetas",
+      "generateButton": "Generar",
+      "generatingButton": "Generando..."
+    }
+  },
+  "quiz": {
+    "title": "Cuestionario",
+    "subtitle": "Prueba tus conocimientos con cuestionarios adaptativos",
+    "setup": {
+      "title": "Configuración del Cuestionario",
+      "subjectLabel": "Asignatura",
+      "topicLabel": "Tema (opcional)",
+      "difficultyLabel": "Dificultad",
+      "questionsLabel": "Número de Preguntas",
+      "startButton": "Iniciar Cuestionario",
+      "difficulty": {
+        "easy": "Fácil",
+        "medium": "Medio",
+        "hard": "Difícil",
+        "mixed": "Mixto"
+      }
+    },
+    "question": {
+      "progress": "Pregunta {current} de {total}",
+      "multipleChoice": "Selecciona la respuesta correcta",
+      "trueFalse": "¿Verdadero o Falso?",
+      "shortAnswer": "Escribe tu respuesta",
+      "essay": "Escribe tu respuesta",
+      "submit": "Enviar Respuesta",
+      "skip": "Omitir",
+      "flag": "Marcar para revisar"
+    },
+    "results": {
+      "title": "Resultados del Cuestionario",
+      "score": "Obtuviste {score}%",
+      "correct": "{correct} correctas de {total}",
+      "time": "Tiempo: {time}",
+      "breakdown": "Desglose de Preguntas",
+      "retake": "Repetir Cuestionario",
+      "newQuiz": "Nuevo Cuestionario",
+      "review": "Revisar Respuestas"
+    },
+    "review": {
+      "title": "Revisar Respuestas",
+      "correct": "Correcta",
+      "incorrect": "Incorrecta",
+      "explanation": "Explicación"
+    }
+  },
+  "documents": {
+    "title": "Documentos",
+    "subtitle": "Sube y analiza tus materiales de estudio",
+    "upload": {
+      "title": "Subir Documento",
+      "dragDrop": "Arrastra y suelta archivos aquí",
+      "or": "o",
+      "browse": "Explorar archivos",
+      "supported": "Soportados: PDF, DOCX, TXT (máx. 10MB)",
+      "uploading": "Subiendo..."
+    },
+    "list": {
+      "title": "Tus Documentos",
+      "empty": "Aún no hay documentos subidos",
+      "name": "Nombre",
+      "date": "Subido",
+      "size": "Tamaño",
+      "actions": "Acciones"
+    },
+    "actions": {
+      "summarize": "Resumir",
+      "ask": "Hacer Preguntas",
+      "flashcards": "Generar Tarjetas",
+      "quiz": "Generar Cuestionario",
+      "delete": "Eliminar"
+    },
+    "chat": {
+      "title": "Preguntar Sobre el Documento",
+      "placeholder": "Haz una pregunta sobre este documento...",
+      "send": "Enviar",
+      "thinking": "Pensando..."
+    }
+  },
+  "library": {
+    "title": "Biblioteca de Estudio",
+    "subtitle": "Accede a exámenes pasados, esquemas de calificación y recursos",
+    "filters": {
+      "subject": "Asignatura",
+      "type": "Tipo de Recurso",
+      "year": "Año",
+      "board": "Junta de Exámenes"
+    },
+    "types": {
+      "pastPaper": "Examen Pasado",
+      "markScheme": "Esquema de Calificación",
+      "specification": "Especificación",
+      "notes": "Notas de Estudio",
+      "video": "Video Tutorial"
+    },
+    "search": {
+      "placeholder": "Buscar recursos...",
+      "noResults": "No se encontraron recursos"
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "subtitle": "Gestiona tu cuenta y preferencias",
+    "sections": {
+      "profile": "Perfil",
+      "account": "Cuenta",
+      "notifications": "Notificaciones",
+      "appearance": "Apariencia",
+      "language": "Idioma",
+      "subscription": "Suscripción",
+      "security": "Seguridad",
+      "data": "Datos y Privacidad"
+    },
+    "profile": {
+      "title": "Información del Perfil",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo Electrónico",
+      "bio": "Biografía",
+      "school": "Escuela/Institución",
+      "subjects": "Estudiando",
+      "saveButton": "Guardar Cambios",
+      "avatar": {
+        "title": "Foto de Perfil",
+        "change": "Cambiar",
+        "remove": "Eliminar"
+      }
+    },
+    "notifications": {
+      "title": "Preferencias de Notificación",
+      "email": {
+        "title": "Notificaciones por Correo",
+        "marketing": "Actualizaciones de marketing",
+        "product": "Anuncios de productos",
+        "weekly": "Reporte semanal de progreso",
+        "reminders": "Recordatorios de estudio"
+      },
+      "push": {
+        "title": "Notificaciones Push",
+        "studyReminders": "Recordatorios de estudio",
+        "newFeatures": "Nuevas características",
+        "achievements": "Logros"
+      }
+    },
+    "appearance": {
+      "title": "Apariencia",
+      "theme": "Tema",
+      "themes": {
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema"
+      },
+      "fontSize": "Tamaño de Fuente",
+      "fontSizes": {
+        "small": "Pequeño",
+        "medium": "Medio",
+        "large": "Grande"
+      }
+    },
+    "language": {
+      "title": "Idioma",
+      "selectLabel": "Seleccionar Idioma",
+      "current": "Idioma Actual",
+      "note": "Los cambios se aplicarán inmediatamente"
+    },
+    "subscription": {
+      "title": "Tu Suscripción",
+      "currentPlan": "Plan Actual",
+      "status": "Estado",
+      "renewal": "Renueva el",
+      "upgradeButton": "Mejorar Plan",
+      "manageButton": "Gestionar Suscripción",
+      "cancelButton": "Cancelar Suscripción",
+      "features": "Características del Plan"
+    },
+    "security": {
+      "title": "Seguridad",
+      "changePassword": "Cambiar Contraseña",
+      "twoFactor": "Autenticación de Dos Factores",
+      "sessions": "Sesiones Activas",
+      "logoutAll": "Cerrar Sesión en Todos los Dispositivos"
+    },
+    "data": {
+      "title": "Datos y Privacidad",
+      "export": "Exportar tus Datos",
+      "delete": "Eliminar Cuenta",
+      "deleteWarning": "Esta acción no se puede deshacer. Todos tus datos serán eliminados permanentemente."
+    }
+  },
+  "errors": {
+    "generic": "Algo salió mal. Por favor inténtalo de nuevo.",
+    "notFound": {
+      "title": "Página No Encontrada",
+      "message": "La página que buscas no existe.",
+      "back": "Volver al Inicio"
+    },
+    "unauthorized": {
+      "title": "No Autorizado",
+      "message": "Necesitas iniciar sesión para acceder a esta página.",
+      "login": "Iniciar Sesión"
+    },
+    "forbidden": {
+      "title": "Acceso Denegado",
+      "message": "No tienes permiso para acceder a este recurso."
+    },
+    "server": {
+      "title": "Error del Servidor",
+      "message": "Algo salió mal de nuestra parte. Por favor inténtalo más tarde."
+    },
+    "offline": {
+      "title": "Estás Desconectado",
+      "message": "Por favor verifica tu conexión a internet e inténtalo de nuevo."
+    },
+    "rateLimit": {
+      "title": "Demasiadas Solicitudes",
+      "message": "Por favor espera un momento antes de intentar de nuevo."
+    }
+  },
+  "common": {
+    "loading": "Cargando...",
+    "saving": "Guardando...",
+    "processing": "Procesando...",
+    "success": "¡Éxito!",
+    "error": "Error",
+    "warning": "Advertencia",
+    "info": "Info",
+    "confirm": "¿Estás seguro?",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "done": "Hecho",
+    "retry": "Reintentar",
+    "refresh": "Actualizar",
+    "more": "Más",
+    "less": "Menos",
+    "all": "Todo",
+    "none": "Ninguno",
+    "or": "o",
+    "and": "y",
+    "from": "de",
+    "to": "a",
+    "of": "de",
+    "by": "por",
+    "on": "en",
+    "at": "a",
+    "in": "en",
+    "with": "con",
+    "for": "para",
+    "about": "sobre",
+    "per": "por",
+    "each": "cada",
+    "every": "cada",
+    "other": "otro",
+    "another": "otro",
+    "new": "Nuevo",
+    "old": "Antiguo",
+    "first": "Primero",
+    "last": "Último",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "current": "Actual",
+    "total": "Total",
+    "average": "Promedio",
+    "minimum": "Mínimo",
+    "maximum": "Máximo",
+    "required": "Requerido",
+    "optional": "Opcional",
+    "default": "Predeterminado",
+    "custom": "Personalizado",
+    "standard": "Estándar",
+    "premium": "Premium",
+    "basic": "Básico",
+    "advanced": "Avanzado",
+    "beginner": "Principiante",
+    "intermediate": "Intermedio",
+    "expert": "Experto",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "pending": "Pendiente",
+    "completed": "Completado",
+    "inProgress": "En Progreso",
+    "notStarted": "No Iniciado",
+    "enabled": "Habilitado",
+    "disabled": "Deshabilitado",
+    "visible": "Visible",
+    "hidden": "Oculto",
+    "public": "Público",
+    "private": "Privado",
+    "shared": "Compartido",
+    "personal": "Personal"
+  },
+  "time": {
+    "now": "Justo ahora",
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "tomorrow": "Mañana",
+    "thisWeek": "Esta semana",
+    "lastWeek": "Semana pasada",
+    "nextWeek": "Próxima semana",
+    "thisMonth": "Este mes",
+    "lastMonth": "Mes pasado",
+    "nextMonth": "Próximo mes",
+    "thisYear": "Este año",
+    "lastYear": "Año pasado",
+    "ago": "hace {time}",
+    "in": "en {time}",
+    "seconds": "{count} segundos",
+    "minutes": "{count} minutos",
+    "hours": "{count} horas",
+    "days": "{count} días",
+    "weeks": "{count} semanas",
+    "months": "{count} meses",
+    "years": "{count} años"
+  },
+  "accessibility": {
+    "skipToMain": "Saltar al contenido principal",
+    "menu": "Menú",
+    "close": "Cerrar",
+    "open": "Abrir",
+    "expand": "Expandir",
+    "collapse": "Contraer",
+    "loading": "Cargando contenido",
+    "error": "Ocurrió un error",
+    "success": "Acción exitosa",
+    "required": "Campo requerido",
+    "optional": "Campo opcional",
+    "selected": "Seleccionado",
+    "unselected": "No seleccionado",
+    "checked": "Marcado",
+    "unchecked": "No marcado",
+    "pressed": "Presionado",
+    "notPressed": "No presionado",
+    "current": "Actual",
+    "completed": "Completado",
+    "incomplete": "Incompleto",
+    "newNotification": "Nueva notificación",
+    "breadcrumb": "Navegación de migas de pan",
+    "pagination": "Paginación",
+    "search": "Buscar",
+    "results": "Resultados de búsqueda"
+  }
+}

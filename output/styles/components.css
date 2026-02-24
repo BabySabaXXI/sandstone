@@ -1,0 +1,917 @@
+/* ============================================================================
+   SANDSTONE COMPONENT STYLES - FIXED
+   ============================================================================
+   
+   Reusable component styles for the Sandstone app.
+   These styles work with the Tailwind utility classes.
+   
+   Contents:
+   1. Button styles
+   2. Card styles
+   3. Form styles
+   4. Alert styles
+   5. Badge styles
+   6. Toast styles
+   7. Modal styles
+   8. Navigation styles
+   9. Loading states
+   10. Empty states
+   ============================================================================ */
+
+/* ============================================================================
+   1. BUTTON STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     BASE BUTTON
+     ======================================== */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    min-height: 44px;
+    padding: 0.5rem 1rem;
+  }
+
+  /* ========================================
+     BUTTON VARIANTS
+     ======================================== */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground shadow-sm;
+    @apply hover:bg-primary/90 hover:shadow-md;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground border border-border;
+    @apply hover:bg-secondary/80 hover:border-border/80;
+    @apply active:bg-secondary/70;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-foreground border border-border;
+    @apply hover:bg-muted hover:border-border/80;
+    @apply active:bg-muted/70;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-foreground;
+    @apply hover:bg-muted;
+    @apply active:bg-muted/70;
+  }
+
+  .btn-destructive {
+    @apply bg-destructive text-destructive-foreground shadow-sm;
+    @apply hover:bg-destructive/90 hover:shadow-md;
+    @apply active:scale-[0.98];
+  }
+
+  .btn-link {
+    @apply bg-transparent text-primary underline-offset-4;
+    @apply hover:underline;
+  }
+
+  /* ========================================
+     BUTTON SIZES
+     ======================================== */
+  .btn-sm {
+    @apply h-9 px-3 text-xs;
+    min-height: 36px;
+  }
+
+  .btn-md {
+    @apply h-11 px-6;
+    min-height: 44px;
+  }
+
+  .btn-lg {
+    @apply h-12 px-8 text-base;
+    min-height: 48px;
+  }
+
+  .btn-icon {
+    @apply h-10 w-10 p-0;
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .btn-icon-sm {
+    @apply h-8 w-8 p-0;
+    min-height: 32px;
+    min-width: 32px;
+  }
+
+  .btn-icon-lg {
+    @apply h-12 w-12 p-0;
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  /* ========================================
+     BUTTON WITH ICON
+     ======================================== */
+  .btn-icon-left {
+    @apply pl-3;
+  }
+
+  .btn-icon-right {
+    @apply pr-3;
+  }
+
+  .btn-icon-left svg,
+  .btn-icon-right svg {
+    @apply flex-shrink-0;
+  }
+}
+
+/* ============================================================================
+   2. CARD STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     BASE CARD
+     ======================================== */
+  .card {
+    @apply bg-card text-card-foreground rounded-xl border border-border;
+    @apply transition-all duration-300;
+  }
+
+  /* ========================================
+     CARD VARIANTS
+     ======================================== */
+  .card-default {
+    @apply shadow-sm;
+    @apply hover:shadow-md hover:border-border/80;
+  }
+
+  .card-elevated {
+    @apply shadow-md;
+    @apply hover:shadow-lg;
+  }
+
+  .card-interactive {
+    @apply cursor-pointer;
+    @apply hover:bg-muted hover:border-border/80;
+    @apply active:scale-[0.99];
+  }
+
+  .card-flat {
+    @apply shadow-none;
+  }
+
+  .card-ghost {
+    @apply border-transparent bg-transparent;
+    @apply hover:bg-muted;
+  }
+
+  /* ========================================
+     CARD PADDING
+     ======================================== */
+  .card-p-0 { @apply p-0; }
+  .card-p-2 { @apply p-2; }
+  .card-p-3 { @apply p-3; }
+  .card-p-4 { @apply p-4; }
+  .card-p-5 { @apply p-5; }
+  .card-p-6 { @apply p-6; }
+  .card-p-8 { @apply p-8; }
+
+  /* ========================================
+     CARD PARTS
+     ======================================== */
+  .card-header {
+    @apply flex flex-col space-y-1.5 p-6;
+  }
+
+  .card-title {
+    @apply text-lg font-semibold leading-snug tracking-tight text-foreground;
+  }
+
+  .card-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .card-content {
+    @apply p-6 pt-0;
+  }
+
+  .card-footer {
+    @apply flex items-center gap-3 p-6 pt-0;
+  }
+}
+
+/* ============================================================================
+   3. FORM STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     FORM FIELD
+     ======================================== */
+  .form-field {
+    @apply space-y-2;
+  }
+
+  .form-field + .form-field {
+    @apply mt-4;
+  }
+
+  /* ========================================
+     FORM LABEL
+     ======================================== */
+  .form-label {
+    @apply text-sm font-medium text-foreground;
+  }
+
+  .form-label-required::after {
+    content: '*';
+    @apply text-destructive ml-0.5;
+  }
+
+  /* ========================================
+     FORM DESCRIPTION
+     ======================================== */
+  .form-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  /* ========================================
+     FORM MESSAGE/ERROR
+     ======================================== */
+  .form-message {
+    @apply text-sm font-medium;
+  }
+
+  .form-message-error {
+    @apply text-destructive;
+  }
+
+  .form-message-success {
+    @apply text-success;
+  }
+
+  /* ========================================
+     INPUT STYLES
+     ======================================== */
+  .input {
+    @apply flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm;
+    @apply ring-offset-background;
+    @apply placeholder:text-muted-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    min-height: 44px;
+  }
+
+  .input-sm {
+    @apply h-9 px-2 text-xs;
+    min-height: 36px;
+  }
+
+  .input-lg {
+    @apply h-12 px-4 text-base;
+    min-height: 48px;
+  }
+
+  /* ========================================
+     TEXTAREA
+     ======================================== */
+  .textarea {
+    @apply flex min-h-[80px] w-full rounded-lg border border-input bg-background px-3 py-2 text-sm;
+    @apply ring-offset-background;
+    @apply placeholder:text-muted-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    resize: vertical;
+  }
+
+  /* ========================================
+     SELECT
+     ======================================== */
+  .select {
+    @apply flex w-full rounded-lg border border-input bg-background px-3 py-2 text-sm;
+    @apply ring-offset-background;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    min-height: 44px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem;
+  }
+
+  /* ========================================
+     CHECKBOX & RADIO
+     ======================================== */
+  .checkbox {
+    @apply h-4 w-4 rounded border border-primary;
+    @apply text-primary;
+    @apply focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    accent-color: hsl(var(--primary));
+  }
+
+  .radio {
+    @apply h-4 w-4 rounded-full border border-primary;
+    @apply text-primary;
+    @apply focus:ring-2 focus:ring-ring focus:ring-offset-2;
+    accent-color: hsl(var(--primary));
+  }
+
+  /* ========================================
+     INPUT WITH ICON
+     ======================================== */
+  .input-with-icon {
+    @apply relative;
+  }
+
+  .input-with-icon .icon {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none;
+  }
+
+  .input-with-icon input {
+    @apply pl-10;
+  }
+
+  .input-with-icon-right .icon {
+    @apply left-auto right-3;
+  }
+
+  .input-with-icon-right input {
+    @apply pl-3 pr-10;
+  }
+}
+
+/* ============================================================================
+   4. ALERT STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     BASE ALERT
+     ======================================== */
+  .alert {
+    @apply relative w-full rounded-lg border p-4;
+    @apply flex items-start gap-3;
+  }
+
+  /* ========================================
+     ALERT VARIANTS
+     ======================================== */
+  .alert-info {
+    @apply bg-blue-50 border-blue-200 text-blue-900;
+    @apply dark:bg-blue-900/20 dark:border-blue-800 dark:text-blue-100;
+  }
+
+  .alert-success {
+    @apply bg-green-50 border-green-200 text-green-900;
+    @apply dark:bg-green-900/20 dark:border-green-800 dark:text-green-100;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 border-yellow-200 text-yellow-900;
+    @apply dark:bg-yellow-900/20 dark:border-yellow-800 dark:text-yellow-100;
+  }
+
+  .alert-error {
+    @apply bg-red-50 border-red-200 text-red-900;
+    @apply dark:bg-red-900/20 dark:border-red-800 dark:text-red-100;
+  }
+
+  /* ========================================
+     ALERT PARTS
+     ======================================== */
+  .alert-icon {
+    @apply flex-shrink-0 mt-0.5;
+  }
+
+  .alert-title {
+    @apply font-medium mb-1;
+  }
+
+  .alert-description {
+    @apply text-sm opacity-90;
+  }
+}
+
+/* ============================================================================
+   5. BADGE STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     BASE BADGE
+     ======================================== */
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium transition-colors;
+  }
+
+  /* ========================================
+     BADGE VARIANTS
+     ======================================== */
+  .badge-default {
+    @apply bg-primary text-primary-foreground;
+    @apply hover:bg-primary/80;
+  }
+
+  .badge-secondary {
+    @apply bg-secondary text-secondary-foreground;
+    @apply hover:bg-secondary/80;
+  }
+
+  .badge-outline {
+    @apply border border-border text-foreground;
+    @apply hover:bg-muted;
+  }
+
+  .badge-ghost {
+    @apply text-foreground;
+    @apply hover:bg-muted;
+  }
+
+  .badge-destructive {
+    @apply bg-destructive text-destructive-foreground;
+    @apply hover:bg-destructive/80;
+  }
+
+  /* ========================================
+     BADGE SIZES
+     ======================================== */
+  .badge-sm {
+    @apply px-2 py-0.5 text-[10px];
+  }
+
+  .badge-lg {
+    @apply px-3 py-1 text-sm;
+  }
+}
+
+/* ============================================================================
+   6. TOAST STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     TOAST CONTAINER
+     ======================================== */
+  .toast-container {
+    @apply fixed z-toast flex flex-col gap-2;
+  }
+
+  .toast-container-bottom-right {
+    @apply bottom-4 right-4;
+  }
+
+  .toast-container-bottom-left {
+    @apply bottom-4 left-4;
+  }
+
+  .toast-container-top-right {
+    @apply top-4 right-4;
+  }
+
+  .toast-container-top-left {
+    @apply top-4 left-4;
+  }
+
+  .toast-container-top-center {
+    @apply top-4 left-1/2 -translate-x-1/2;
+  }
+
+  .toast-container-bottom-center {
+    @apply bottom-4 left-1/2 -translate-x-1/2;
+  }
+
+  /* ========================================
+     TOAST ITEM
+     ======================================== */
+  .toast {
+    @apply relative flex w-full items-center gap-3 overflow-hidden rounded-lg border p-4 shadow-lg;
+    @apply bg-card text-card-foreground;
+    min-width: 300px;
+    max-width: 400px;
+  }
+
+  /* ========================================
+     TOAST VARIANTS
+     ======================================== */
+  .toast-info {
+    @apply border-blue-200 bg-blue-50 text-blue-900;
+    @apply dark:border-blue-800 dark:bg-blue-900/20 dark:text-blue-100;
+  }
+
+  .toast-success {
+    @apply border-green-200 bg-green-50 text-green-900;
+    @apply dark:border-green-800 dark:bg-green-900/20 dark:text-green-100;
+  }
+
+  .toast-warning {
+    @apply border-yellow-200 bg-yellow-50 text-yellow-900;
+    @apply dark:border-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-100;
+  }
+
+  .toast-error {
+    @apply border-red-200 bg-red-50 text-red-900;
+    @apply dark:border-red-800 dark:bg-red-900/20 dark:text-red-100;
+  }
+
+  /* ========================================
+     TOAST PARTS
+     ======================================== */
+  .toast-icon {
+    @apply flex-shrink-0;
+  }
+
+  .toast-content {
+    @apply flex-1 min-w-0;
+  }
+
+  .toast-title {
+    @apply font-medium text-sm;
+  }
+
+  .toast-description {
+    @apply text-sm opacity-90 mt-0.5;
+  }
+
+  .toast-close {
+    @apply flex-shrink-0 opacity-50 hover:opacity-100 transition-opacity;
+  }
+}
+
+/* ============================================================================
+   7. MODAL/DIALOG STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     MODAL OVERLAY
+     ======================================== */
+  .modal-overlay {
+    @apply fixed inset-0 z-modal-backdrop bg-black/50;
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+    @apply data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
+    backdrop-filter: blur(2px);
+  }
+
+  /* ========================================
+     MODAL CONTENT
+     ======================================== */
+  .modal-content {
+    @apply fixed left-[50%] top-[50%] z-modal w-full max-w-lg -translate-x-1/2 -translate-y-1/2;
+    @apply rounded-lg border bg-card p-6 shadow-lg;
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+    @apply data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
+    @apply data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+    @apply data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%];
+    @apply data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%];
+    max-height: 90vh;
+    max-height: 90dvh;
+    overflow-y: auto;
+  }
+
+  /* ========================================
+     MODAL PARTS
+     ======================================== */
+  .modal-header {
+    @apply flex flex-col space-y-1.5 text-center sm:text-left;
+  }
+
+  .modal-title {
+    @apply text-lg font-semibold leading-none tracking-tight;
+  }
+
+  .modal-description {
+    @apply text-sm text-muted-foreground;
+  }
+
+  .modal-footer {
+    @apply flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-6;
+  }
+}
+
+/* ============================================================================
+   8. NAVIGATION STYLES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     NAV LINK
+     ======================================== */
+  .nav-link {
+    @apply inline-flex items-center gap-2 text-sm font-medium transition-colors;
+    @apply text-muted-foreground hover:text-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+    min-height: 44px;
+  }
+
+  .nav-link-active {
+    @apply text-foreground;
+  }
+
+  /* ========================================
+     NAV GROUP
+     ======================================== */
+  .nav-group {
+    @apply flex flex-col gap-1;
+  }
+
+  .nav-group-label {
+    @apply px-2 py-1.5 text-xs font-semibold text-muted-foreground uppercase tracking-wider;
+  }
+
+  /* ========================================
+     TABS
+     ======================================== */
+  .tabs-list {
+    @apply inline-flex h-10 items-center justify-center rounded-md bg-muted p-1 text-muted-foreground;
+  }
+
+  .tabs-trigger {
+    @apply inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium;
+    @apply ring-offset-background transition-all;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+    @apply disabled:pointer-events-none disabled:opacity-50;
+    @apply data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm;
+  }
+
+  .tabs-content {
+    @apply mt-2 ring-offset-background;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+}
+
+/* ============================================================================
+   9. LOADING STATES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     SKELETON
+     ======================================== */
+  .skeleton {
+    @apply relative overflow-hidden rounded-md bg-muted;
+  }
+
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--background) / 0.5),
+      transparent
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  .skeleton-text {
+    @apply h-4 w-full;
+  }
+
+  .skeleton-text-sm {
+    @apply h-3 w-full;
+  }
+
+  .skeleton-text-lg {
+    @apply h-5 w-full;
+  }
+
+  .skeleton-avatar {
+    @apply rounded-full;
+  }
+
+  .skeleton-avatar-sm {
+    @apply h-8 w-8;
+  }
+
+  .skeleton-avatar-md {
+    @apply h-10 w-10;
+  }
+
+  .skeleton-avatar-lg {
+    @apply h-12 w-12;
+  }
+
+  .skeleton-card {
+    @apply h-32 w-full;
+  }
+
+  /* ========================================
+     SPINNER
+     ======================================== */
+  .spinner {
+    @apply inline-block animate-spin;
+  }
+
+  .spinner-sm {
+    @apply h-4 w-4;
+  }
+
+  .spinner-md {
+    @apply h-6 w-6;
+  }
+
+  .spinner-lg {
+    @apply h-8 w-8;
+  }
+
+  /* ========================================
+     LOADING DOTS
+     ======================================== */
+  .loading-dots {
+    @apply inline-flex items-center gap-1;
+  }
+
+  .loading-dots span {
+    @apply w-2 h-2 rounded-full bg-current;
+    animation: loading-dot 1.4s ease-in-out infinite both;
+  }
+
+  .loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+}
+
+@keyframes loading-dot {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* ============================================================================
+   10. EMPTY STATES
+   ============================================================================ */
+
+@layer components {
+  /* ========================================
+     EMPTY STATE
+     ======================================== */
+  .empty-state {
+    @apply flex flex-col items-center justify-center text-center p-8;
+  }
+
+  .empty-state-icon {
+    @apply w-16 h-16 mb-4 text-muted-foreground/50;
+  }
+
+  .empty-state-title {
+    @apply text-lg font-medium text-foreground mb-2;
+  }
+
+  .empty-state-description {
+    @apply text-sm text-muted-foreground max-w-sm;
+  }
+
+  .empty-state-action {
+    @apply mt-6;
+  }
+}
+
+/* ============================================================================
+   11. SEPARATOR
+   ============================================================================ */
+
+@layer components {
+  .separator {
+    @apply shrink-0 bg-border;
+  }
+
+  .separator-horizontal {
+    @apply h-[1px] w-full;
+  }
+
+  .separator-vertical {
+    @apply h-full w-[1px];
+  }
+}
+
+/* ============================================================================
+   12. TOOLTIP
+   ============================================================================ */
+
+@layer components {
+  .tooltip-content {
+    @apply z-tooltip overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md;
+    @apply animate-in fade-in-0 zoom-in-95;
+    @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+    @apply data-[side=bottom]:slide-in-from-top-2;
+    @apply data-[side=left]:slide-in-from-right-2;
+    @apply data-[side=right]:slide-in-from-left-2;
+    @apply data-[side=top]:slide-in-from-bottom-2;
+  }
+}
+
+/* ============================================================================
+   13. POPOVER
+   ============================================================================ */
+
+@layer components {
+  .popover-content {
+    @apply z-popover w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none;
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+    @apply data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
+    @apply data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+    @apply data-[side=bottom]:slide-in-from-top-2;
+    @apply data-[side=left]:slide-in-from-right-2;
+    @apply data-[side=right]:slide-in-from-left-2;
+    @apply data-[side=top]:slide-in-from-bottom-2;
+  }
+
+  .popover-trigger {
+    @apply inline-flex items-center justify-center;
+  }
+}
+
+/* ============================================================================
+   14. DROPDOWN MENU
+   ============================================================================ */
+
+@layer components {
+  .dropdown-menu-content {
+    @apply z-popover min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md;
+    @apply data-[state=open]:animate-in data-[state=closed]:animate-out;
+    @apply data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
+    @apply data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95;
+    @apply data-[side=bottom]:slide-in-from-top-2;
+    @apply data-[side=left]:slide-in-from-right-2;
+    @apply data-[side=right]:slide-in-from-left-2;
+    @apply data-[side=top]:slide-in-from-bottom-2;
+  }
+
+  .dropdown-menu-item {
+    @apply relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none;
+    @apply transition-colors;
+    @apply focus:bg-accent focus:text-accent-foreground;
+    @apply data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
+  }
+
+  .dropdown-menu-label {
+    @apply px-2 py-1.5 text-sm font-semibold;
+  }
+
+  .dropdown-menu-separator {
+    @apply -mx-1 my-1 h-px bg-muted;
+  }
+
+  .dropdown-menu-shortcut {
+    @apply ml-auto text-xs tracking-widest opacity-60;
+  }
+}
+
+/* ============================================================================
+   15. ACCORDION
+   ============================================================================ */
+
+@layer components {
+  .accordion-item {
+    @apply border-b;
+  }
+
+  .accordion-trigger {
+    @apply flex flex-1 items-center justify-between py-4 font-medium transition-all;
+    @apply hover:underline;
+    @apply [&[data-state=open]>svg]:rotate-180;
+  }
+
+  .accordion-content {
+    @apply overflow-hidden text-sm transition-all;
+    @apply data-[state=closed]:animate-accordion-up;
+    @apply data-[state=open]:animate-accordion-down;
+  }
+}
+
+/* ============================================================================
+   16. AVATAR
+   ============================================================================ */
+
+@layer components {
+  .avatar {
+    @apply relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full;
+  }
+
+  .avatar-image {
+    @apply aspect-square h-full w-full;
+  }
+
+  .avatar-fallback {
+    @apply flex h-full w-full items-center justify-center rounded-full bg-muted;
+  }
+
+  .avatar-sm {
+    @apply h-8 w-8;
+  }
+
+  .avatar-lg {
+    @apply h-12 w-12;
+  }
+}

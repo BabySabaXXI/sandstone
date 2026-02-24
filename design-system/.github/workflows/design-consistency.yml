@@ -1,0 +1,170 @@
+name: Design Consistency Check
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - '*.css'
+      - '*.config.*'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'lib/**'
+      - '*.css'
+      - '*.config.*'
+
+jobs:
+  design-check:
+    name: Check Design Consistency
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run design consistency check
+        run: node design-system/consistency-check.js --json > consistency-report.json
+        continue-on-error: true
+      
+      - name: Upload consistency report
+        uses: actions/upload-artifact@v4
+        with:
+          name: consistency-report
+          path: consistency-report.json
+      
+      - name: Check for critical issues
+        run: |
+          if [ -f consistency-report.json ]; then
+            ERRORS=$(cat consistency-report.json | jq '.summary.errors // 0')
+            if [ "$ERRORS" -gt 0 ]; then
+              echo "❌ Found $ERRORS design consistency errors"
+              cat consistency-report.json | jq '.issues[] | select(.severity == "error")'
+              exit 1
+            else
+              echo "✅ No critical design consistency errors found"
+            fi
+          fi
+      
+      - name: Comment PR with results
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            let report = { summary: { totalIssues: 0, errors: 0, warnings: 0 } };
+            try {
+              report = JSON.parse(fs.readFileSync('consistency-report.json', 'utf8'));
+            } catch (e) {
+              console.log('No report file found');
+            }
+            
+            const { totalIssues, errors, warnings } = report.summary;
+            
+            const body = `## 🎨 Design Consistency Check Results
+            
+            | Metric | Count |
+            |--------|-------|
+            | Total Issues | ${totalIssues} |
+            | Errors | ${errors} ❌ |
+            | Warnings | ${warnings} ⚠️ |
+            
+            ${errors > 0 ? '❌ **Please fix the errors before merging**' : '✅ **No critical issues found**'}
+            
+            <details>
+            <summary>View detailed report</summary>
+            
+            \`\`\`json
+            ${JSON.stringify(report, null, 2)}
+            \`\`\`
+            
+            </details>
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  visual-regression:
+    name: Visual Regression Tests
+    runs-on: ubuntu-latest
+    needs: design-check
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Run Storybook tests (if configured)
+        run: |
+          if npm run storybook --version > /dev/null 2>&1; then
+            echo "Storybook detected, running visual tests..."
+            # Add Storybook visual regression tests here
+          else
+            echo "Storybook not configured, skipping visual tests"
+          fi
+        continue-on-error: true
+
+  accessibility:
+    name: Accessibility Audit
+    runs-on: ubuntu-latest
+    needs: design-check
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Run accessibility audit
+        run: |
+          # Install axe-core if not present
+          npm list @axe-core/cli || npm install -g @axe-core/cli
+          
+          # Start the application
+          npm start &
+          sleep 10
+          
+          # Run accessibility audit
+          axe http://localhost:3000 --exit || true
+        continue-on-error: true

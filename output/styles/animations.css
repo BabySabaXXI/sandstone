@@ -1,0 +1,1018 @@
+/* ============================================================================
+   SANDSTONE ANIMATIONS - FIXED & ORGANIZED
+   ============================================================================
+   
+   Comprehensive animation library for the Sandstone app.
+   All animations respect user motion preferences.
+   
+   Contents:
+   1. CSS Custom Properties for animations
+   2. Keyframe animations
+   3. Animation utility classes
+   4. Hover effects
+   5. Focus states
+   6. Active/pressed states
+   7. Loading states
+   8. Feedback animations
+   9. Stagger animations
+   10. Reduced motion support
+   ============================================================================ */
+
+/* ============================================================================
+   1. CSS CUSTOM PROPERTIES FOR ANIMATIONS
+   ============================================================================ */
+
+:root {
+  /* Timing Functions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-expo: cubic-bezier(0.87, 0, 0.13, 1);
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Durations */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  /* Scale Values */
+  --scale-hover: 1.02;
+  --scale-press: 0.98;
+  --scale-bounce: 1.05;
+
+  /* Shadow Transitions */
+  --shadow-hover: 0 8px 24px -4px rgb(0 0 0 / 0.1), 0 4px 8px -2px rgb(0 0 0 / 0.05);
+  --shadow-elevated: 0 12px 32px -6px rgb(0 0 0 / 0.12), 0 6px 12px -4px rgb(0 0 0 / 0.08);
+}
+
+/* ============================================================================
+   2. KEYFRAME ANIMATIONS
+   ============================================================================ */
+
+/* ========================================
+   FADE ANIMATIONS
+   ======================================== */
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   SCALE ANIMATIONS
+   ======================================== */
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes scale-bounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes scale-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ========================================
+   SLIDE ANIMATIONS
+   ======================================== */
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
+   SPIN ANIMATIONS
+   ======================================== */
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   PULSE ANIMATIONS
+   ======================================== */
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.8);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+/* ========================================
+   BOUNCE ANIMATIONS
+   ======================================== */
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+    animation-timing-function: var(--ease-out-expo);
+  }
+  50% {
+    transform: translateY(-10px);
+    animation-timing-function: var(--ease-out-expo);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ========================================
+   SHAKE & WIGGLE ANIMATIONS
+   ======================================== */
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+/* ========================================
+   RIPPLE EFFECT
+   ======================================== */
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ========================================
+   SHIMMER LOADING
+   ======================================== */
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ========================================
+   FLOATING ANIMATION
+   ======================================== */
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* ========================================
+   GLOW ANIMATION
+   ======================================== */
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px hsl(var(--primary) / 0.3),
+                0 0 10px hsl(var(--primary) / 0.2),
+                0 0 15px hsl(var(--primary) / 0.1);
+  }
+  50% {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5),
+                0 0 20px hsl(var(--primary) / 0.3),
+                0 0 30px hsl(var(--primary) / 0.2);
+  }
+}
+
+/* ========================================
+   PROGRESS BAR
+   ======================================== */
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  50% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ========================================
+   TYPING INDICATOR
+   ======================================== */
+
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ========================================
+   HEARTBEAT
+   ======================================== */
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.1); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.1); }
+  70% { transform: scale(1); }
+}
+
+/* ============================================================================
+   3. ANIMATION UTILITY CLASSES
+   ============================================================================ */
+
+/* ========================================
+   ENTRANCE ANIMATIONS
+   ======================================== */
+
+.animate-fade-in {
+  animation: fade-in var(--duration-normal) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--duration-normal) var(--ease-out-back) forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-slide-down {
+  animation: slide-down var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+/* ========================================
+   EXIT ANIMATIONS
+   ======================================== */
+
+.animate-fade-out {
+  animation: fade-out var(--duration-normal) var(--ease-smooth) forwards;
+}
+
+.animate-scale-out {
+  animation: scale-out var(--duration-normal) var(--ease-smooth) forwards;
+}
+
+/* ========================================
+   CONTINUOUS ANIMATIONS
+   ======================================== */
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+.animate-pulse {
+  animation: pulse 2s var(--ease-smooth) infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s var(--ease-smooth) infinite;
+}
+
+.animate-bounce {
+  animation: bounce 1s var(--ease-out-expo) infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 1.5s var(--ease-smooth) infinite;
+}
+
+.animate-float {
+  animation: float 3s var(--ease-smooth) infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s linear infinite;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--muted) / 0.5),
+    transparent
+  );
+  background-size: 200% 100%;
+}
+
+.animate-glow {
+  animation: glow 2s var(--ease-smooth) infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s var(--ease-spring);
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s var(--ease-smooth) infinite;
+}
+
+/* ========================================
+   INTERACTIVE ANIMATIONS
+   ======================================== */
+
+.animate-shake {
+  animation: shake 0.5s var(--ease-smooth);
+}
+
+.animate-scale-bounce {
+  animation: scale-bounce 0.4s var(--ease-out-back);
+}
+
+/* ========================================
+   ANIMATION DELAYS
+   ======================================== */
+
+.animate-delay-100 { animation-delay: 100ms; }
+.animate-delay-200 { animation-delay: 200ms; }
+.animate-delay-300 { animation-delay: 300ms; }
+.animate-delay-400 { animation-delay: 400ms; }
+.animate-delay-500 { animation-delay: 500ms; }
+.animate-delay-600 { animation-delay: 600ms; }
+.animate-delay-700 { animation-delay: 700ms; }
+.animate-delay-800 { animation-delay: 800ms; }
+
+/* ========================================
+   ANIMATION DURATIONS
+   ======================================== */
+
+.animate-duration-instant { animation-duration: var(--duration-instant); }
+.animate-duration-fast { animation-duration: var(--duration-fast); }
+.animate-duration-normal { animation-duration: var(--duration-normal); }
+.animate-duration-slow { animation-duration: var(--duration-slow); }
+.animate-duration-slower { animation-duration: var(--duration-slower); }
+
+/* ========================================
+   ANIMATION FILL MODES
+   ======================================== */
+
+.animate-fill-forwards { animation-fill-mode: forwards; }
+.animate-fill-backwards { animation-fill-mode: backwards; }
+.animate-fill-both { animation-fill-mode: both; }
+
+/* ============================================================================
+   4. HOVER EFFECTS
+   ============================================================================ */
+
+/* ========================================
+   LIFT EFFECT
+   ======================================== */
+
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-out-expo),
+              box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.hover-lift:active {
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   SCALE EFFECT
+   ======================================== */
+
+.hover-scale {
+  transition: transform var(--duration-fast) var(--ease-out-back);
+}
+
+.hover-scale:hover {
+  transform: scale(var(--scale-hover));
+}
+
+.hover-scale:active {
+  transform: scale(var(--scale-press));
+}
+
+/* ========================================
+   GLOW EFFECT
+   ======================================== */
+
+.hover-glow {
+  transition: box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.4);
+}
+
+/* ========================================
+   BRIGHTNESS EFFECT
+   ======================================== */
+
+.hover-brightness {
+  transition: filter var(--duration-fast) var(--ease-smooth);
+}
+
+.hover-brightness:hover {
+  filter: brightness(1.05);
+}
+
+/* ========================================
+   UNDERLINE EFFECT
+   ======================================== */
+
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: hsl(var(--primary));
+  transition: width var(--duration-normal) var(--ease-out-expo);
+}
+
+.hover-underline:hover::after {
+  width: 100%;
+}
+
+/* ========================================
+   BACKGROUND SLIDE EFFECT
+   ======================================== */
+
+.hover-bg-slide {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.hover-bg-slide::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: hsl(var(--primary) / 0.1);
+  transition: left var(--duration-normal) var(--ease-out-expo);
+  z-index: -1;
+}
+
+.hover-bg-slide:hover::before {
+  left: 0;
+}
+
+/* ========================================
+   BORDER GLOW EFFECT
+   ======================================== */
+
+.hover-border-glow {
+  transition: border-color var(--duration-fast) var(--ease-smooth),
+              box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+.hover-border-glow:hover {
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.2);
+}
+
+/* ============================================================================
+   5. FOCUS STATES
+   ============================================================================ */
+
+/* ========================================
+   ENHANCED FOCUS RING
+   ======================================== */
+
+.focus-ring-enhanced {
+  transition: box-shadow var(--duration-fast) var(--ease-smooth),
+              outline var(--duration-fast) var(--ease-smooth);
+}
+
+.focus-ring-enhanced:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--background)),
+              0 0 0 4px hsl(var(--ring));
+}
+
+/* ========================================
+   FOCUS GLOW
+   ======================================== */
+
+.focus-glow:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px hsl(var(--primary) / 0.3),
+              0 0 20px hsl(var(--primary) / 0.2);
+}
+
+/* ========================================
+   FOCUS SCALE
+   ======================================== */
+
+.focus-scale:focus-visible {
+  outline: none;
+  transform: scale(1.02);
+}
+
+/* ========================================
+   FOCUS UNDERLINE
+   ======================================== */
+
+.focus-underline:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-color: hsl(var(--primary));
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* ============================================================================
+   6. ACTIVE/PRESSED STATES
+   ============================================================================ */
+
+.active-scale {
+  transition: transform var(--duration-instant) var(--ease-smooth);
+}
+
+.active-scale:active {
+  transform: scale(var(--scale-press));
+}
+
+.active-press {
+  transition: transform var(--duration-instant) var(--ease-smooth),
+              box-shadow var(--duration-instant) var(--ease-smooth);
+}
+
+.active-press:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgb(0 0 0 / 0.1);
+}
+
+/* ============================================================================
+   7. RIPPLE EFFECT
+   ============================================================================ */
+
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.3);
+  transform: scale(0);
+  animation: ripple 0.6s var(--ease-out-expo);
+  pointer-events: none;
+}
+
+/* ============================================================================
+   8. LOADING STATES
+   ============================================================================ */
+
+/* ========================================
+   SKELETON SHIMMER
+   ======================================== */
+
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: hsl(var(--muted));
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--background) / 0.5),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ========================================
+   LOADING DOTS
+   ======================================== */
+
+.loading-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: hsl(var(--primary));
+  animation: typing-bounce 1.4s var(--ease-smooth) infinite both;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+/* ========================================
+   PROGRESS INDETERMINATE
+   ======================================== */
+
+.progress-indeterminate {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-indeterminate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: hsl(var(--primary));
+  animation: progress-indeterminate 1.5s var(--ease-smooth) infinite;
+}
+
+/* ============================================================================
+   9. FEEDBACK ANIMATIONS
+   ============================================================================ */
+
+/* ========================================
+   SUCCESS FEEDBACK
+   ======================================== */
+
+.feedback-success {
+  animation: scale-bounce 0.4s var(--ease-out-back),
+             glow 0.5s var(--ease-out-expo);
+}
+
+/* ========================================
+   ERROR FEEDBACK
+   ======================================== */
+
+.feedback-error {
+  animation: shake 0.5s var(--ease-smooth);
+}
+
+/* ========================================
+   WARNING FEEDBACK
+   ======================================== */
+
+.feedback-warning {
+  animation: wiggle 0.5s var(--ease-spring);
+}
+
+/* ========================================
+   INFO FEEDBACK
+   ======================================== */
+
+.feedback-info {
+  animation: fade-in-up 0.3s var(--ease-out-expo),
+             pulse-soft 2s var(--ease-smooth) infinite 0.3s;
+}
+
+/* ============================================================================
+   10. TRANSITION UTILITIES
+   ============================================================================ */
+
+/* ========================================
+   SMOOTH ALL
+   ======================================== */
+
+.transition-smooth {
+  transition: all var(--duration-normal) var(--ease-smooth);
+}
+
+/* ========================================
+   TRANSFORM ONLY
+   ======================================== */
+
+.transition-transform {
+  transition: transform var(--duration-normal) var(--ease-out-expo);
+}
+
+/* ========================================
+   OPACITY ONLY
+   ======================================== */
+
+.transition-opacity {
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+}
+
+/* ========================================
+   COLORS
+   ======================================== */
+
+.transition-colors {
+  transition: color var(--duration-fast) var(--ease-smooth),
+              background-color var(--duration-fast) var(--ease-smooth),
+              border-color var(--duration-fast) var(--ease-smooth);
+}
+
+/* ========================================
+   SHADOWS
+   ======================================== */
+
+.transition-shadow {
+  transition: box-shadow var(--duration-normal) var(--ease-out-expo);
+}
+
+/* ========================================
+   COMBINED INTERACTIVE
+   ======================================== */
+
+.transition-interactive {
+  transition: transform var(--duration-fast) var(--ease-out-expo),
+              box-shadow var(--duration-normal) var(--ease-out-expo),
+              background-color var(--duration-fast) var(--ease-smooth);
+}
+
+/* ============================================================================
+   11. STAGGER ANIMATIONS
+   ============================================================================ */
+
+.stagger-children > * {
+  opacity: 0;
+  animation: fade-in-up var(--duration-slow) var(--ease-out-expo) forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 50ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 100ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 150ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 200ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 250ms; }
+.stagger-children > *:nth-child(7) { animation-delay: 300ms; }
+.stagger-children > *:nth-child(8) { animation-delay: 350ms; }
+.stagger-children > *:nth-child(9) { animation-delay: 400ms; }
+.stagger-children > *:nth-child(10) { animation-delay: 450ms; }
+
+/* ============================================================================
+   12. GPU ACCELERATION
+   ============================================================================ */
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* ============================================================================
+   13. REDUCED MOTION SUPPORT
+   ============================================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Reset entrance animations */
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-fade-in-down,
+  .animate-fade-in-left,
+  .animate-fade-in-right,
+  .animate-scale-in,
+  .animate-slide-up,
+  .animate-slide-down,
+  .animate-slide-in-right,
+  .animate-slide-in-left {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  /* Reset hover effects */
+  .hover-lift:hover,
+  .hover-scale:hover {
+    transform: none;
+  }
+
+  /* Reset stagger children */
+  .stagger-children > * {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* Reset loading animations */
+  .skeleton-shimmer::after,
+  .progress-indeterminate::after {
+    animation: none;
+  }
+
+  /* Reset shimmer */
+  .animate-shimmer {
+    animation: none;
+    background: none;
+  }
+}
+
+/* ============================================================================
+   14. DARK MODE ADJUSTMENTS
+   ============================================================================ */
+
+.dark .skeleton-shimmer {
+  background: hsl(var(--muted) / 0.5);
+}
+
+.dark .skeleton-shimmer::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    hsl(var(--background) / 0.3),
+    transparent
+  );
+}
+
+.dark .loading-dots span {
+  background: hsl(var(--primary));
+}

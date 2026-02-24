@@ -1,0 +1,365 @@
+# ============================================
+# SANDSTONE MONITORING ALERT CONFIGURATION
+# ============================================
+# This file defines alerting rules for the Sandstone application
+# Integrate with your monitoring system (Datadog, Grafana, PagerDuty, etc.)
+
+version: '1.0'
+
+# ============================================
+# GLOBAL SETTINGS
+# ============================================
+global:
+  evaluation_interval: 30s
+  scrape_interval: 15s
+  notification_timeout: 10s
+
+# ============================================
+# NOTIFICATION CHANNELS
+# ============================================
+notification_channels:
+  email:
+    enabled: true
+    smtp_server: ${SMTP_SERVER}
+    smtp_port: 587
+    from_address: alerts@sandstone.app
+    to_addresses:
+      - admin@sandstone.app
+      - devops@sandstone.app
+    
+  slack:
+    enabled: true
+    webhook_url: ${SLACK_WEBHOOK_URL}
+    channel: '#alerts'
+    username: 'Sandstone Monitor'
+    
+  pagerduty:
+    enabled: true
+    service_key: ${PAGERDUTY_SERVICE_KEY}
+    severity_mapping:
+      critical: critical
+      warning: warning
+      info: info
+      
+  webhook:
+    enabled: true
+    url: ${WEBHOOK_URL}
+    headers:
+      Authorization: Bearer ${WEBHOOK_TOKEN}
+
+# ============================================
+# ALERT RULES
+# ============================================
+alert_rules:
+  # ==========================================
+  # DATABASE CONNECTION ALERTS
+  # ==========================================
+  - name: high_connection_usage
+    type: connection
+    severity: warning
+    metric: connection_usage_percent
+    condition: 
+      operator: '>'
+      threshold: 70
+    duration: 5m
+    channels:
+      - email
+      - slack
+    description: "Connection pool usage exceeds 70%"
+    runbook_url: "https://wiki.sandstone.app/runbooks/high-connection-usage"
+    
+  - name: critical_connection_usage
+    type: connection
+    severity: critical
+    metric: connection_usage_percent
+    condition:
+      operator: '>'
+      threshold: 90
+    duration: 2m
+    channels:
+      - email
+      - slack
+      - pagerduty
+    description: "Connection pool usage exceeds 90% - immediate action required"
+    auto_resolve: true
+    resolve_after: 5m
+    
+  - name: idle_in_transaction
+    type: connection
+    severity: warning
+    metric: idle_in_transaction_count
+    condition:
+      operator: '>'
+      threshold: 5
+    duration: 10m
+    channels:
+      - email
+    description: "Multiple connections idle in transaction - potential lock issues"
+    
+  - name: long_running_transactions
+    type: connection
+    severity: warning
+    metric: long_transaction_count
+    condition:
+      operator: '>'
+      threshold: 3
+    duration: 5m
+    channels:
+      - email
+      - slack
+    description: "Transactions running longer than 5 minutes detected"
+
+  # ==========================================
+  # QUERY PERFORMANCE ALERTS
+  # ==========================================
+  - name: slow_query_detected
+    type: performance
+    severity: warning
+    metric: slow_query_count
+    condition:
+      operator: '>'
+      threshold: 5
+    duration: 0s
+    channels:
+      - email
+    description: "More than 5 slow queries detected (>1s avg execution time)"
+    
+  - name: high_avg_query_time
+    type: performance
+    severity: warning
+    metric: avg_query_time_ms
+    condition:
+      operator: '>'
+      threshold: 500
+    duration: 10m
+    channels:
+      - email
+    description: "Average query time exceeds 500ms"
+    
+  - name: critical_query_time
+    type: performance
+    severity: critical
+    metric: avg_query_time_ms
+    condition:
+      operator: '>'
+      threshold: 1000
+    duration: 5m
+    channels:
+      - email
+      - slack
+      - pagerduty
+    description: "Average query time exceeds 1000ms - performance degraded"
+    
+  - name: low_cache_hit_ratio
+    type: performance
+    severity: warning
+    metric: cache_hit_ratio
+    condition:
+      operator: '<'
+      threshold: 95
+    duration: 15m
+    channels:
+      - email
+    description: "Cache hit ratio below 95% - consider increasing shared_buffers"
+    
+  - name: table_bloat_critical
+    type: performance
+    severity: critical
+    metric: dead_tuple_ratio
+    condition:
+      operator: '>'
+      threshold: 50
+    duration: 1h
+    channels:
+      - email
+      - slack
+    description: "Table bloat exceeds 50% - VACUUM FULL may be needed"
+    
+  - name: table_bloat_warning
+    type: performance
+    severity: warning
+    metric: dead_tuple_ratio
+    condition:
+      operator: '>'
+      threshold: 20
+    duration: 1h
+    channels:
+      - email
+    description: "Table bloat exceeds 20% - monitor for autovacuum issues"
+
+  # ==========================================
+  # ERROR RATE ALERTS
+  # ==========================================
+  - name: error_rate_high
+    type: error
+    severity: warning
+    metric: errors_per_minute
+    condition:
+      operator: '>'
+      threshold: 10
+    duration: 5m
+    channels:
+      - email
+      - slack
+    description: "Error rate exceeds 10 per minute"
+    
+  - name: critical_errors_detected
+    type: error
+    severity: critical
+    metric: critical_error_count
+    condition:
+      operator: '>'
+      threshold: 0
+    duration: 0s
+    channels:
+      - email
+      - slack
+      - pagerduty
+    description: "Critical errors detected - immediate investigation required"
+    
+  - name: repeated_errors
+    type: error
+    severity: warning
+    metric: repeated_error_count
+    condition:
+      operator: '>'
+      threshold: 10
+    duration: 30m
+    channels:
+      - email
+    description: "Same error type repeated more than 10 times"
+    
+  - name: auth_errors_spike
+    type: error
+    severity: warning
+    metric: auth_errors_per_hour
+    condition:
+      operator: '>'
+      threshold: 50
+    duration: 15m
+    channels:
+      - email
+      - slack
+    description: "Authentication errors spiking - possible security issue"
+
+  # ==========================================
+  # STORAGE ALERTS
+  # ==========================================
+  - name: database_size_warning
+    type: storage
+    severity: warning
+    metric: database_size_gb
+    condition:
+      operator: '>'
+      threshold: 8
+    duration: 0s
+    channels:
+      - email
+    description: "Database size approaching 10GB limit"
+    
+  - name: table_growth_spike
+    type: storage
+    severity: warning
+    metric: table_growth_percent
+    condition:
+      operator: '>'
+      threshold: 50
+    duration: 1h
+    channels:
+      - email
+    description: "Table size grew by more than 50% in an hour"
+    
+  - name: disk_space_low
+    type: storage
+    severity: critical
+    metric: disk_usage_percent
+    condition:
+      operator: '>'
+      threshold: 85
+    duration: 5m
+    channels:
+      - email
+      - slack
+      - pagerduty
+    description: "Disk usage exceeds 85% - risk of database failure"
+
+  # ==========================================
+  # APPLICATION METRICS ALERTS
+  # ==========================================
+  - name: low_active_users
+    type: application
+    severity: info
+    metric: daily_active_users
+    condition:
+      operator: '<'
+      threshold: 10
+    duration: 24h
+    channels:
+      - email
+    description: "Daily active users below expected threshold"
+    
+  - name: api_response_time_high
+    type: application
+    severity: warning
+    metric: api_p95_response_time_ms
+    condition:
+      operator: '>'
+      threshold: 2000
+    duration: 10m
+    channels:
+      - email
+      - slack
+    description: "API 95th percentile response time exceeds 2 seconds"
+
+# ============================================
+# ALERT ROUTING
+# ============================================
+routing:
+  # Route critical alerts to on-call
+  - match:
+      severity: critical
+    receiver: on_call_team
+    
+  # Route connection issues to DBA team
+  - match:
+      type: connection
+    receiver: dba_team
+    
+  # Route performance issues to dev team
+  - match:
+      type: performance
+    receiver: dev_team
+
+receivers:
+  on_call_team:
+    channels:
+      - pagerduty
+      - slack
+      
+  dba_team:
+    channels:
+      - email
+      - slack
+      
+  dev_team:
+    channels:
+      - email
+
+# ============================================
+# SILENCING RULES
+# ============================================
+silence_rules:
+  # Maintenance window
+  - name: weekly_maintenance
+    start: "Sunday 02:00"
+    duration: 2h
+    alerts:
+      - table_bloat_warning
+      - low_cache_hit_ratio
+    
+  # Known issue silencing
+  - name: migration_in_progress
+    alerts:
+      - high_connection_usage
+    duration: 30m
+    reason: "Database migration in progress"

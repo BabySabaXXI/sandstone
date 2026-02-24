@@ -1,0 +1,541 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Sandstone Color System - CSS Variables
+ * A comprehensive, accessible color system for the Sandstone learning application
+ * @version 1.0.0
+ */
+
+@layer base {
+  :root {
+    /* ========================================
+       BASE COLOR PALETTES - Light Theme
+       ======================================== */
+
+    /* Sand Palette - Warm neutral base */
+    --sand-50: #FAFAF8;
+    --sand-100: #F5F4F0;
+    --sand-200: #EBE9E3;
+    --sand-300: #DDDAD1;
+    --sand-400: #C4BFB3;
+    --sand-500: #A39E91;
+    --sand-600: #8A8579;
+    --sand-700: #706C62;
+    --sand-800: #57544C;
+    --sand-900: #3D3B36;
+    --sand-950: #242320;
+
+    /* Peach Palette - Primary accent */
+    --peach-50: #FDF8F5;
+    --peach-100: #FAF0EA;
+    --peach-200: #F5E0D4;
+    --peach-300: #EDC8B5;
+    --peach-400: #E2A88C;
+    --peach-500: #D48660;
+    --peach-600: #A65A36;
+    --peach-700: #8A4A2D;
+    --peach-800: #85462E;
+    --peach-900: #6D3C29;
+    --peach-950: #3A1E14;
+
+    /* Sage Palette - Secondary accent */
+    --sage-50: #F6F8F6;
+    --sage-100: #E8F0E8;
+    --sage-200: #D2E2D2;
+    --sage-300: #AECBAE;
+    --sage-400: #82AD82;
+    --sage-500: #5E915E;
+    --sage-600: #3D6B3D;
+    --sage-700: #2F552F;
+    --sage-800: #2F4A2F;
+    --sage-900: #283D28;
+    --sage-950: #132113;
+
+    /* Blue Palette - Info accent */
+    --blue-50: #F5F8FA;
+    --blue-100: #E8F1F7;
+    --blue-200: #D4E3EF;
+    --blue-300: #B5D0E5;
+    --blue-400: #8CB8D9;
+    --blue-500: #609CC8;
+    --blue-600: #3570A8;
+    --blue-700: #2A5A8A;
+    --blue-800: #2E5678;
+    --blue-900: #294864;
+    --blue-950: #142636;
+
+    /* Neutral Palette - Text and UI */
+    --neutral-50: #FAFAFA;
+    --neutral-100: #F5F5F5;
+    --neutral-200: #EBEBEB;
+    --neutral-300: #DDDDDD;
+    --neutral-400: #C4C4C4;
+    --neutral-500: #9E9E9E;
+    --neutral-600: #6B6B6B;
+    --neutral-700: #616161;
+    --neutral-800: #444444;
+    --neutral-900: #212121;
+    --neutral-950: #0A0A0A;
+
+    /* Semantic Status Colors */
+    --success-50: #F0FDF4;
+    --success-100: #DCFCE7;
+    --success-200: #BBF7D0;
+    --success-300: #86EFAC;
+    --success-400: #4ADE80;
+    --success-500: #22C55E;
+    --success-600: #15803D;
+    --success-700: #14532D;
+    --success-800: #166534;
+    --success-900: #14532D;
+    --success-950: #052E16;
+
+    --warning-50: #FFFBEB;
+    --warning-100: #FEF3C7;
+    --warning-200: #FDE68A;
+    --warning-300: #FCD34D;
+    --warning-400: #FBBF24;
+    --warning-500: #F59E0B;
+    --warning-600: #A16207;
+    --warning-700: #854D0E;
+    --warning-800: #92400E;
+    --warning-900: #78350F;
+    --warning-950: #451A03;
+
+    --error-50: #FEF2F2;
+    --error-100: #FEE2E2;
+    --error-200: #FECACA;
+    --error-300: #FCA5A5;
+    --error-400: #F87171;
+    --error-500: #EF4444;
+    --error-600: #B91C1C;
+    --error-700: #991B1B;
+    --error-800: #991B1B;
+    --error-900: #7F1D1D;
+    --error-950: #450A0A;
+
+    --info-50: #EFF6FF;
+    --info-100: #DBEAFE;
+    --info-200: #BFDBFE;
+    --info-300: #93C5FD;
+    --info-400: #60A5FA;
+    --info-500: #3B82F6;
+    --info-600: #2563EB;
+    --info-700: #1D4ED8;
+    --info-800: #1E40AF;
+    --info-900: #1E3A8A;
+    --info-950: #172554;
+
+    /* ========================================
+       SHADCN/UI THEME VARIABLES - Light
+       ======================================== */
+    --background: 45 14% 97%;
+    --foreground: 0 0% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+    --primary: 22 51% 43%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 45 14% 95%;
+    --secondary-foreground: 0 0% 13%;
+    --muted: 45 14% 93%;
+    --muted-foreground: 0 0% 42%;
+    --accent: 22 51% 43%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 41%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 45 14% 85%;
+    --input: 45 14% 85%;
+    --ring: 22 51% 43%;
+    --radius: 0.75rem;
+
+    /* ========================================
+       SEMANTIC COLOR TOKENS - Light
+       ======================================== */
+
+    /* Background Colors */
+    --bg-default: var(--sand-50);
+    --bg-primary: #FFFFFF;
+    --bg-secondary: var(--sand-100);
+    --bg-tertiary: var(--sand-200);
+    --bg-elevated: #FFFFFF;
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+    --bg-inverse: var(--neutral-900);
+
+    /* Foreground Colors */
+    --fg-default: var(--neutral-900);
+    --fg-primary: var(--neutral-900);
+    --fg-secondary: var(--neutral-700);
+    --fg-tertiary: var(--neutral-500);
+    --fg-quaternary: var(--neutral-400);
+    --fg-inverse: #FFFFFF;
+
+    /* Border Colors */
+    --border-default: var(--sand-300);
+    --border-subtle: var(--sand-200);
+    --border-strong: var(--sand-400);
+    --border-focus: var(--peach-400);
+
+    /* Accent Colors - Primary (Peach) */
+    --accent-primary: var(--peach-600);
+    --accent-primary-hover: var(--peach-700);
+    --accent-primary-light: var(--peach-100);
+    --accent-primary-lighter: var(--peach-50);
+
+    /* Accent Colors - Secondary (Sage) */
+    --accent-secondary: var(--sage-600);
+    --accent-secondary-hover: var(--sage-700);
+    --accent-secondary-light: var(--sage-100);
+    --accent-secondary-lighter: var(--sage-50);
+
+    /* Accent Colors - Tertiary (Blue) */
+    --accent-tertiary: var(--blue-600);
+    --accent-tertiary-hover: var(--blue-700);
+    --accent-tertiary-light: var(--blue-100);
+    --accent-tertiary-lighter: var(--blue-50);
+
+    /* Status Colors - Success */
+    --status-success: var(--success-600);
+    --status-success-light: var(--success-100);
+    --status-success-lighter: var(--success-50);
+
+    /* Status Colors - Warning */
+    --status-warning: var(--warning-600);
+    --status-warning-light: var(--warning-100);
+    --status-warning-lighter: var(--warning-50);
+
+    /* Status Colors - Error */
+    --status-error: var(--error-600);
+    --status-error-light: var(--error-100);
+    --status-error-lighter: var(--error-50);
+
+    /* Status Colors - Info */
+    --status-info: var(--info-600);
+    --status-info-light: var(--info-100);
+    --status-info-lighter: var(--info-50);
+  }
+
+  .dark {
+    /* ========================================
+       SHADCN/UI THEME VARIABLES - Dark
+       ======================================== */
+    --background: 0 0% 6%;
+    --foreground: 0 0% 96%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 22 70% 72%;
+    --primary-foreground: 0 0% 6%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 22 70% 72%;
+    --accent-foreground: 0 0% 6%;
+    --destructive: 0 62% 54%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 22 70% 72%;
+
+    /* ========================================
+       SEMANTIC COLOR TOKENS - Dark
+       ======================================== */
+
+    /* Background Colors */
+    --bg-default: #0F0F0F;
+    --bg-primary: #141414;
+    --bg-secondary: #1A1A1A;
+    --bg-tertiary: #242424;
+    --bg-elevated: #1E1E1E;
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+    --bg-inverse: var(--neutral-100);
+
+    /* Foreground Colors */
+    --fg-default: var(--neutral-100);
+    --fg-primary: var(--neutral-100);
+    --fg-secondary: var(--neutral-300);
+    --fg-tertiary: var(--neutral-500);
+    --fg-quaternary: var(--neutral-600);
+    --fg-inverse: var(--neutral-900);
+
+    /* Border Colors */
+    --border-default: #2A2A2A;
+    --border-subtle: #1F1F1F;
+    --border-strong: #3A3A3A;
+    --border-focus: var(--peach-400);
+
+    /* Accent Colors - Primary (Peach) */
+    --accent-primary: var(--peach-400);
+    --accent-primary-hover: var(--peach-300);
+    --accent-primary-light: #2A2520;
+    --accent-primary-lighter: #1F1A16;
+
+    /* Accent Colors - Secondary (Sage) */
+    --accent-secondary: var(--sage-400);
+    --accent-secondary-hover: var(--sage-300);
+    --accent-secondary-light: #1A251A;
+    --accent-secondary-lighter: #131F13;
+
+    /* Accent Colors - Tertiary (Blue) */
+    --accent-tertiary: var(--blue-400);
+    --accent-tertiary-hover: var(--blue-300);
+    --accent-tertiary-light: #1A2530;
+    --accent-tertiary-lighter: #131A24;
+
+    /* Status Colors - Success */
+    --status-success: var(--success-400);
+    --status-success-light: #0F2918;
+    --status-success-lighter: #0A1F12;
+
+    /* Status Colors - Warning */
+    --status-warning: var(--warning-400);
+    --status-warning-light: #291E0A;
+    --status-warning-lighter: #1F1606;
+
+    /* Status Colors - Error */
+    --status-error: var(--error-400);
+    --status-error-light: #290F0F;
+    --status-error-lighter: #1F0A0A;
+
+    /* Status Colors - Info */
+    --status-info: var(--info-400);
+    --status-info-light: #0F1A29;
+    --status-info-lighter: #0A121F;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground transition-colors duration-200;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+@layer utilities {
+  /* Soft Shadow Utilities */
+  .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+  }
+
+  .shadow-soft-xl {
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  }
+
+  /* Dark mode shadows */
+  .dark .shadow-soft {
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.2), 0 1px 2px -1px rgb(0 0 0 / 0.2);
+  }
+
+  .dark .shadow-soft-md {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2);
+  }
+
+  .dark .shadow-soft-lg {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  }
+
+  /* Background Utilities */
+  .bg-default {
+    background-color: var(--bg-default);
+  }
+
+  .bg-primary {
+    background-color: var(--bg-primary);
+  }
+
+  .bg-secondary {
+    background-color: var(--bg-secondary);
+  }
+
+  .bg-tertiary {
+    background-color: var(--bg-tertiary);
+  }
+
+  .bg-elevated {
+    background-color: var(--bg-elevated);
+  }
+
+  /* Foreground Utilities */
+  .text-default {
+    color: var(--fg-default);
+  }
+
+  .text-primary {
+    color: var(--fg-primary);
+  }
+
+  .text-secondary {
+    color: var(--fg-secondary);
+  }
+
+  .text-tertiary {
+    color: var(--fg-tertiary);
+  }
+
+  .text-quaternary {
+    color: var(--fg-quaternary);
+  }
+
+  /* Border Utilities */
+  .border-default {
+    border-color: var(--border-default);
+  }
+
+  .border-subtle {
+    border-color: var(--border-subtle);
+  }
+
+  .border-strong {
+    border-color: var(--border-strong);
+  }
+
+  /* Accent Background Utilities */
+  .bg-accent-primary {
+    background-color: var(--accent-primary);
+  }
+
+  .bg-accent-primary-light {
+    background-color: var(--accent-primary-light);
+  }
+
+  .bg-accent-secondary {
+    background-color: var(--accent-secondary);
+  }
+
+  .bg-accent-secondary-light {
+    background-color: var(--accent-secondary-light);
+  }
+
+  /* Status Background Utilities */
+  .bg-status-success {
+    background-color: var(--status-success);
+  }
+
+  .bg-status-success-light {
+    background-color: var(--status-success-light);
+  }
+
+  .bg-status-warning {
+    background-color: var(--status-warning);
+  }
+
+  .bg-status-warning-light {
+    background-color: var(--status-warning-light);
+  }
+
+  .bg-status-error {
+    background-color: var(--status-error);
+  }
+
+  .bg-status-error-light {
+    background-color: var(--status-error-light);
+  }
+
+  .bg-status-info {
+    background-color: var(--status-info);
+  }
+
+  .bg-status-info-light {
+    background-color: var(--status-info-light);
+  }
+
+  /* Scrollbar Styling */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(0 0 0 / 0.2) transparent;
+  }
+
+  .dark .scrollbar-thin {
+    scrollbar-color: rgb(255 255 255 / 0.2) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(0 0 0 / 0.2);
+    border-radius: 3px;
+  }
+
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgb(255 255 255 / 0.2);
+  }
+}
+
+/* ========================================
+   ANIMATION UTILITIES
+   ======================================== */
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* ========================================
+   FOCUS STYLES
+   ======================================== */
+
+@layer utilities {
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] focus:ring-offset-2;
+  }
+
+  .focus-ring-offset-dark {
+    --tw-ring-offset-color: var(--bg-default);
+  }
+}
